@@ -26,9 +26,10 @@ def hello_world():
 
 @app.route('/signup', methods['GET','POST'])
 def usr_signup():
+    
     if request.method == 'POST':
     #implement  'on_json_loading_failed()'
-       signUpData =  request.get_json()
+        signUpData =  request.get_json()
 
         #signUpData['name']
         name = signUpData['name']
@@ -39,20 +40,23 @@ def usr_signup():
         hashedPassword = generate_password_hash(unhashedPassword)
 
         #Make sure the email is not already taken
-        if Accounts.query.filter_by(email=email).first() is None:
-            createAccount = Accounts(email=email, name=name, surName=surName \
-             password=hashedPassword )
+        if Accounts.query.filter_by(email=usrEmail).first() is None:
+            createAccount = Accounts(email=usrEmail, name=name, surName=surName, \
+            password=hashedPassword)
 
             #Add account to the database
-             db.session.add(createAccount)
-             db.session.commit()
+            db.session.add(createAccount)
+            db.session.commit()
+            status = 'success'
 
         else: 
-            return jsonify('Email has already been taken')
+            status = 'failed'
+    else: 
+        status = jsonify('failed')
 
 
 
-    return 0
+    return status
 
 @app.route('/login')
 def usr_login():
