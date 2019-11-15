@@ -41,8 +41,8 @@ def usr_signup():
 
         #Make sure the email is not already taken
         if Accounts.query.filter_by(email=email).first() is None:
-            createAccount = Accounts(email=email, name=name, surName=surName \
-             password=hashedPassword )
+            createAccount = Accounts(email=email, name=name, surName=surName, \
+            password=hashedPassword)
 
             #Add account to the database
              db.session.add(createAccount)
