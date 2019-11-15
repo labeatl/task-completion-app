@@ -129,6 +129,7 @@ class LoginPage extends StatelessWidget {
                                       Padding(
                                         padding: EdgeInsets.all(10.0),
                                         child: TextFormField(
+                                          obscureText: true,
                                           //Make this input hidden
                                           decoration: InputDecoration(
                                               labelText: "password"),
@@ -146,12 +147,17 @@ class LoginPage extends StatelessWidget {
                                       Padding(
                                         padding: EdgeInsets.all(10.0),
                                         child: TextFormField(
+                                          obscureText: true,
                                           //Make this input hidden
+
                                           decoration: InputDecoration(
                                               labelText: "Confirm Password"),
                                           validator: (value) {
                                             if (value.isEmpty) {
                                               return 'Please enter some text';
+                                            }
+                                            if (password != value) {
+                                              return 'Passwords do not match';
                                             }
                                             return null;
                                           },
@@ -166,7 +172,7 @@ class LoginPage extends StatelessWidget {
                                           child: Text("Submit"),
                                           onPressed: () {
                                             if (_formKey.currentState
-                                                .validate()) {
+                                                .validate()){
                                               _formKey.currentState.save();
 
                                               var jsonData = {
@@ -179,6 +185,7 @@ class LoginPage extends StatelessWidget {
 
 
                                             }
+
                                           },
                                         ),
                                       )
