@@ -170,12 +170,12 @@ class LoginPage extends StatelessWidget {
                                               _formKey.currentState.save();
 
                                               var jsonData = {
-                                                'name' = name,
-                                                'surName' = surName,
-                                                'email' = email,
-                                                'password' = password
+                                                'name':  name,
+                                                'surName':  surName,
+                                                'email':  email,
+                                                'password': password
 
-                                              }
+                                              };
 
 
                                             }
