@@ -67,11 +67,15 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(fontSize: 17),
                       ),
                       onPressed: () {
+                        //The below strings store the form data entered.
+                        String name, surName, email;
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
+
                                 content: Form(
+
                                   key: _formKey,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -85,6 +89,9 @@ class LoginPage extends StatelessWidget {
                                           }
                                           return null;
                                         },
+                                        onSaved:(String val){
+                                          name = val;
+                                        },
                                       ),
                                       Padding(
                                         padding: EdgeInsets.all(10.0),
@@ -95,7 +102,11 @@ class LoginPage extends StatelessWidget {
                                             if (value.isEmpty) {
                                               return 'Please enter some text';
                                             }
+
                                             return null;
+                                          },
+                                          onSaved:(String val){
+                                            surName = val;
                                           },
                                         ),
                                       ),
@@ -110,6 +121,9 @@ class LoginPage extends StatelessWidget {
                                             }
                                             return null;
                                           },
+                                          onSaved:(String val){
+                                            email = val;
+                                          },
                                         ),
                                       ),
                                       Padding(
@@ -120,6 +134,8 @@ class LoginPage extends StatelessWidget {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               _formKey.currentState.save();
+
+
                                             }
                                           },
                                         ),
