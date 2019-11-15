@@ -40,14 +40,14 @@ def usr_signup():
         hashedPassword = generate_password_hash(unhashedPassword)
 
         #Make sure the email is not already taken
-        if Accounts.query.filter_by(email=email).first() is None:
-            createAccount = Accounts(email=email, name=name, surName=surName, \
+        if Accounts.query.filter_by(email=usrEmail).first() is None:
+            createAccount = Accounts(email=usrEmail, name=name, surName=surName, \
             password=hashedPassword)
 
             #Add account to the database
-             db.session.add(createAccount)
-             db.session.commit()
-             status = 'success'
+            db.session.add(createAccount)
+            db.session.commit()
+            status = 'success'
 
         else: 
             status = 'failed'
