@@ -26,9 +26,10 @@ def hello_world():
 
 @app.route('/signup', methods['GET','POST'])
 def usr_signup():
+    
     if request.method == 'POST':
     #implement  'on_json_loading_failed()'
-       signUpData =  request.get_json()
+        signUpData =  request.get_json()
 
         #signUpData['name']
         name = signUpData['name']
@@ -46,13 +47,16 @@ def usr_signup():
             #Add account to the database
              db.session.add(createAccount)
              db.session.commit()
+             status = 'success'
 
         else: 
-            return jsonify('Email has already been taken')
+            status = 'failed'
+    else: 
+        status = jsonify('failed')
 
 
 
-    return 0
+    return status
 
 @app.route('/login')
 def usr_login():
