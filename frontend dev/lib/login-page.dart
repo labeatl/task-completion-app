@@ -68,7 +68,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       onPressed: () {
                         //The below strings store the form data entered.
-                        String name, surName, email;
+                        String name, surName, email, password, confirmPassword;
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -127,6 +127,40 @@ class LoginPage extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: TextFormField(
+                                          //Make this input hidden
+                                          decoration: InputDecoration(
+                                              labelText: "password"),
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return 'Please enter some text';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved:(String val){
+                                            password = val;
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: TextFormField(
+                                          //Make this input hidden
+                                          decoration: InputDecoration(
+                                              labelText: "Confirm Password"),
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return 'Please enter some text';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved:(String val){
+                                            confirmPassword = val;
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: RaisedButton(
                                           child: Text("Submit"),
@@ -134,6 +168,14 @@ class LoginPage extends StatelessWidget {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               _formKey.currentState.save();
+
+                                              var jsonData = {
+                                                'name' = name,
+                                                'surName' = surName,
+                                                'email' = email,
+                                                'password' = password
+
+                                              }
 
 
                                             }
