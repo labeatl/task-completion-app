@@ -1,53 +1,32 @@
 import 'package:flutter/material.dart';
-import "./login-page.dart";
-import "./tasks-page.dart";
+import 'package:flutter_app/pages/tasks-page.dart';
+import "./pages/login-page.dart";
+import "./pages/home-page.dart";
+import "./services/auth.service.dart";
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return MyAppState();
+AuthService appAuth = new AuthService();
+
+void main() async {
+  // Set default home.
+  Widget _defaultHome = new LoginPage();
+
+  // Get result of the login function.
+  bool _result = await appAuth.login();
+  if (_result) {
+    _defaultHome = new HomePage();
   }
-}
 
-class MyAppState extends State<MyApp> {
-  int _selectedPage = 0;
-  final _pageOptions = [LoginPage(), TasksPage()];
+  // Run app!
+  runApp(new MaterialApp(
+    title: 'App',
+    home: _defaultHome,
+    routes: <String, WidgetBuilder>{
+      // Set routes for using the Navigator.
+      '/home': (BuildContext context) => new HomePage(),
+      '/login': (BuildContext context) => new LoginPage(),
+      '/tasks': (BuildContext context) => new TasksPage(),
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.deepPurpleAccent,
-          title: Text("Task App"),
-        ),
-        body: _pageOptions[_selectedPage],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedPage,
-          onTap: (int index) {
-            setState(() {
-              _selectedPage = index;
-            });
-          },
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home), title: Text("Home")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.burst_mode), title: Text("tasks")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.control_point), title: Text("Add a task")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.import_contacts), title: Text("Training")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.sentiment_very_satisfied),
-                title: Text("Profile")),
-          ],
-        ),
-      ),
-    );
-  }
+    },
+  ));
 }
