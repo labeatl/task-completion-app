@@ -11,32 +11,36 @@ class _LoginPageState extends State<LoginPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-
-  Widget build(BuildContext context) =>
-      new Scaffold(
+  Widget build(BuildContext context) => new Scaffold(
         body: new Container(
           height: 800,
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              new Card(
-                elevation: 5,
-                child: new Container(
-                  width: 50,
-                  padding: EdgeInsets.all(10),
-                  child: new TextField(
-                    decoration: InputDecoration(labelText: "username"),
+              Container(
+                height: 65,
+                margin: EdgeInsets.fromLTRB(8, 4, 8, 4),
+                child: new Card(
+                  elevation: 5,
+                  child: new Container(
+                    padding: EdgeInsets.all(10),
+                    child: new TextField(
+                      decoration: InputDecoration(labelText: "username"),
+                    ),
                   ),
                 ),
               ),
-              new Card(
-                elevation: 5,
-                child: new Container(
-                  width: 100,
-                  padding: EdgeInsets.all(10),
-                  child: new TextField(
-                    decoration: InputDecoration(labelText: "password"),
+              Container(
+                height: 65,
+                margin: EdgeInsets.fromLTRB(8, 4, 8, 10),
+                child: new Card(
+                  elevation: 5,
+                  child: new Container(
+                    padding: EdgeInsets.all(10),
+                    child: new TextField(
+                      decoration: InputDecoration(labelText: "password"),
+                    ),
                   ),
                 ),
               ),
@@ -44,20 +48,22 @@ class _LoginPageState extends State<LoginPage> {
                 child: new Align(
                   alignment: Alignment.bottomRight,
                   child: new FlatButton(
-                    textColor: Colors.deepPurpleAccent,
+                    textColor: Colors.blueGrey,
                     child: new Text("Forgotten password?"),
                     onPressed: () {},
                   ),
                 ),
               ),
               new Container(
+                margin: EdgeInsets.fromLTRB(8, 4, 8, 130),
+                child: Card(
+                  color: Colors.blueGrey,
                   child: new FlatButton(
-                    color: Colors.deepPurpleAccent,
                     textColor: Colors.white,
                     disabledColor: Colors.grey,
                     disabledTextColor: Colors.black,
                     padding: EdgeInsets.all(8.0),
-                    splashColor: Colors.deepPurpleAccent,
+                    splashColor: Colors.blueGrey,
                     child: new Text(
                       "LOG IN",
                       style: TextStyle(fontSize: 20.0),
@@ -66,19 +72,20 @@ class _LoginPageState extends State<LoginPage> {
                       setState(() => this._status = "loading");
                       appAuth.login().then((result) {
                         if (result) {
-                          Navigator.of(context).pushReplacementNamed(
-                              '/home');
+                          Navigator.of(context).pushReplacementNamed('/home');
                         } else {
                           setState(() => this._status = 'rejected');
                         }
                       });
                     },
-                  )),
+                  ),
+                ),
+              ),
               new Container(
                 child: new Align(
                   alignment: Alignment.bottomCenter,
                   child: new FlatButton(
-                    textColor: Colors.deepPurpleAccent,
+                    textColor: Colors.blueGrey,
                     child: new Text(
                       "Create Account",
                       style: TextStyle(fontSize: 17),
@@ -97,14 +104,14 @@ class _LoginPageState extends State<LoginPage> {
                                   children: <Widget>[
                                     TextFormField(
                                       decoration:
-                                      InputDecoration(labelText: "name"),
+                                          InputDecoration(labelText: "name"),
                                       validator: (value) {
                                         if (value.isEmpty) {
                                           return 'Please enter some text';
                                         }
                                         return null;
                                       },
-                                      onSaved:(String val){
+                                      onSaved: (String val) {
                                         name = val;
                                       },
                                     ),
@@ -120,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
 
                                           return null;
                                         },
-                                        onSaved:(String val){
+                                        onSaved: (String val) {
                                           surName = val;
                                         },
                                       ),
@@ -136,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                                           }
                                           return null;
                                         },
-                                        onSaved:(String val){
+                                        onSaved: (String val) {
                                           email = val;
                                         },
                                       ),
@@ -155,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                                           }
                                           return null;
                                         },
-                                        onSaved:(String val){
+                                        onSaved: (String val) {
                                           password = val;
                                         },
                                       ),
@@ -171,13 +178,14 @@ class _LoginPageState extends State<LoginPage> {
                                         validator: (value) {
                                           if (value.isEmpty) {
                                             return 'Please enter some text';
-                                          }
-                                          else if (value.compareTo(password) != 0) {
+                                          } else if (value
+                                                  .compareTo(password) !=
+                                              0) {
                                             return 'Passwords do not match';
                                           }
                                           return null;
                                         },
-                                        onSaved:(String val){
+                                        onSaved: (String val) {
                                           confirmPassword = val;
                                         },
                                       ),
@@ -188,20 +196,16 @@ class _LoginPageState extends State<LoginPage> {
                                         child: Text("Submit"),
                                         onPressed: () {
                                           if (_formKey.currentState
-                                              .validate()){
+                                              .validate()) {
                                             _formKey.currentState.save();
 
                                             var jsonData = {
-                                              'name':  name,
-                                              'surName':  surName,
-                                              'email':  email,
+                                              'name': name,
+                                              'surName': surName,
+                                              'email': email,
                                               'password': password
-
                                             };
-
-
                                           }
-
                                         },
                                       ),
                                     )
@@ -219,4 +223,3 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
 }
-
