@@ -99,117 +99,119 @@ class _LoginPageState extends State<LoginPage> {
                             return AlertDialog(
                               content: Form(
                                 key: _formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    TextFormField(
-                                      decoration:
-                                          InputDecoration(labelText: "name"),
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Please enter some text';
-                                        }
-                                        return null;
-                                      },
-                                      onSaved: (String val) {
-                                        name = val;
-                                      },
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                            labelText: "surname"),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      TextFormField(
+                                        decoration:
+                                            InputDecoration(labelText: "name"),
                                         validator: (value) {
                                           if (value.isEmpty) {
                                             return 'Please enter some text';
                                           }
+                                          return null;
+                                        },
+                                        onSaved: (String val) {
+                                          name = val;
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: TextFormField(
+                                          decoration: InputDecoration(
+                                              labelText: "surname"),
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return 'Please enter some text';
+                                            }
 
-                                          return null;
-                                        },
-                                        onSaved: (String val) {
-                                          surName = val;
-                                        },
+                                            return null;
+                                          },
+                                          onSaved: (String val) {
+                                            surName = val;
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                            labelText: "email address"),
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Please enter some text';
-                                          }
-                                          return null;
-                                        },
-                                        onSaved: (String val) {
-                                          email = val;
-                                        },
+                                      Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: TextFormField(
+                                          decoration: InputDecoration(
+                                              labelText: "email address"),
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return 'Please enter some text';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved: (String val) {
+                                            email = val;
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: TextFormField(
-                                        obscureText: true,
-                                        //Make this input hidden
-                                        decoration: InputDecoration(
-                                            labelText: "password"),
-                                        validator: (value) {
-                                          password = value;
-                                          if (value.isEmpty) {
-                                            return 'Please enter some text';
-                                          }
-                                          return null;
-                                        },
-                                        onSaved: (String val) {
-                                          password = val;
-                                        },
+                                      Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: TextFormField(
+                                          obscureText: true,
+                                          //Make this input hidden
+                                          decoration: InputDecoration(
+                                              labelText: "password"),
+                                          validator: (value) {
+                                            password = value;
+                                            if (value.isEmpty) {
+                                              return 'Please enter some text';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved: (String val) {
+                                            password = val;
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: TextFormField(
-                                        obscureText: true,
-                                        //Make this input hidden
+                                      Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: TextFormField(
+                                          obscureText: true,
+                                          //Make this input hidden
 
-                                        decoration: InputDecoration(
-                                            labelText: "Confirm Password"),
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Please enter some text';
-                                          } else if (value
-                                                  .compareTo(password) !=
-                                              0) {
-                                            return 'Passwords do not match';
-                                          }
-                                          return null;
-                                        },
-                                        onSaved: (String val) {
-                                          confirmPassword = val;
-                                        },
+                                          decoration: InputDecoration(
+                                              labelText: "Confirm Password"),
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return 'Please enter some text';
+                                            } else if (value
+                                                    .compareTo(password) !=
+                                                0) {
+                                              return 'Passwords do not match';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved: (String val) {
+                                            confirmPassword = val;
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: RaisedButton(
-                                        child: Text("Submit"),
-                                        onPressed: () {
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            _formKey.currentState.save();
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: RaisedButton(
+                                          child: Text("Submit"),
+                                          onPressed: () {
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              _formKey.currentState.save();
 
-                                            var jsonData = {
-                                              'name': name,
-                                              'surName': surName,
-                                              'email': email,
-                                              'password': password
-                                            };
-                                          }
-                                        },
-                                      ),
-                                    )
-                                  ],
+                                              var jsonData = {
+                                                'name': name,
+                                                'surName': surName,
+                                                'email': email,
+                                                'password': password
+                                              };
+                                            }
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
