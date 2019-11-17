@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../task.dart';
 
-class TasksPage extends StatelessWidget {
-  final List<Task> tasks = [
-    Task(
-        title: "Bike repair",
-        description: "it is severly damaged",
-        category: "physical repairments",
-        et: 200,
-        price: 100,
+class TasksPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new TaskPageState();
+}
+
+class TaskPageState extends State<TasksPage> {
+  List<Task> tasks = [
+    new Task(
+        title: "Bike Repair",
+        description: "severly damaged",
+        category: "repairs",
+        et: 100,
+        price: 150,
         location: "Oxford",
         date: DateTime.now()),
-    Task(
+    new Task(
         title: "Grocery sainsburys",
         description: "grocery for two weeks",
         category: "Grocery",
@@ -69,6 +74,7 @@ class TasksPage extends StatelessWidget {
                             Row(
                               children: <Widget>[
                                 IconButton(
+                                  onPressed: () {},
                                   icon: Icon(Icons.title),
                                 ),
                                 Text(
@@ -83,10 +89,11 @@ class TasksPage extends StatelessWidget {
                             Row(
                               children: <Widget>[
                                 IconButton(
+                                  onPressed: () {},
                                   icon: Icon(Icons.attach_money),
                                 ),
                                 Text(
-                                  "price: £${task.price}",
+                                  "£${task.price}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -106,6 +113,7 @@ class TasksPage extends StatelessWidget {
                               children: <Widget>[
                                 IconButton(
                                   icon: Icon(Icons.location_on),
+                                  onPressed: () {},
                                 ),
                                 Text(
                                   "${task.location}",
@@ -120,6 +128,7 @@ class TasksPage extends StatelessWidget {
                               children: <Widget>[
                                 IconButton(
                                   icon: Icon(Icons.access_time),
+                                  onPressed: () {},
                                 ),
                                 Text(
                                   "${task.et} min.",

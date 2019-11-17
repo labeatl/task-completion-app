@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import "./tasks-page.dart";
 import "./profile-page.dart";
+import "./add-task-page.dart";
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,10 +14,7 @@ class _HomePageState extends State<HomePage> {
   final _pageOptions = [
     Text("So what we smoke weed"),
     TasksPage(),
-    Text(
-      "Add a task here",
-      style: TextStyle(fontSize: 20),
-    ),
+    CreateTask(),
     Text(
       "Take your training here",
       style: TextStyle(fontSize: 20),

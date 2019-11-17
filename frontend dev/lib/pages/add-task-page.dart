@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
+import "../task.dart";
+import "./tasks-page.dart";
 
 class CreateTask extends StatefulWidget {
   State<StatefulWidget> createState() {
-    return CreateTaskState();
+    return _CreateTaskState();
   }
 }
 
-class CreateTaskState extends State<CreateTask> {
-  final _formKey = GlobalKey<FormState>();
-
+class _CreateTaskState extends State<CreateTask> {
   String dropdownValue = "Choose a category";
 
   Widget build(BuildContext context) {
     final priceController = TextEditingController();
     final timeController = TextEditingController();
-    final jobDiscriptionController = TextEditingController();
+    final jobDescriptionController = TextEditingController();
     final locationController = TextEditingController();
     final jobTitleController = TextEditingController();
 
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Post Your Task'),
-        ),
-        body: SingleChildScrollView(
+    return new Scaffold(
+        body: new SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -45,7 +41,7 @@ class CreateTaskState extends State<CreateTask> {
                   padding: EdgeInsets.all(10),
                   child: new TextFormField(
                     decoration: InputDecoration(labelText: "Job Discription"),
-                    controller: jobDiscriptionController,
+                    controller: jobDescriptionController,
                   ),
                 ),
               ),
@@ -90,9 +86,9 @@ class CreateTaskState extends State<CreateTask> {
                   child: DropdownButton<String>(
                     value: dropdownValue,
                     elevation: 5,
-                    style: TextStyle(color: Colors.deepPurple),
+                    style: TextStyle(color: Colors.blueGrey),
                     underline: Container(
-                      color: Colors.deepPurpleAccent,
+                      color: Colors.blueGrey,
                     ),
                     onChanged: (String newValue) {
                       setState(() {
@@ -115,15 +111,12 @@ class CreateTaskState extends State<CreateTask> {
               ),
               FlatButton(
                 child: Text("Submit"),
-                textColor: Colors.deepPurpleAccent,
-                onPressed: () {
-                print(dropdownValue);
-                },
+                textColor: Colors.blueGrey,
+                onPressed: () {},
               ),
             ],
           ),
         ),
-      ),
     );
   }
 }
