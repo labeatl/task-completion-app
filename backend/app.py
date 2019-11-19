@@ -27,7 +27,7 @@ class Accounts(db.Model):
 
 class hello(Resource):
     def get(self):
-        return 'Bruh'
+        return 'live'
 api.add_resource(hello, '/')
 class UserSignUp(Resource):
     def put(self):
