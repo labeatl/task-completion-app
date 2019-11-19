@@ -1,5 +1,6 @@
 import '../main.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -68,7 +69,9 @@ class _LoginPageState extends State<LoginPage> {
                       "LOG IN",
                       style: TextStyle(fontSize: 20.0),
                     ),
-                    onPressed: () {
+                    onPressed: (
+
+                        ) {
                       setState(() => this._status = "loading");
                       appAuth.login().then((result) {
                         if (result) {
@@ -199,13 +202,14 @@ class _LoginPageState extends State<LoginPage> {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               _formKey.currentState.save();
-
-                                              var jsonData = {
+                                              var url = 'http://192.168.137.1:5000';
+                                              print("Going");
+                                               http.put(url, body: {
                                                 'name': name,
                                                 'surName': surName,
                                                 'email': email,
                                                 'password': password
-                                              };
+                                              });
                                             }
                                           },
                                         ),
