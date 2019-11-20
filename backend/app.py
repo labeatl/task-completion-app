@@ -15,10 +15,10 @@ db=SQLAlchemy(app)
 
 class Accounts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    surName = db.Column(db.String)
-    email = db.Column(db.String)
-    password = db.Column(db.String)
+    name = db.Column(db.String(20), nullable=False)
+    surName = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String )
 
 @app.route('/')
 def hello_world():
