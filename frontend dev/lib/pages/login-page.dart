@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: new Container(
                     padding: EdgeInsets.all(10),
                     child: new TextField(
-                      decoration: InputDecoration(labelText: "username"),
+                      decoration: InputDecoration(labelText: "email"),
                     ),
                   ),
                 ),
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
 
                         ) {
                       setState(() => this._status = "loading");
-                      appAuth.login().then((result) {
+                      appAuth.login(email, password).then((result) {
                         if (result) {
                           Navigator.of(context).pushReplacementNamed('/home');
                         } else {
@@ -202,8 +202,13 @@ class _LoginPageState extends State<LoginPage> {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               _formKey.currentState.save();
-                                              var url = 'http://192.168.137.1:5000';
-                                              print("Going");
+                                              var url = 'http://192.168.137.1:5000/signup';
+                                              print( {
+                                                'name': name,
+                                                'surName': surName,
+                                                'email': email,
+                                                'password': password
+                                              });
                                                http.put(url, body: {
                                                 'name': name,
                                                 'surName': surName,
