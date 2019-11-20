@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -10,8 +10,7 @@ api = Api(app)
 
 dbParam = 'mysql+pymysql://root@localhost/taskr'
 app.config['SQLALCHEMY_DATABASE_URI'] = dbParam
-if __name__ == "__main__":
-    app.run(host='192.168.137.1')
+
 #Flask secret key
 theKey = 'thEejrdaR5$wE3yY4wsehn4wASHR'
 
@@ -61,7 +60,7 @@ api.add_resource(UserSignUp, '/signup')
 
   
 class UserLogin(Resource):
-    def get():
+    def post():
         #request.form("data")
         loginData = request.get_json()
 
