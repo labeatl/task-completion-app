@@ -1,20 +1,24 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Resource, Api
 
 app = Flask(__name__)
-
+api = Api(app)
 #Database connection information
+
 dbParam = 'mysql+pymysql://root@localhost/taskr'
+app.config['SQLALCHEMY_DATABASE_URI'] = dbParam
 
 #Flask secret key
 theKey = 'thEejrdaR5$wE3yY4wsehn4wASHR'
 
-db=SQLAlchemy(app)
+db = SQLAlchemy(app)
 
 class Accounts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+<<<<<<< HEAD
     name = db.Column(db.String(20), nullable=False)
     surName = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
@@ -30,6 +34,22 @@ def usr_signup():
     if request.method == 'POST':
     #implement  'on_json_loading_failed()'
         signUpData =  request.get_json()
+=======
+    name = db.Column(db.String(20))
+    surName = db.Column(db.String(25))
+    email = db.Column(db.String(40))
+    password = db.Column(db.String(100))
+
+
+class hello(Resource):
+    def get(self):
+        return 'live'
+api.add_resource(hello, '/')
+class UserSignUp(Resource):
+    def put(self):
+        #request.form("data")
+        signUpData = request.get_json()
+>>>>>>> 45f3d4482d51d64838a82c1a3dafe423f6240312
 
         #signUpData['name']
         name = signUpData['name']
@@ -51,15 +71,35 @@ def usr_signup():
 
         else: 
             status = 'failed'
-    else: 
-        status = jsonify('failed')
+        return status
 
 
+api.add_resource(UserSignUp, '/signup')
 
-    return status
+  
+class UserLogin(Resource):
+    def post():
+        #request.form("data")
+        loginData = request.get_json()
 
-@app.route('/login')
-def usr_login():
-    return 0
+        #signUpData['name']
+        usrEmail = loginData['email']
+        unhashedPassword = signUpData['password']
+        #check password is same on frontend
+        hashedPassword = generate_password_hash(unhashedPassword)
 
+        #Make sure the email is not already taken
+        if Accounts.query.filter_by(email=usrEmail,password=hashedPassword).first() is  None:
+            #Login and send token
+            
+            
+
+            #Add account to the database
+            status = 'success'
+        else: 
+            status = 'failed'
+        return status
+
+
+api.add_resource(UserLogin, '/login')
 
