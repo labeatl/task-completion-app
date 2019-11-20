@@ -65,9 +65,10 @@ class TaskPageState extends State<TasksPage> {
                 return Card(
                   margin: EdgeInsets.all(10),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.all(15),
+                        margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -105,7 +106,7 @@ class TaskPageState extends State<TasksPage> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.all(15),
+                        margin: EdgeInsets.fromLTRB(0, 20, 40, 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -131,7 +132,7 @@ class TaskPageState extends State<TasksPage> {
                                   onPressed: () {},
                                 ),
                                 Text(
-                                  "${task.et} min.",
+                                  "${task.et} min",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,

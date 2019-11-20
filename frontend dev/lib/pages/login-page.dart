@@ -55,30 +55,31 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               new Container(
-                margin: EdgeInsets.fromLTRB(8, 4, 8, 130),
-                child: Card(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(25)),
                   color: Colors.blueGrey,
-                  child: new FlatButton(
-                    textColor: Colors.white,
-                    disabledColor: Colors.grey,
-                    disabledTextColor: Colors.black,
-                    padding: EdgeInsets.all(8.0),
-                    splashColor: Colors.blueGrey,
-                    child: new Text(
-                      "LOG IN",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    onPressed: () {
-                      setState(() => this._status = "loading");
-                      appAuth.login().then((result) {
-                        if (result) {
-                          Navigator.of(context).pushReplacementNamed('/home');
-                        } else {
-                          setState(() => this._status = 'rejected');
-                        }
-                      });
-                    },
+                ),
+                margin: EdgeInsets.fromLTRB(8, 4, 8, 130),
+                child: new FlatButton(
+                  textColor: Colors.white,
+                  disabledColor: Colors.grey,
+                  disabledTextColor: Colors.black,
+                  padding: EdgeInsets.all(8.0),
+                  splashColor: Colors.blueGrey,
+                  child: new Text(
+                    "LOG IN",
+                    style: TextStyle(fontSize: 20.0),
                   ),
+                  onPressed: () {
+                    setState(() => this._status = "loading");
+                    appAuth.login().then((result) {
+                      if (result) {
+                        Navigator.of(context).pushReplacementNamed('/home');
+                      } else {
+                        setState(() => this._status = 'rejected');
+                      }
+                    });
+                  },
                 ),
               ),
               new Container(
@@ -103,7 +104,9 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      TextFormField(
+                                      Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                      child: TextFormField(
                                         decoration:
                                             InputDecoration(labelText: "name"),
                                         validator: (value) {
@@ -116,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                                           name = val;
                                         },
                                       ),
+                              ),
                                       Padding(
                                         padding: EdgeInsets.all(10.0),
                                         child: TextFormField(

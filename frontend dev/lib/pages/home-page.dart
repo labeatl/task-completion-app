@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) => new Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueGrey,
-          title: Text("Task App"),
+          title: Text("Greatness"),
         ),
         body: _pageOptions[_selectedPage],
         bottomNavigationBar: BottomNavigationBar(
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                 ),
                 title: Text(
-                  "tasks",
+                  "Tasks",
                   style: TextStyle(color: Colors.white),
                 )),
             BottomNavigationBarItem(
