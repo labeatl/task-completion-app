@@ -1,15 +1,28 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
+
 
 class AuthService {
   // Login
-  Future<bool> login() async {
-    // Simulate a future for response after 2 second.
-    return await new Future<bool>.delayed(
-        new Duration(
-            seconds: 1
-        ), () => new Random().nextBool()
-    );
+  Future<bool> login(String _email,String _password) async {
+    var url = 'http://192.168.137.1:5000/login';
+
+    var response = await http.post(url, body: {
+      'email': _email,
+      'password': _password
+    });
+    bool responseBool;
+    //Conver the response to a bool
+    if (response == 'success') {
+      responseBool = true;
+    }
+    else {
+      responseBool = false;
+    }
+
+    return responseBool;
   }
 
   // Logout
