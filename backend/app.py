@@ -23,16 +23,6 @@ class Accounts(db.Model):
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String )
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-
-@app.route('/signup', methods['GET','POST'])
-def usr_signup():
-    
-    if request.method == 'POST':
-    #implement  'on_json_loading_failed()'
-        signUpData =  request.get_json()
 
 class hello(Resource):
     def get(self):
