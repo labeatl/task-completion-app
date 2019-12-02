@@ -18,7 +18,6 @@ db = SQLAlchemy(app)
 
 class Accounts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-<<<<<<< HEAD
     name = db.Column(db.String(20), nullable=False)
     surName = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
@@ -34,12 +33,6 @@ def usr_signup():
     if request.method == 'POST':
     #implement  'on_json_loading_failed()'
         signUpData =  request.get_json()
-=======
-    name = db.Column(db.String(20))
-    surName = db.Column(db.String(25))
-    email = db.Column(db.String(40))
-    password = db.Column(db.String(100))
-
 
 class hello(Resource):
     def get(self):
@@ -49,7 +42,6 @@ class UserSignUp(Resource):
     def put(self):
         #request.form("data")
         signUpData = request.get_json()
->>>>>>> 45f3d4482d51d64838a82c1a3dafe423f6240312
 
         #signUpData['name']
         name = signUpData['name']
