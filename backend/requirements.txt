@@ -1,0 +1,4 @@
+Flask-SQLAlchemy
+Flask-Restul
+Flask-HTTPAuth
+PyMySQL
