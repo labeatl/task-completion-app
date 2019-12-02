@@ -1,4 +1,4 @@
 Flask-SQLAlchemy
-Flask-Restul
+Flask-Restful
 Flask-HTTPAuth
 PyMySQL
