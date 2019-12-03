@@ -108,7 +108,7 @@ api.add_resource(UserLogin, '/login')
 
 
 class TasksList(Resource):
-    def post(self):
+    def get(self):
         list = Tasks.query.filter_by()
         for i in list:
             print(i)

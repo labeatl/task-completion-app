@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../task.dart';
+import 'package:http/http.dart' as http;
 
 class TasksPage extends StatefulWidget {
   @override
@@ -8,6 +9,10 @@ class TasksPage extends StatefulWidget {
 }
 
 class TaskPageState extends State<TasksPage> {
+
+  static var url = "http://51.140.92.250:5000/tasks";
+  var list = http.get(url);
+
   List<Task> tasks = [
     new Task(
         title: "Bike Repair",
