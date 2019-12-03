@@ -73,7 +73,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () {
                     setState(() => this._status = "loading");
-                    appAuth.login(email, password).then((result) {
+                    //Replace the two stringsi nlogin() with email and password
+                    appAuth.login("joe@joe.joe", "Mikfdgdgdfg").then((result) {
                       if (result) {
                         Navigator.of(context).pushReplacementNamed('/home');
                       } else {
@@ -205,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 .validate()) {
                                               _formKey.currentState.save();
 
-                                              var url = 'http://192.168.137.1:5000/signup';
+                                              var url = 'http://51.140.92.250:5000/signup';
                                               print( {
                                                 'name': name,
                                                 'surName': surName,
