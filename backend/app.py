@@ -40,7 +40,7 @@ class Tasks(db.Model):
 
 
 tasksSchema = Schema.from_dict(
-    {"id": fields.Integer(), "title": fields.String(), "description": fields.String()}
+    {"description": fields.String()}
 )
 
 class hello(Resource):
@@ -120,9 +120,10 @@ api.add_resource(UserLogin, '/login')
 
 class TasksList(Resource):
     def get(self):
-        tasks = db.session.query(Tasks).all()
+        tasks = db.session.query(Tasks.description)
         schema = tasksSchema()
         json_result = schema.dumps(tasks)
+        pprint(schema)
         pprint(json_result)
         return json_result
 
