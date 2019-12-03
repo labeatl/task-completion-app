@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class AuthService {
   // Login
   Future<bool> login(String _email,String _password) async {
-    var url = 'http://192.168.137.1:5000/login';
+    var url = 'http://51.140.92.250:5000//login';
 
     var response = await http.post(url, body: {
       'email': _email,
