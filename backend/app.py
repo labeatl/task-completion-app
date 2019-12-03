@@ -91,18 +91,33 @@ class UserLogin(Resource):
         #check password is same on frontend
         hashedPassword = generate_password_hash(unhashedPassword)
 
-        #Make sure the email is not already taken
-        if Accounts.query.filter_by(email=usrEmail,password=hashedPassword).first() is  None:
-            #Login and send token
+        #Make sure the email exists
+        if Accounts.query.filter_by(email=usrEmail).first() is  not None:
+            if hashedPassword == db.query(password).filter_by(email=usrEmail).first():
+                status = 0
+                print("Correct password")
+            else:
+                status = 1
+                print("InCorrect Password")
             
-            
-
             #Add account to the database
-            status = 0
         else: 
             status = 1
+            print("Email does not exist")
         return status
 
 
 api.add_resource(UserLogin, '/login')
+
+#TODO: Implement frontend for deletion
+class AccountDeletion(Resource):
+    def put(self):
+        accEmailToDelete = request.form['email']
+        if Accounts.query.filter_by(email=accEmailToDelete).first() is not None:
+            Accounts.query.filter_by(email=accEmailToDelete).delete()
+            db.session.commit()
+            return 'success'
+        else 
+            return 'failed'
+        
 
