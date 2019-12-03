@@ -77,9 +77,9 @@ class UserLogin(Resource):
             
 
             #Add account to the database
-            status = 'success'
+            status = true
         else: 
-            status = 'failed'
+            status = false
         return status
 
 
