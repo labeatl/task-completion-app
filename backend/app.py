@@ -24,16 +24,22 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
 
 
+class Tasks(db.Model):
+    title = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(20), nullable=False)
+    category = db.Column(db.String(20), nullable=False)
+    et = db.Column(db.Integer(6), nullable=False)
+    price = db.Column(db.Integer(6), nullable=False)
+    location = db.Column(db.String(20), nullable=False)
+    date = db.Column(db.DateTime(), nullable=False)
+
+
 class hello(Resource):
     def get(self):
         return 'live'
 api.add_resource(hello, '/')
 class UserSignUp(Resource):
     def put(self):
-        #request.form("data")
-        signUpData = request.get_json()
-
-        #signUpData['name']
         name = request.form['name']
         surName = request.form['surName']
         usrEmail = request.form['email']
@@ -58,7 +64,22 @@ class UserSignUp(Resource):
 
 api.add_resource(UserSignUp, '/signup')
 
-  
+class TasksAdded(Resource):
+    def put(self):
+        Title = request.form['title']
+        Description = request.form['description']
+        Category = request.form['category']
+        Et = request.form['et']
+        Price = request.form['price']
+        Location = request.form['location']
+        Date = request.form['date']
+
+        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, date=Date)
+        db.session.add(createTask)
+        db.session.commit()
+
+api.add_resource(TasksAdded, '/addTask')
+
 class UserLogin(Resource):
     def post(self):
         #request.form("data")
