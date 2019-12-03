@@ -96,7 +96,7 @@ class UserLogin(Resource):
             else:
                 status = 1
                 print("InCorrect Password")
-            
+
             #Add account to the database
         else: 
             status = 1
@@ -105,6 +105,15 @@ class UserLogin(Resource):
 
 
 api.add_resource(UserLogin, '/login')
+
+
+class TasksList(Resource):
+    def post(self):
+        list = Tasks.query.filter_by()
+        for i in list:
+            print(i)
+
+api.add_resource(TasksList, '/tasks')
 
 #TODO: Implement frontend for deletion
 class AccountDeletion(Resource):
