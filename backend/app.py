@@ -60,7 +60,7 @@ api.add_resource(UserSignUp, '/signup')
 
   
 class UserLogin(Resource):
-    def post():
+    def post(self):
         #request.form("data")
         loginData = request.get_json()
 
