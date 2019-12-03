@@ -28,8 +28,8 @@ class Tasks(db.Model):
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(20), nullable=False)
     category = db.Column(db.String(20), nullable=False)
-    et = db.Column(db.Integer(6), nullable=False)
-    price = db.Column(db.Integer(6), nullable=False)
+    et = db.Column(db.Integer(), nullable=False)
+    price = db.Column(db.Integer(), nullable=False)
     location = db.Column(db.String(20), nullable=False)
     date = db.Column(db.DateTime(), nullable=False)
 
