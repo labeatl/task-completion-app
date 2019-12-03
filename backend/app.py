@@ -40,7 +40,7 @@ class Tasks(db.Model):
 
 
 tasksSchema = Schema.from_dict(
-    {"id": fields.id(), "title": fields.title(), "description": fields.description}
+    {"id": fields.Integer(), "title": fields.String(), "description": fields.String()}
 )
 
 class hello(Resource):
