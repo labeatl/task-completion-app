@@ -117,7 +117,7 @@ class AccountDeletion(Resource):
             Accounts.query.filter_by(email=accEmailToDelete).delete()
             db.session.commit()
             return 'success'
-        else 
+        else :
             return 'failed'
         
 
