@@ -21,7 +21,7 @@ class Accounts(db.Model):
     name = db.Column(db.String(20), nullable=False)
     surName = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(100000000) )
+    password = db.Column(db.Text)
 
 
 class hello(Resource):
