@@ -122,8 +122,8 @@ class TasksList(Resource):
     def get(self):
         tasks = db.session.query(Tasks).all()
         result = tasksSchema.dump(tasks)
-        print(jsonify(result.data))
-        return jsonify(result.data)
+        print(jsonify(result))
+        return jsonify(result)
 
 api.add_resource(TasksList, '/tasks')
 
