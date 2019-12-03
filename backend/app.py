@@ -49,10 +49,10 @@ class UserSignUp(Resource):
             #Add account to the database
             db.session.add(createAccount)
             db.session.commit()
-            status = 'success'
+            status = "success"
 
         else: 
-            status = 'failed'
+            status = "failed"
         return status
 
 
