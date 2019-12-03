@@ -65,8 +65,8 @@ class UserLogin(Resource):
         loginData = request.get_json()
 
         #signUpData['name']
-        usrEmail = loginData['email']
-        unhashedPassword = signUpData['password']
+        usrEmail = request.form['email']
+        unhashedPassword = request.form['password']
         #check password is same on frontend
         hashedPassword = generate_password_hash(unhashedPassword)
 
