@@ -9,7 +9,6 @@ class TasksPage extends StatefulWidget {
 }
 
 class TaskPageState extends State<TasksPage> {
-
   static var url = "http://51.140.92.250:5000/tasks";
   var list = http.get(url);
 

@@ -107,13 +107,18 @@ class UserLogin(Resource):
 api.add_resource(UserLogin, '/login')
 
 
+
+
 class TasksList(Resource):
     def get(self):
-        list = Tasks.query.filter_by()
-        for i in list:
-            print(i)
+        result = Tasks.query.with_entities(Tasks.title, Tasks.et)
+        print(Tasks.title)
+        print(result)
+        return result
 
 api.add_resource(TasksList, '/tasks')
+
+
 
 #TODO: Implement frontend for deletion
 class AccountDeletion(Resource):
