@@ -81,7 +81,7 @@ class TasksAdded(Resource):
         db.session.add(createTask)
         db.session.commit()
 
-api.add_resource(TasksAdded, '/addTask')
+api.add_resource(TasksAdded, '/addtask')
 
 class UserLogin(Resource):
     def post(self):

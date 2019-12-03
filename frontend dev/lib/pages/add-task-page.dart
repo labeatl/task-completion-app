@@ -127,7 +127,7 @@ class _CreateTaskState extends State<CreateTask> {
                     ),
                     textColor: Colors.white,
                     onPressed: () {
-                      var url = 'http://51.140.92.250:5000/addTask';
+                      var url = 'http://51.140.92.250:5000/addtask';
                       print( {
                         'title': jobTitleController.text,
                         'description': jobDescriptionController.text,
@@ -135,7 +135,7 @@ class _CreateTaskState extends State<CreateTask> {
                         'et': timeController.text,
                         'price': priceController.text,
                         'location': locationController.text,
-                        'date': now,
+                        'date': now
                       });
                       http.post(url, body: {
                         'title': jobTitleController.text,
@@ -144,7 +144,7 @@ class _CreateTaskState extends State<CreateTask> {
                         'et': timeController.text,
                         'price': priceController.text,
                         'location': locationController.text,
-                        'date': now,
+                        'date': now
                       });
                     },
                   ),
