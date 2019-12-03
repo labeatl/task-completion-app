@@ -68,6 +68,7 @@ api.add_resource(UserSignUp, '/signup')
 
 class TasksAdded(Resource):
     def put(self):
+        print('worked at start')
         Title = request.form['title']
         Description = request.form['description']
         Category = request.form['category']
@@ -79,7 +80,7 @@ class TasksAdded(Resource):
         db.session.add(createTask)
         db.session.commit()
 
-api.add_resource(TasksAdded, '/addTask')
+api.add_resource(TasksAdded, '/addtask')
 
 class UserLogin(Resource):
     def post(self):
