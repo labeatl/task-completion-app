@@ -95,13 +95,15 @@ class UserLogin(Resource):
         if Accounts.query.filter_by(email=usrEmail).first() is  not None:
             if hashedPassword == db.query(password).filter_by(email=usrEmail).first():
                 status = 0
+                print("Correct password")
             else:
                 status = 1
+                print("InCorrect Password")
             
             #Add account to the database
-            status = 0
         else: 
             status = 1
+            print("Email does not exist")
         return status
 
 
