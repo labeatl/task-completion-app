@@ -34,10 +34,10 @@ class UserSignUp(Resource):
         signUpData = request.get_json()
 
         #signUpData['name']
-        name = request.json['name']
-        surName = request.json['surName']
-        usrEmail = request.json['email']
-        unhashedPassword = request.json['password']
+        name = request.form['name']
+        surName = request.form['surName']
+        usrEmail = request.form['email']
+        unhashedPassword = request.form['password']
         #check password is same on frontend
         hashedPassword = generate_password_hash(unhashedPassword)
 
