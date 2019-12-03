@@ -128,39 +128,14 @@ class _CreateTaskState extends State<CreateTask> {
                     textColor: Colors.white,
                     onPressed: () {
                       var url = 'http://51.140.92.250:5000/addtask';
-<<<<<<< HEAD
-                      print( {
-=======
                       http.put(url, body: {
->>>>>>> de8433dc00c86e5c2336a4218dc7c7af67ae091f
                         'title': jobTitleController.text,
                         'description': jobDescriptionController.text,
                         'category': dropdownValue,
                         'et': timeController.text,
                         'price': priceController.text,
                         'location': locationController.text,
-<<<<<<< HEAD
-                        'date': now
                       });
-                      http.put(url, body: {
-=======
-
-                      });
-                      print( {
->>>>>>> de8433dc00c86e5c2336a4218dc7c7af67ae091f
-                        'title': jobTitleController.text,
-                        'description': jobDescriptionController.text,
-                        'category': dropdownValue,
-                        'et': timeController.text,
-                        'price': priceController.text,
-                        'location': locationController.text,
-<<<<<<< HEAD
-                        'date': now
-=======
-
->>>>>>> de8433dc00c86e5c2336a4218dc7c7af67ae091f
-                      });
-
                     },
                   ),
                 ),
