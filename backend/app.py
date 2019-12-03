@@ -93,7 +93,7 @@ class UserLogin(Resource):
 
         #Make sure the email exists
         if Accounts.query.filter_by(email=usrEmail).first() is  not None:
-            if hashedPassword == Accounts.query(hashedPassword).filter_by(email=usrEmail).first():
+            if hashedPassword == Accounts.query(password).filter_by(email=usrEmail).first():
                 status = 0
                 print("Correct password")
             else:
