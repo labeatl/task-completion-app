@@ -16,7 +16,7 @@ class _CreateTaskState extends State<CreateTask> {
     final jobDescriptionController = TextEditingController();
     final locationController = TextEditingController();
     final jobTitleController = TextEditingController();
-    var now = new DateTime.now();
+    DateTime now = new DateTime.now();
 
     return new Scaffold(
       body: new SingleChildScrollView(
@@ -127,7 +127,7 @@ class _CreateTaskState extends State<CreateTask> {
                     ),
                     textColor: Colors.white,
                     onPressed: () {
-                      var url = 'http://51.140.92.250:5000/addTask';
+                      var url = 'http://51.140.92.250:5000/addtask';
                       print( {
                         'title': jobTitleController.text,
                         'description': jobDescriptionController.text,
@@ -135,16 +135,16 @@ class _CreateTaskState extends State<CreateTask> {
                         'et': timeController.text,
                         'price': priceController.text,
                         'location': locationController.text,
-                        'date': now,
+
                       });
-                      http.post(url, body: {
+                      http.put(url, body: {
                         'title': jobTitleController.text,
                         'description': jobDescriptionController.text,
                         'category': dropdownValue,
                         'et': timeController.text,
                         'price': priceController.text,
                         'location': locationController.text,
-                        'date': now,
+
                       });
                     },
                   ),

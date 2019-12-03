@@ -32,7 +32,6 @@ class Tasks(db.Model):
     et = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
-    date = db.Column(db.DateTime(), nullable=False)
 
 
 class hello(Resource):
@@ -68,16 +67,15 @@ class UserSignUp(Resource):
 api.add_resource(UserSignUp, '/signup')
 
 class TasksAdded(Resource):
-    def post(self):
+    def put(self):
         Title = request.form['title']
         Description = request.form['description']
         Category = request.form['category']
         Et = request.form['et']
         Price = request.form['price']
         Location = request.form['location']
-        Date = request.form['date']
 
-        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, date=Date)
+        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location)
         db.session.add(createTask)
         db.session.commit()
 
