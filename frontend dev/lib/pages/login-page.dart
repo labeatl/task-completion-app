@@ -9,6 +9,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String _status = 'no-action';
+  final username = TextEditingController();
+  final password = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -28,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.all(10),
                     child: new TextField(
                       decoration: InputDecoration(labelText: "username"),
+                      controller: username,
                     ),
                   ),
                 ),
@@ -41,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.all(10),
                     child: new TextField(
                       decoration: InputDecoration(labelText: "password"),
+                      controller: password,
                     ),
                   ),
                 ),
@@ -74,7 +78,8 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     setState(() => this._status = "loading");
                     //Replace the two stringsi nlogin() with email and password
-                    appAuth.login("joe@joe.joe", "Mikfdgdgdfg").then((result) {
+                    appAuth.login(username.text, password.text).then((result) {
+                      print(username.text);
                       if (result) {
                         Navigator.of(context).pushReplacementNamed('/home');
                       } else {
