@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class CreateTask extends StatefulWidget {
   State<StatefulWidget> createState() {
@@ -15,6 +16,7 @@ class _CreateTaskState extends State<CreateTask> {
     final jobDescriptionController = TextEditingController();
     final locationController = TextEditingController();
     final jobTitleController = TextEditingController();
+    DateTime now = new DateTime.now();
 
     return new Scaffold(
       body: new SingleChildScrollView(
@@ -40,7 +42,7 @@ class _CreateTaskState extends State<CreateTask> {
                 width: 250,
                 padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: new TextFormField(
-                  decoration: InputDecoration(labelText: "Job Discription"),
+                  decoration: InputDecoration(labelText: "Job Description"),
                   controller: jobDescriptionController,
                 ),
               ),
@@ -124,7 +126,42 @@ class _CreateTaskState extends State<CreateTask> {
                       style: TextStyle(fontSize: 15),
                     ),
                     textColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      var url = 'http://51.140.92.250:5000/addtask';
+<<<<<<< HEAD
+                      print( {
+=======
+                      http.put(url, body: {
+>>>>>>> de8433dc00c86e5c2336a4218dc7c7af67ae091f
+                        'title': jobTitleController.text,
+                        'description': jobDescriptionController.text,
+                        'category': dropdownValue,
+                        'et': timeController.text,
+                        'price': priceController.text,
+                        'location': locationController.text,
+<<<<<<< HEAD
+                        'date': now
+                      });
+                      http.put(url, body: {
+=======
+
+                      });
+                      print( {
+>>>>>>> de8433dc00c86e5c2336a4218dc7c7af67ae091f
+                        'title': jobTitleController.text,
+                        'description': jobDescriptionController.text,
+                        'category': dropdownValue,
+                        'et': timeController.text,
+                        'price': priceController.text,
+                        'location': locationController.text,
+<<<<<<< HEAD
+                        'date': now
+=======
+
+>>>>>>> de8433dc00c86e5c2336a4218dc7c7af67ae091f
+                      });
+
+                    },
                   ),
                 ),
               ],
