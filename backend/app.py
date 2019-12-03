@@ -1,11 +1,14 @@
 from flask import Flask, jsonify, request
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, select
 from flask_restful import Resource, Api
+from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
 api = Api(app)
+ma = Marshmallow(app)
+
 #Database connection information
 
 dbParam = 'mysql+pymysql://task:LENDev201912@localhost/taskr'
@@ -33,6 +36,12 @@ class Tasks(db.Model):
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
 
+class TasksSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'title', 'description', 'category', 'et', 'price', 'location')
+
+taskSchema = TasksSchema()
+tasksSchema = TasksSchema(many=True)
 
 class hello(Resource):
     def get(self):
@@ -111,10 +120,10 @@ api.add_resource(UserLogin, '/login')
 
 class TasksList(Resource):
     def get(self):
-        result = Tasks.query.with_entities(Tasks.title, Tasks.et)
-        print(Tasks.title)
-        print(result)
-        return result
+        tasks = db.session.query(Tasks).all()
+        result = tasksSchema.dump(tasks)
+        print(jsonify(result.data))
+        return jsonify(result.data)
 
 api.add_resource(TasksList, '/tasks')
 
