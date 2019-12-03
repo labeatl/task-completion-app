@@ -8,7 +8,7 @@ app = Flask(__name__)
 api = Api(app)
 #Database connection information
 
-dbParam = 'mysql+pymysql://root@localhost/taskr'
+dbParam = 'mysql+pymysql://root:LENDev201912@localhost/taskr'
 app.config['SQLALCHEMY_DATABASE_URI'] = dbParam
 
 #Flask secret key
