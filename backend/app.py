@@ -82,10 +82,6 @@ api.add_resource(TasksAdded, '/addtask')
 
 class UserLogin(Resource):
     def post(self):
-        #request.form("data")
-        loginData = request.get_json()
-
-        #signUpData['name']
         usrEmail = request.form['email']
         unhashedPassword = request.form['password']
         #check password is same on frontend
