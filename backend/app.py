@@ -68,7 +68,7 @@ class UserSignUp(Resource):
 api.add_resource(UserSignUp, '/signup')
 
 class TasksAdded(Resource):
-    def post(self):
+    def put(self):
         Title = request.form['title']
         Description = request.form['description']
         Category = request.form['category']

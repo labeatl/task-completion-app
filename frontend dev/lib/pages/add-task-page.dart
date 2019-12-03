@@ -137,7 +137,7 @@ class _CreateTaskState extends State<CreateTask> {
                         'location': locationController.text,
                         'date': now
                       });
-                      http.post(url, body: {
+                      http.put(url, body: {
                         'title': jobTitleController.text,
                         'description': jobDescriptionController.text,
                         'category': dropdownValue,
