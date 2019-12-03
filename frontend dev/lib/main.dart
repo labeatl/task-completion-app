@@ -22,7 +22,6 @@ void main() async {
       '/home': (BuildContext context) => new HomePage(),
       '/login': (BuildContext context) => new LoginPage(),
       '/tasks': (BuildContext context) => new TasksPage(),
-
     },
   ));
 }

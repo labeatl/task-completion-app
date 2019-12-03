@@ -39,6 +39,8 @@ class hello(Resource):
     def get(self):
         return 'live'
 api.add_resource(hello, '/')
+
+
 class UserSignUp(Resource):
     def put(self):
         name = request.form['name']
@@ -66,7 +68,7 @@ class UserSignUp(Resource):
 api.add_resource(UserSignUp, '/signup')
 
 class TasksAdded(Resource):
-    def put(self):
+    def post(self):
         Title = request.form['title']
         Description = request.form['description']
         Category = request.form['category']
