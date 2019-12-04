@@ -128,8 +128,9 @@ class TasksList(Resource):
         for task in tasks:
             schema = TasksSchema()
             json_result = schema.dumps(task)
+            print(json_result)
             list.append(json_result)
-        return list
+        return jsonify(list)
 
 api.add_resource(TasksList, '/tasks')
 
