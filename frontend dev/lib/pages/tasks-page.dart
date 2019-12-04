@@ -11,9 +11,33 @@ class TasksPage extends StatefulWidget {
 
 class TaskPageState extends State<TasksPage> {
 
+  List data;
+
+  Future<String> getData() async {
+    http.Response response = await http.get(
+      Uri.encodeFull("http://51.140.92.250:5000/tasks"),
+      headers: {
+        "Accept": "application/json"
+      },
+    );
+
+    this.setState((){
+      data = json.decode(response.body);
+    });
+    print(data[0]);
+
+  }
+
+  @override
+  void initState() {
+    this.getData();
+  }
+
+
   List<Task> tasks = [
+
     new Task(
-        title: "Bike Repair",
+        title: "bike repair",
         description: "severly damaged",
         category: "repairs",
         et: 100,
@@ -29,20 +53,6 @@ class TaskPageState extends State<TasksPage> {
         location: "Oxford",
         date: DateTime.now()),
   ];
-
-
-  Future<String> getData() async {
-    http.Response response = await http.get(
-      Uri.encodeFull("http://51.140.92.250:5000/tasks"),
-      headers: {
-        "Accept": "application/json"
-      },
-    );
-    print(response.body);
-    List data = json.decode(response.body);
-    print(data[0]["et"]);
-  }
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +79,9 @@ class TaskPageState extends State<TasksPage> {
                     alignment: Alignment.topRight,
                     child: IconButton(
                       icon: Icon(Icons.search),
-                      onPressed: getData,
+                      onPressed: () {
+
+                      }
                     ),
                   ),
                 ),
