@@ -127,6 +127,10 @@ class TasksList(Resource):
             tasks = Tasks.query.filter_by(id=counter).first()
             print(tasks.description)
             counter+=1
+
+        ITasks = Tasks.query
+        for i in ITasks:
+            print(i.description)
         #schema = tasksSchema()
         #json_result = schema.dumps(tasks)
         #pprint(json_result)
