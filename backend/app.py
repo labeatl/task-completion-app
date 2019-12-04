@@ -120,13 +120,15 @@ api.add_resource(UserLogin, '/login')
 
 class TasksList(Resource):
     def get(self):
-        tasks = Tasks.query.filter_by()
-        print(tasks.description)
-        print(tasks[1].description)
+        number_of_tasks = Tasks.query().count()
+        counter = 0
+        while counter != number_of_tasks:
+            tasks = Tasks.query.filter_by(id=counter).first()
+            print(tasks.description)
         #schema = tasksSchema()
         #json_result = schema.dumps(tasks)
         #pprint(json_result)
-        return tasks.description
+        return 1
 
 api.add_resource(TasksList, '/tasks')
 
