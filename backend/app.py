@@ -120,7 +120,7 @@ api.add_resource(UserLogin, '/login')
 
 class TasksList(Resource):
     def get(self):
-        number_of_tasks = Tasks.query().count()
+        number_of_tasks = db.query(Tasks).count()
         counter = 0
         while counter != number_of_tasks:
             tasks = Tasks.query.filter_by(id=counter).first()
