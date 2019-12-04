@@ -122,7 +122,8 @@ class TasksList(Resource):
     def get(self):
         number_of_tasks = Tasks.query.count()
         counter = 1
-        while counter != number_of_tasks:
+        print(number_of_tasks)
+        while counter <= number_of_tasks:
             tasks = Tasks.query.filter_by(id=counter).first()
             print(tasks.description)
             counter+=1
