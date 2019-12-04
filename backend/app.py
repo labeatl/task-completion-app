@@ -126,11 +126,10 @@ class TasksList(Resource):
         tasks = Tasks.query
         list = []
         for task in tasks:
-            schema = TasksSchema()
-            json_result = schema.dumps(task)
-            print(json_result)
-            list.append(json_result)
-        return jsonify(list)
+            dict_task = {"title": task.title, "description": task.description, "et": task.et, "category": task.category, "price": task.price, "location": task.location}
+            print(dict_task["title"])
+            list.append(dict_task)
+        return list
 
 api.add_resource(TasksList, '/tasks')
 
