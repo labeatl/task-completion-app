@@ -120,8 +120,9 @@ api.add_resource(UserLogin, '/login')
 
 class TasksList(Resource):
     def get(self):
-        tasks = Tasks.query.filter_by().first()
+        tasks = Tasks.query.filter_by()
         print(tasks.description)
+        print(tasks[1].description)
         #schema = tasksSchema()
         #json_result = schema.dumps(tasks)
         #pprint(json_result)
