@@ -132,4 +132,5 @@ class AccountDeletion(Resource):
         else :
             return 'failed'
         
+api.add_resource(AccountDeletion, '/deleteaccount')
 

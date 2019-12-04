@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 
 class ProfilePage extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -31,7 +35,62 @@ class ProfilePage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    String email, password;
+
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: Form(
+                              key: _formKey,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            labelText: "email address"),
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'Please enter some text';
+                                          }
+                                          return null;
+                                        },
+                                        onSaved: (String val) {
+                                          email = val;
+                                        },
+                                      ),
+                                    ),
+
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: RaisedButton(
+                                        child: Text("Submit"),
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _formKey.currentState.save();
+
+                                            var url = 'http://51.140.92.250:5000/deleteaccount';
+
+                                            http.put(url, body: {
+                                              'email': email,
+                                            });
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+
+                  },
                   child: new Text(
                     'Delete the account',
                     style: TextStyle(color: Colors.white),
