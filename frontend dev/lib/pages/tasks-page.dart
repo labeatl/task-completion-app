@@ -10,15 +10,6 @@ class TasksPage extends StatefulWidget {
 }
 
 class TaskPageState extends State<TasksPage> {
-  Future<String> getData() async {
-    http.Response response = await http.get(
-      Uri.encodeFull("http://51.140.92.250:5000/tasks"),
-      headers: {
-        "Accept": "application/json"
-      },
-    );
-    print(response.body);
-  }
 
   List<Task> tasks = [
     new Task(
@@ -38,6 +29,20 @@ class TaskPageState extends State<TasksPage> {
         location: "Oxford",
         date: DateTime.now()),
   ];
+
+
+  Future<String> getData() async {
+    http.Response response = await http.get(
+      Uri.encodeFull("http://51.140.92.250:5000/tasks"),
+      headers: {
+        "Accept": "application/json"
+      },
+    );
+    print(response.body);
+    List data = json.decode(response.body);
+    print(data[0]["et"]);
+  }
+
 
   Widget build(BuildContext context) {
     return Scaffold(
