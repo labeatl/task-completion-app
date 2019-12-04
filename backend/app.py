@@ -123,8 +123,10 @@ class TasksList(Resource):
         tasks = Tasks.query
         list = []
         for task in tasks:
-            print(task)
-            print(task.description)
+            internal_list = [task.title, task.description, task.et, task.category, task.price, task.location]
+            print(internal_list)
+            list.append(internal_list)
+            print(list)
         #schema = tasksSchema()
         #json_result = schema.dumps(tasks)
         #pprint(json_result)
