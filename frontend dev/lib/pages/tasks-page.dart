@@ -49,145 +49,148 @@ class TaskPageState extends State<TasksPage> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(220, 220, 220, 100),
       body: Container(
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: IconButton(
-                      icon: Icon(Icons.graphic_eq),
-                      onPressed: () {
-                        /*...*/
-                      },
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.graphic_eq),
+                        onPressed: () {
+                          /*...*/
+                        },
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child:
-                        IconButton(icon: Icon(Icons.search), onPressed: () {showSearch(
-                            context: context, delegate: searchEngine());
-                        }),
+                  Container(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                          icon: Icon(Icons.search),
+                          onPressed: () {
+                            showSearch(
+                                context: context, delegate: searchEngine());
+                          }),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Column(
-              children: tasks.map((task) {
-                return Card(
-                  margin: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.title),
-                                ),
-                                Text(
-                                  "${task.title}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.blueGrey),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.attach_money),
-                                ),
-                                Text(
-                                  "£${task.price}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.blueGrey),
-                                ),
-                              ],
-                            ),
-                          ],
+                ],
+              ),
+              Column(
+                children: tasks.map((task) {
+                  return Card(
+                    margin: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.title),
+                                  ),
+                                  Text(
+                                    "${task.title}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.attach_money),
+                                  ),
+                                  Text(
+                                    "£${task.price}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 20, 40, 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(Icons.location_on),
-                                  onPressed: () {},
-                                ),
-                                Text(
-                                  "${task.location}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17,
-                                      color: Colors.blueGrey),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(Icons.access_time),
-                                  onPressed: () {},
-                                ),
-                                Text(
-                                  "${task.et} min",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.blueGrey),
-                                ),
-                              ],
-                            ),
-                          ],
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 20, 40, 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Icon(Icons.location_on),
+                                    onPressed: () {},
+                                  ),
+                                  Text(
+                                    "${task.location}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17,
+                                        color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Icon(Icons.access_time),
+                                    onPressed: () {},
+                                  ),
+                                  Text(
+                                    "${task.et} min",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
-            )
-          ],
+                      ],
+                    ),
+                  );
+                }).toList(),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-
 class searchEngine extends SearchDelegate<String> {
   List<String> tasks = [
     "Bike Repairs",
-        "Gardening",
-        "Tech repairs",
+    "Gardening",
+    "Tech repairs",
   ];
 
   List<String> allTasks = [
     "Bike Repairs",
-        "Gardening",
-        "Tech repairs",
-        "Yeet",
-        "YeYeet",
-        "Ye",
-        "R 2",
-        "D 2",
+    "Gardening",
+    "Tech repairs",
+    "Yeet",
+    "YeYeet",
+    "Ye",
+    "R 2",
+    "D 2",
   ];
 
   @override
@@ -216,8 +219,7 @@ class searchEngine extends SearchDelegate<String> {
   }
 
   @override
-  Widget buildResults(BuildContext context) {
-  }
+  Widget buildResults(BuildContext context) {}
 
   @override
   Widget buildSuggestions(BuildContext context) {
@@ -227,7 +229,7 @@ class searchEngine extends SearchDelegate<String> {
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
-        onTap: (){
+        onTap: () {
           showResults(context);
         },
         title: Text(suggestionList[index]),
@@ -236,5 +238,3 @@ class searchEngine extends SearchDelegate<String> {
     );
   }
 }
-
-
