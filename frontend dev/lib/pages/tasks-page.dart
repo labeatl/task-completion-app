@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../task.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class TasksPage extends StatefulWidget {
   @override
@@ -9,8 +10,15 @@ class TasksPage extends StatefulWidget {
 }
 
 class TaskPageState extends State<TasksPage> {
-  static var url = "http://51.140.92.250:5000/tasks";
-  var list = http.get(url);
+  Future<String> getData() async {
+    http.Response response = await http.get(
+      Uri.encodeFull("http://51.140.92.250:5000/tasks"),
+      headers: {
+        "Accept": "application/json"
+      },
+    );
+    print(response.body);
+  }
 
   List<Task> tasks = [
     new Task(
@@ -56,9 +64,7 @@ class TaskPageState extends State<TasksPage> {
                     alignment: Alignment.topRight,
                     child: IconButton(
                       icon: Icon(Icons.search),
-                      onPressed: () {
-                        /*...*/
-                      },
+                      onPressed: getData,
                     ),
                   ),
                 ),
