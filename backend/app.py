@@ -3,13 +3,9 @@ from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
-from flask_marshmallow import Marshmallow
-from marshmallow import Schema, fields
-from marshmallow import pprint
 
 app = Flask(__name__)
 api = Api(app)
-ma = Marshmallow(app)
 
 #Database connection information
 
@@ -38,10 +34,6 @@ class Tasks(db.Model):
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
 
-
-#tasksSchema = Schema.from_dict(
-#    {"description": fields.String()}
-#)
 
 class hello(Resource):
     def get(self):
@@ -116,18 +108,12 @@ class UserLogin(Resource):
 api.add_resource(UserLogin, '/login')
 
 
-
-TasksSchema = Schema.from_dict(
-    {"title": fields.Str(), "description": fields.Str(), "et": fields.Integer(), "category": fields.Str(), "price": fields.Integer(), "location": fields.Str()}
-)
-
 class TasksList(Resource):
     def get(self):
         tasks = Tasks.query
         list = []
         for task in tasks:
             dict_task = {"title": task.title, "description": task.description, "et": task.et, "category": task.category, "price": task.price, "location": task.location}
-            print(dict_task["title"])
             list.append(dict_task)
         return list
 

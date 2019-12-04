@@ -10,49 +10,40 @@ class TasksPage extends StatefulWidget {
 }
 
 class TaskPageState extends State<TasksPage> {
-
   List data;
+  List<Task> tasks = [];
 
   Future<String> getData() async {
     http.Response response = await http.get(
       Uri.encodeFull("http://51.140.92.250:5000/tasks"),
-      headers: {
-        "Accept": "application/json"
-      },
+      headers: {"Accept": "application/json"},
     );
 
-    this.setState((){
+    this.setState(() {
       data = json.decode(response.body);
     });
-    print(data[0]);
-
+    print(data.length);
+    var counter = 0;
+    while (counter < data.length) {
+      tasks.add(
+        new Task(
+          title: data[counter]["title"],
+          description: data[counter]["description"],
+          category: data[counter]["category"],
+          et: data[counter]["et"],
+          price: data[counter]["price"],
+          location: data[counter]["location"],
+          date: DateTime.now(),
+        ),
+      );
+      counter++;
+    }
   }
 
   @override
   void initState() {
     this.getData();
   }
-
-
-  List<Task> tasks = [
-
-    new Task(
-        title: "bike repair",
-        description: "severly damaged",
-        category: "repairs",
-        et: 100,
-        price: 150,
-        location: "Oxford",
-        date: DateTime.now()),
-    new Task(
-        title: "Grocery sainsburys",
-        description: "grocery for two weeks",
-        category: "Grocery",
-        et: 40,
-        price: 150,
-        location: "Oxford",
-        date: DateTime.now()),
-  ];
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,12 +68,8 @@ class TaskPageState extends State<TasksPage> {
                 Container(
                   child: Align(
                     alignment: Alignment.topRight,
-                    child: IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-
-                      }
-                    ),
+                    child:
+                        IconButton(icon: Icon(Icons.search), onPressed: () {}),
                   ),
                 ),
               ],

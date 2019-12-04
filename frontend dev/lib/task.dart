@@ -5,7 +5,7 @@ class Task {
   final String description;
   final String category;
   final int et;
-  final double price;
+  final int price;
   final String location;
   final DateTime date;
 
