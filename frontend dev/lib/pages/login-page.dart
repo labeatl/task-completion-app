@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: new Container(
                     padding: EdgeInsets.all(10),
                     child: new TextField(
-                      decoration: InputDecoration(labelText: "username"),
+                      decoration: InputDecoration(labelText: "email"),
                       controller: username,
                     ),
                   ),
