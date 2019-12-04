@@ -79,6 +79,8 @@ class ProfilePage extends StatelessWidget {
                                             http.put(url, body: {
                                               'email': email,
                                             });
+                                            Navigator.of(context).pushReplacementNamed('/login');
+
                                           }
                                         },
                                       ),
