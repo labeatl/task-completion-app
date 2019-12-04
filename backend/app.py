@@ -39,9 +39,9 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
 
 
-tasksSchema = Schema.from_dict(
-    {"description": fields.String()}
-)
+#tasksSchema = Schema.from_dict(
+#    {"description": fields.String()}
+#)
 
 class hello(Resource):
     def get(self):
@@ -120,12 +120,12 @@ api.add_resource(UserLogin, '/login')
 
 class TasksList(Resource):
     def get(self):
-        tasks = db.session.query(Tasks.description)
-        schema = tasksSchema()
-        json_result = schema.dumps(tasks)
-        pprint(schema)
-        pprint(json_result)
-        return json_result
+        tasks = Tasks.query.filter_by(title="gardening").first()
+        print(tasks.description)
+        #schema = tasksSchema()
+        #json_result = schema.dumps(tasks)
+        #pprint(json_result)
+        return tasks.description
 
 api.add_resource(TasksList, '/tasks')
 
