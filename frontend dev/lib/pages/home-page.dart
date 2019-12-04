@@ -3,7 +3,6 @@ import "./tasks-page.dart";
 import "./profile-page.dart";
 import "./add-task-page.dart";
 
-
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _HomePageState();
@@ -12,12 +11,27 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedPage = 0;
   final _pageOptions = [
-    Text("So what we smoke weed"),
+    new Align(
+      alignment: Alignment.center,
+      child: Text(
+        "This is the Home Page",
+        style: TextStyle(
+          color: Colors.blueGrey,
+          fontSize: 25,
+        ),
+      ),
+    ),
     TasksPage(),
     CreateTask(),
-    Text(
-      "Take your training here",
-      style: TextStyle(fontSize: 20),
+    new Align(
+      alignment: Alignment.center,
+      child: Text(
+        "This is the Training Page",
+        style: TextStyle(
+          color: Colors.blueGrey,
+          fontSize: 25,
+        ),
+      ),
     ),
     ProfilePage(),
   ];

@@ -24,7 +24,38 @@ class _CreateTaskState extends State<CreateTask> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             new Card(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.fromLTRB(10, 25, 10, 10),
+              child: new Container(
+                height: 58,
+                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: DropdownButton<String>(
+                  value: dropdownValue,
+                  elevation: 5,
+                  style: TextStyle(color: Colors.blueGrey),
+                  underline: Container(
+                    color: Colors.blueGrey,
+                  ),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      dropdownValue = newValue;
+                    });
+                  },
+                  items: <String>[
+                    "Choose a Category",
+                    "Gardening",
+                    "Bike Repair",
+                    "Deliveries"
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value, style: TextStyle(fontSize: 16)),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            new Card(
+              margin: EdgeInsets.fromLTRB(10, 7.5, 10, 7.5),
               elevation: 5,
               child: new Container(
                 width: 250,
@@ -36,7 +67,7 @@ class _CreateTaskState extends State<CreateTask> {
               ),
             ),
             new Card(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.fromLTRB(10, 7.5, 10, 7.5),
               elevation: 5,
               child: new Container(
                 width: 250,
@@ -48,7 +79,7 @@ class _CreateTaskState extends State<CreateTask> {
               ),
             ),
             new Card(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.fromLTRB(10, 7.5, 10, 7.5),
               elevation: 5,
               child: new Container(
                 width: 250,
@@ -60,7 +91,7 @@ class _CreateTaskState extends State<CreateTask> {
               ),
             ),
             new Card(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.fromLTRB(10, 7.5, 10, 7.5),
               elevation: 5,
               child: new Container(
                 width: 250,
@@ -72,7 +103,7 @@ class _CreateTaskState extends State<CreateTask> {
               ),
             ),
             new Card(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.fromLTRB(10, 7.5, 10, 7.5),
               elevation: 5,
               child: new Container(
                 width: 250,
@@ -83,64 +114,29 @@ class _CreateTaskState extends State<CreateTask> {
                 ),
               ),
             ),
-            Row(
-              children: <Widget>[
-                new Card(
-                  margin: EdgeInsets.all(10),
-                  child: new Container(
-                    height: 58,
-                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: DropdownButton<String>(
-                      value: dropdownValue,
-                      elevation: 5,
-                      style: TextStyle(color: Colors.blueGrey),
-                      underline: Container(
-                        color: Colors.blueGrey,
-                      ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                        });
-                      },
-                      items: <String>[
-                        "Choose a Category",
-                        "Gardening",
-                        "Bike Repair",
-                        "Deliveries"
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value, style: TextStyle(fontSize: 16)),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+            Container(
+              height: 56,
+              margin: EdgeInsets.fromLTRB(10, 7.5, 10, 7.5),
+              child: FlatButton(
+                color: Colors.blueGrey,
+                child: Text(
+                  "Submit",
+                  style: TextStyle(fontSize: 15),
                 ),
-                Container(
-                  height: 56,
-                  margin: EdgeInsets.all(10),
-                  child: FlatButton(
-                    color: Colors.blueGrey,
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    textColor: Colors.white,
-                    onPressed: () {
-                      var url = 'http://51.140.92.250:5000/addtask';
-                      http.put(url, body: {
-                        'title': jobTitleController.text,
-                        'description': jobDescriptionController.text,
-                        'category': dropdownValue,
-                        'et': timeController.text,
-                        'price': priceController.text,
-                        'location': locationController.text,
-                      });
-                    },
-                  ),
-                ),
-              ],
-            )
+                textColor: Colors.white,
+                onPressed: () {
+                  var url = 'http://51.140.92.250:5000/addtask';
+                  http.put(url, body: {
+                    'title': jobTitleController.text,
+                    'description': jobDescriptionController.text,
+                    'category': dropdownValue,
+                    'et': timeController.text,
+                    'price': priceController.text,
+                    'location': locationController.text,
+                  });
+                },
+              ),
+            ),
           ],
         ),
       ),

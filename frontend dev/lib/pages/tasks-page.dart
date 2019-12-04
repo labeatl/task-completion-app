@@ -69,7 +69,9 @@ class TaskPageState extends State<TasksPage> {
                   child: Align(
                     alignment: Alignment.topRight,
                     child:
-                        IconButton(icon: Icon(Icons.search), onPressed: () {}),
+                        IconButton(icon: Icon(Icons.search), onPressed: () {showSearch(
+                            context: context, delegate: searchEngine());
+                        }),
                   ),
                 ),
               ],
@@ -168,3 +170,71 @@ class TaskPageState extends State<TasksPage> {
     );
   }
 }
+
+
+class searchEngine extends SearchDelegate<String> {
+  List<String> tasks = [
+    "Bike Repairs",
+        "Gardening",
+        "Tech repairs",
+  ];
+
+  List<String> allTasks = [
+    "Bike Repairs",
+        "Gardening",
+        "Tech repairs",
+        "Yeet",
+        "YeYeet",
+        "Ye",
+        "R 2",
+        "D 2",
+  ];
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = "";
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestionList = query.isEmpty
+        ? tasks
+        : allTasks.where((p) => p.startsWith(query)).toList();
+
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        onTap: (){
+          showResults(context);
+        },
+        title: Text(suggestionList[index]),
+      ),
+      itemCount: suggestionList.length,
+    );
+  }
+}
+
+
