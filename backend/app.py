@@ -116,22 +116,25 @@ class UserLogin(Resource):
 api.add_resource(UserLogin, '/login')
 
 
-
+TasksSchema = Schema.from_dict(
+    {"title": fields.Str(), "description": fields.Str(), "et": fields.Integer(), "category": fields.Str(), "price": fields.Integer(), "location": fields.Str()}
+)
 
 class TasksList(Resource):
     def get(self):
         tasks = Tasks.query
         list = []
         for task in tasks:
-            internal_list = [task.title, task.description, task.et, task.category, task.price, task.location]
-            print(internal_list)
-            list.append(internal_list)
-            print(list)
+            schema = TasksSchema()
+            json_result = schema.dumps(task)
+            pprint(json_result)
+            #internal_list = [task.title, task.description, task.et, task.category, task.price, task.location]
+
+            #list.append(internal_list)
         #schema = tasksSchema()
         #json_result = schema.dumps(tasks)
         #pprint(json_result)
-        return 1
-
+        return list
 api.add_resource(TasksList, '/tasks')
 
 
