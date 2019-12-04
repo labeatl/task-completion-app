@@ -121,10 +121,11 @@ api.add_resource(UserLogin, '/login')
 class TasksList(Resource):
     def get(self):
         number_of_tasks = Tasks.query.count()
-        counter = 0
+        counter = 1
         while counter != number_of_tasks:
             tasks = Tasks.query.filter_by(id=counter).first()
             print(tasks.description)
+            counter+=1
         #schema = tasksSchema()
         #json_result = schema.dumps(tasks)
         #pprint(json_result)
