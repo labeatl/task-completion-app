@@ -146,5 +146,5 @@ class AccountDeletion(Resource):
         else :
             return 'failed'
         
-api.add_resource(TasksList, '/deleteaccount')
+api.add_resource(AccountDeletion, '/deleteaccount')
 
