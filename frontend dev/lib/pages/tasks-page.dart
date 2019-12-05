@@ -3,41 +3,53 @@ import '../main.dart';
 import '../task.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
+
 
 class TasksPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new TaskPageState();
 }
 
-class TaskPageState extends State<TasksPage> {
-  List data;
-  List<Task> tasks = [];
+List data;
+List<Task> tasks = [];
 
+void updateTasks(String category) {
+  var index = 0;
+  while (index < tasks.length) {
+    if (tasks[index].category != category) {
+      tasks.remove(tasks[index]);
+    } else {
+      index++;
+    }
+  }
+}
+
+class TaskPageState extends State<TasksPage> {
   Future<String> getData() async {
     http.Response response = await http.get(
       Uri.encodeFull("http://51.140.92.250:5000/tasks"),
       headers: {"Accept": "application/json"},
     );
-
+    tasks = [];
     this.setState(() {
       data = json.decode(response.body);
     });
-    print(data.length);
     var counter = 0;
-    while (counter < data.length) {
-      tasks.add(
-        new Task(
-          title: data[counter]["title"],
-          description: data[counter]["description"],
-          category: data[counter]["category"],
-          et: data[counter]["et"],
-          price: data[counter]["price"],
-          location: data[counter]["location"],
-          date: DateTime.now(),
-        ),
-      );
-      counter++;
-    }
+      while (counter < data.length) {
+        tasks.add(
+          new Task(
+            title: data[counter]["title"],
+            description: data[counter]["description"],
+            category: data[counter]["category"],
+            et: data[counter]["et"],
+            price: data[counter]["price"],
+            location: data[counter]["location"],
+            date: DateTime.now(),
+          ),
+        );
+        counter++;
+      }
   }
 
   @override
@@ -74,6 +86,7 @@ class TaskPageState extends State<TasksPage> {
                           onPressed: () {
                             showSearch(
                                 context: context, delegate: searchEngine());
+                                Future.delayed(const Duration(milliseconds: 500), () {getData();});
                           }),
                     ),
                   ),
@@ -176,8 +189,8 @@ class TaskPageState extends State<TasksPage> {
 }
 
 class searchEngine extends SearchDelegate<String> {
-  List<String> tasks = [
-    "Bike Repairs",
+  List<String> reTasks = [
+    "Bike Repair",
     "Gardening",
     "Tech repairs",
   ];
@@ -186,11 +199,6 @@ class searchEngine extends SearchDelegate<String> {
     "Bike Repairs",
     "Gardening",
     "Tech repairs",
-    "Yeet",
-    "YeYeet",
-    "Ye",
-    "R 2",
-    "D 2",
   ];
 
   @override
@@ -224,13 +232,14 @@ class searchEngine extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     final suggestionList = query.isEmpty
-        ? tasks
+        ? reTasks
         : allTasks.where((p) => p.startsWith(query)).toList();
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         onTap: () {
-          showResults(context);
+          updateTasks(reTasks[index]);
+          close(context, null);
         },
         title: Text(suggestionList[index]),
       ),

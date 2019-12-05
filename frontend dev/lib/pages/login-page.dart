@@ -29,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: new Container(
                     padding: EdgeInsets.all(10),
                     child: new TextField(
+                      autofocus: true,
                       decoration: InputDecoration(labelText: "email"),
                       controller: username,
                     ),
@@ -43,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: new Container(
                     padding: EdgeInsets.all(10),
                     child: new TextField(
-                      decoration: InputDecoration(labelText: "password"),
+                      decoration: InputDecoration(hintText: "password"),
                       controller: password,
                     ),
                   ),
