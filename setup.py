@@ -10,5 +10,5 @@ setup(name='Task-completion-app',
       zip_safe = False,
       packages=['backend'],
       install_requires=[
-          'Flask','flask-sqlalchemy', 'flask-httpauth'],
+          'Flask','flask-sqlalchemy', 'flask-httpauth, flask-restful, pymysql'],
       )
