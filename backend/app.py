@@ -134,3 +134,11 @@ class AccountDeletion(Resource):
         
 api.add_resource(AccountDeletion, '/deleteaccount')
 
+#Display skills to user, adding will be done with relational db in another class/func
+class PostSkills(Resource):
+    def post(self):
+        allSkills = Skills.query.all()
+        
+        return allSkills
+
+api.add_resource(TasksAdded, '/postskills')
