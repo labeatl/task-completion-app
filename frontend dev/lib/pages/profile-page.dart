@@ -74,7 +74,7 @@ class ProfilePage extends StatelessWidget {
                                               .validate()) {
                                             _formKey.currentState.save();
 
-                                            var url = 'http://51.140.92.250:5000/deleteaccount';
+                                            var url = 'http://167.172.59.89:5000/deleteaccount';
 
                                             http.put(url, body: {
                                               'email': email,

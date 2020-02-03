@@ -125,7 +125,7 @@ class _CreateTaskState extends State<CreateTask> {
                 ),
                 textColor: Colors.white,
                 onPressed: () {
-                  var url = 'http://51.140.92.250:5000/addtask';
+                  var url = 'http://167.172.59.89:5000/addtask';
                   http.put(url, body: {
                     'title': jobTitleController.text,
                     'description': jobDescriptionController.text,
