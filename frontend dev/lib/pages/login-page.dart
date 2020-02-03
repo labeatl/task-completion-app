@@ -216,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 _formKey.currentState.save();
 
                                                 var url =
-                                                    'http://51.140.92.250:5000/signup';
+                                                    'http:/167.172.59.89:5000/signup';
                                                 print({
                                                   'name': name,
                                                   'surName': surName,

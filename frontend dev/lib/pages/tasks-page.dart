@@ -28,7 +28,7 @@ void updateTasks(String category) {
 class TaskPageState extends State<TasksPage> {
   Future<String> getData() async {
     http.Response response = await http.get(
-      Uri.encodeFull("http://51.140.92.250:5000/tasks"),
+      Uri.encodeFull("http://167.172.59.89:5000/tasks"),
       headers: {"Accept": "application/json"},
     );
     tasks = [];
