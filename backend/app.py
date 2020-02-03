@@ -24,7 +24,7 @@ class Accounts(db.Model):
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.Text)
 
-
+#TODO: Add author field
 class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
@@ -33,6 +33,13 @@ class Tasks(db.Model):
     et = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
+
+class Skills(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(50), nullable=False)
+    skillLevel=  db.Column(db.Integer, nullable=False) # On scale of 1 to 10
+
 
 
 class hello(Resource):
@@ -142,3 +149,13 @@ class PostSkills(Resource):
         return allSkills
 
 api.add_resource(TasksAdded, '/postskills')
+
+'''
+class ListUserTasks(Resource):
+    def post(self):
+        allSkills = Skills.query.all()
+        
+        return allSkills
+
+api.add_resource(TasksAdded, '/listusertasks')
+'''
