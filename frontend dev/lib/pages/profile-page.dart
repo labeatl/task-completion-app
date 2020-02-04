@@ -1,15 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
 class ProfilePage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: SingleChildScrollView(
+
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(left: 0, right: 0, top:10, bottom:20), //We can remove left and right just leaving in case we need them to save time
+            child: Text( "Small yrofile summary fjgdgfkgdhf "
+                "fgofdgoif fgoihdofg"),
+          ),
+
+          Container(
+            height: 200,
+            child: GridView.count(
+              shrinkWrap: true,
+              // Create a grid with 2 columns. If you change the scrollDirection to
+              // horizontal, this produces 2 rows.
+              crossAxisCount: 2,
+              // Generate 100 widgets that display their index in the List.
+              children: List.generate(6, (index) {
+                print(index);
+                return Center(
+                  child: Text(
+                    'Skill $index',
+                    style: Theme.of(context).textTheme.body1,
+                  ),
+                );
+              }),
+            ),
+          ),
           Container(
             child: Card(
               margin: EdgeInsets.fromLTRB(7, 4, 7, 4),
@@ -64,7 +92,6 @@ class ProfilePage extends StatelessWidget {
                                         },
                                       ),
                                     ),
-
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: RaisedButton(
@@ -74,13 +101,14 @@ class ProfilePage extends StatelessWidget {
                                               .validate()) {
                                             _formKey.currentState.save();
 
-                                            var url = 'http://167.172.59.89:5000/deleteaccount';
+                                            var url =
+                                                'http://167.172.59.89:5000/deleteaccount';
 
                                             http.put(url, body: {
                                               'email': email,
                                             });
-                                            Navigator.of(context).pushReplacementNamed('/login');
-
+                                            Navigator.of(context)
+                                                .pushReplacementNamed('/login');
                                           }
                                         },
                                       ),
@@ -91,7 +119,6 @@ class ProfilePage extends StatelessWidget {
                             ),
                           );
                         });
-
                   },
                   child: new Text(
                     'Delete the account',
@@ -102,6 +129,7 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }
