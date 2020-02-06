@@ -23,6 +23,7 @@ class Accounts(db.Model):
     surName = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.Text)
+    userBio = db.Column(db.String(5000), nullable=False)
 
 #TODO: Add author field
 class Tasks(db.Model):
@@ -33,18 +34,18 @@ class Tasks(db.Model):
     et = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
+    author = db.Column(db.Integer, primary_key=True) # link to user 
 
 class Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(50), nullable=False)
-    skillLevel=  db.Column(db.Integer, nullable=False) # On scale of 1 to 10
 
 class User_Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    skill_id = db.Column(db.Integer, nullable=False)
-    skillLevel=  db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False) # link to user 
+    skill_id = db.Column(db.Integer, nullable=False) # link to skill
+    skillLevel=  db.Column(db.Integer, nullable=False) # On scale of 1 to 10
 
 
 class hello(Resource):
