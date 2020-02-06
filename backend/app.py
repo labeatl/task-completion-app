@@ -40,6 +40,11 @@ class Skills(db.Model):
     description = db.Column(db.String(50), nullable=False)
     skillLevel=  db.Column(db.Integer, nullable=False) # On scale of 1 to 10
 
+class User_Skills(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    skill_id = db.Column(db.Integer, nullable=False)
+    skillLevel=  db.Column(db.Integer, nullable=False)
 
 
 class hello(Resource):
