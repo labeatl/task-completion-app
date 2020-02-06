@@ -14,7 +14,7 @@ class ProfilePage extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 20),
               //We can remove left and right just leaving in case we need them to save time
-              child: Text("Small yrofile summary fjgdgfkgdhf "
+              child: Text("Small profile summary fjgdgfkgdhf "
                   "fgofdgoif fgoihdofg"),
             ),
             Container(
