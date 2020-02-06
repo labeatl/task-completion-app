@@ -23,12 +23,12 @@ class Accounts(db.Model):
     surName = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.Text)
-    userBio = db.Column(db.String(5000), nullable=False)
+    userBio = db.Column(db.String(256), nullable=False)
 
 class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
-    description = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(512), nullable=False)
     category = db.Column(db.String(20), nullable=False)
     et = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
