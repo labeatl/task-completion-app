@@ -25,7 +25,6 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(5000), nullable=False)
 
-#TODO: Add author field
 class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
