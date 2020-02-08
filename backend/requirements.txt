@@ -2,3 +2,4 @@ Flask-SQLAlchemy
 Flask-Restful
 Flask-HTTPAuth
 PyMySQL
+Flask-Migrate

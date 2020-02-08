@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 
-
 class TasksPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new TaskPageState();
@@ -36,20 +35,20 @@ class TaskPageState extends State<TasksPage> {
       data = json.decode(response.body);
     });
     var counter = 0;
-      while (counter < data.length) {
-        tasks.add(
-          new Task(
-            title: data[counter]["title"],
-            description: data[counter]["description"],
-            category: data[counter]["category"],
-            et: data[counter]["et"],
-            price: data[counter]["price"],
-            location: data[counter]["location"],
-            date: DateTime.now(),
-          ),
-        );
-        counter++;
-      }
+    while (counter < data.length) {
+      tasks.add(
+        new Task(
+          title: data[counter]["title"],
+          description: data[counter]["description"],
+          category: data[counter]["category"],
+          et: data[counter]["et"],
+          price: data[counter]["price"],
+          location: data[counter]["location"],
+          date: DateTime.now(),
+        ),
+      );
+      counter++;
+    }
   }
 
   @override
@@ -86,7 +85,10 @@ class TaskPageState extends State<TasksPage> {
                           onPressed: () {
                             showSearch(
                                 context: context, delegate: searchEngine());
-                                Future.delayed(const Duration(milliseconds: 500), () {getData();});
+                            Future.delayed(const Duration(milliseconds: 500),
+                                () {
+                              getData();
+                            });
                           }),
                     ),
                   ),
