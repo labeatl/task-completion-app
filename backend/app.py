@@ -10,7 +10,7 @@ api = Api(app)
 
 # Database connection information
 
-dbParam = 'mysql+pymysql://task:LENDev201912@localhost/taskr'
+dbParam = 'mysql+pymysql://taskuser:LENAnalytics2019@localhost/taskr'
 app.config['SQLALCHEMY_DATABASE_URI'] = dbParam
 
 # Flask secret key
