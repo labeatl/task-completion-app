@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatelessWidget {
@@ -30,10 +33,60 @@ class ProfilePage extends StatelessWidget {
                   return Center(
                     child: Text(
                       'Skill $index',
-                      style: Theme.of(context).textTheme.body1,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .body1,
                     ),
                   );
                 }),
+              ),
+            ),
+            Container(
+              child: FlatButton.icon(
+                color: Colors.blueGrey,
+                icon: Icon(Icons.edit), //`Icon` to display
+                label: Text('Edit Skills'), //`Text` to display
+                onPressed: () {
+                  List<Widget> skillsList = [];
+                  Future<String> getData() async {
+                    http.Response response = await http.get(
+                      Uri.encodeFull("http://167.172.59.89:5000/tasks"),
+                      headers: {"Accept": "application/json"},
+                    );
+
+
+                    var data = jsonDecode(response.body);
+                    var counter = 0;
+                    while (counter < data.length) {
+                      int id = data[counter]["id"];
+                      String name = data[counter]["name"];
+                      String description = data[counter]["description"];
+                      var aButton = new FlatButton(onPressed: null,
+                          child: Text(
+                              name)); //TODO: Add send message to backend to add skill on click
+                      skillsList.add(aButton);
+
+                      counter++;
+                    }
+                  }
+                  returnSkillButtons() {
+                    return skillsList;
+                  }
+              showDialog(context: context,
+              builder: (BuildContext context) {
+
+
+                  return AlertDialog(
+                    //Put list of skill buttons here
+                    title: Text("Add skills"),
+                    content: Column(
+                        children: returnSkillButtons() //Can probably remove the method and directly put the list done jsut for testing
+
+                    ),
+                  );
+                  });
+                },
               ),
             ),
             Container(
@@ -107,7 +160,7 @@ class ProfilePage extends StatelessWidget {
                                               });
                                               Navigator.of(context)
                                                   .pushReplacementNamed(
-                                                      '/login');
+                                                  '/login');
                                             }
                                           },
                                         ),
