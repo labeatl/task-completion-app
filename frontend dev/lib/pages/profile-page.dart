@@ -51,13 +51,14 @@ class ProfilePage extends StatelessWidget {
                   List<Widget> skillsList = [];
                   Future<String> getData() async {
                     http.Response response = await http.get(
-                      Uri.encodeFull("http://167.172.59.89:5000/tasks"),
+                      Uri.encodeFull("http://167.172.59.89:5000/postskills"),
                       headers: {"Accept": "application/json"},
                     );
 
 
-                    var data = jsonDecode(response.body);
+                    var data = json.decode(response.body);
                     var counter = 0;
+                    print(response.body);
                     while (counter < data.length) {
                       int id = data[counter]["id"];
                       String name = data[counter]["name"];
@@ -70,6 +71,7 @@ class ProfilePage extends StatelessWidget {
                       counter++;
                     }
                   }
+                  getData();
                   returnSkillButtons() {
                     return skillsList;
                   }
