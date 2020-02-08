@@ -3,6 +3,7 @@ from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 api = Api(app)
@@ -17,6 +18,7 @@ theKey = 'thEejrdaR5$wE3yY4wsehn4wASHR'
 
 db = SQLAlchemy(app)
 
+migrate = Migrate(app, db)
 #TODO Move models to models file
 class Accounts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
