@@ -56,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                     );
 
 
-                    var data = json.decode(response.body);
+                    List data = json.decode(response.body);
                     var counter = 0;
                     print(response.body);
                     while (counter < data.length) {
