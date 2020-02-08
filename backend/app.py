@@ -17,7 +17,7 @@ theKey = 'thEejrdaR5$wE3yY4wsehn4wASHR'
 
 db = SQLAlchemy(app)
 
-
+#TODO Move models to models file
 class Accounts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
@@ -163,8 +163,12 @@ api.add_resource(AccountDeletion, '/deleteaccount')
 class PostSkills(Resource):
     def post(self):
         allSkills = Skills.query.all()
+        skillList = []
+        for i in allSkills:
+            skilldict = {"id": i.id, "name": i.name, "description": i.description}
+            skillList.add(skilldict)
 
-        return allSkills
+        return skillList
 
 
 api.add_resource(PostSkills, '/postskills')
