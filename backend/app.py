@@ -39,7 +39,7 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
     author = db.Column(db.Integer, primary_key=True)  # link to user
 
-
+#Adding skill: INSERT INTO skills *press enter* VALUE (0,Programming,"Building stuff with electrical impulses");
 class Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -163,7 +163,7 @@ api.add_resource(AccountDeletion, '/deleteaccount')
 
 # Display skills to user, adding will be done with relational db in another class/func
 class PostSkills(Resource):
-    def post(self):
+    def get(self):
         allSkills = Skills.query.all()
         skillList = []
         for i in allSkills:
