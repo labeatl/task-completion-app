@@ -168,7 +168,7 @@ class PostSkills(Resource):
         skillList = []
         for i in allSkills:
             skilldict = {"id": i.id, "name": i.name, "description": i.description}
-            skillList.add(skilldict)
+            skillList.append(skilldict)
 
         return skillList
 
