@@ -1,13 +1,14 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
+import os
 
 app = Flask(__name__)
 api = Api(app)
-
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Database connection information
 
 dbParam = 'mysql+pymysql://taskuser:LENAnalytics2019@localhost/taskr'
@@ -214,3 +215,17 @@ class ListUserTasks(Resource):
 
 api.add_resource(TasksAdded, '/listusertasks')
 '''
+
+class ImageUpload(Resource):
+    def post(self):
+        target = os.path.join(APP_ROOT, "images/")
+
+        if not os.path.isdir(target):
+            os.mkdir(target)
+
+        for file in request.files.getlist("file"):
+            filename = file.filename
+            destination = "/".join([target, filename])
+            file.save(destination)
+
+api.add_resource(ImageUpload, "/imageUpload")
