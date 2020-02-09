@@ -15,12 +15,6 @@ class _ProfilePageState extends State<ProfilePage> {
   String _status = 'none';
   final _formKey = GlobalKey<FormState>();
 
-  File _pickedImage;
-
-  void _selectImage(File pickedImage) {
-    _pickedImage = pickedImage;
-  }
-
 
     Widget build(BuildContext context) {
       Future<String> getSkills() async {
@@ -46,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Image_pick(_selectImage),
+              Image_pick(),
               SizedBox(height: 25,),
               Container(
                 margin: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 20),

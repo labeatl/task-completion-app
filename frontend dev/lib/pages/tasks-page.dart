@@ -25,6 +25,8 @@ void updateTasks(String category) {
 }
 
 class TaskPageState extends State<TasksPage> {
+  File _selectedPicture;
+
   Future<String> getData() async {
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/tasks"),
@@ -102,7 +104,7 @@ class TaskPageState extends State<TasksPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                          margin: EdgeInsets.fromLTRB(5, 10, 0, 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -116,7 +118,7 @@ class TaskPageState extends State<TasksPage> {
                                     "${task.title}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         color: Colors.blueGrey),
                                   ),
                                 ],
@@ -131,7 +133,7 @@ class TaskPageState extends State<TasksPage> {
                                     "£${task.price}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         color: Colors.blueGrey),
                                   ),
                                 ],
@@ -140,7 +142,7 @@ class TaskPageState extends State<TasksPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 20, 40, 20),
+                          margin: EdgeInsets.fromLTRB(0, 20, 5, 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -154,7 +156,7 @@ class TaskPageState extends State<TasksPage> {
                                     "${task.location}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 17,
+                                        fontSize: 15,
                                         color: Colors.blueGrey),
                                   ),
                                 ],
@@ -169,13 +171,28 @@ class TaskPageState extends State<TasksPage> {
                                     "${task.et} min",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         color: Colors.blueGrey),
                                   ),
                                 ],
                               ),
                             ],
                           ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                          width: 90,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1.5,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          child: _selectedPicture != null
+                              ? Image.file(_selectedPicture)
+                              : Text("No Image Taken", textAlign: TextAlign.center),
+                          alignment: Alignment.center,
                         ),
                       ],
                     ),

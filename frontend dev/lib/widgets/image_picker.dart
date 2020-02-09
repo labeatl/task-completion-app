@@ -1,14 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart' as syspath;
 import 'package:path/path.dart' as path;
+import 'package:http/http.dart' as http;
 
 class Image_pick extends StatefulWidget {
-  final Function onSelectImage;
-
-  Image_pick(this.onSelectImage);
 
   _Image_pickState createState() => _Image_pickState();
 }
@@ -38,7 +38,13 @@ class _Image_pickState extends State<Image_pick> {
                     onTap: () {
                       _takePicture(context);
                     },
-                  )
+                  ),
+                  GestureDetector(
+                    child: FlatButton.icon(icon: Icon(Icons.file_upload), label: Text(" upload"),),
+                    onTap: () {
+                      _upload();
+                    },
+                  ),
                 ],
               ),
             ),
@@ -69,8 +75,24 @@ class _Image_pickState extends State<Image_pick> {
     final appDir = await syspath.getApplicationDocumentsDirectory();
     final fileName = path.basename(imageFile.path);
     final savedImage = await imageFile.copy("${appDir.path}/${fileName}");
-    widget.onSelectImage(savedImage);
   }
+
+
+  void _upload() {
+    if (_storedImage == null) return;
+    String base64Image = base64Encode(_storedImage.readAsBytesSync());
+    String fileName = _storedImage.path.split("/").last;
+    var url = 'http://167.172.59.89:5000/imageUpload';
+    http.put(url, body: {
+    "image": base64Image,
+    "name": fileName,
+    }).then((res) {
+      print(res.statusCode);
+    }).catchError((err) {
+      print(err);
+    });
+  }
+
 
   Widget build(BuildContext context) {
     return Row(
