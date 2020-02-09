@@ -41,6 +41,15 @@ class _ProfilePageState extends State<ProfilePage> {
           String skilllevel = data[counter]["skilllevel"];
         }
       }
+      Future<String> getSummary() async {
+        http.Response response = await http.get(
+          Uri.encodeFull("http://167.172.59.89:5000/getSummary"),
+          headers: {"Accept": "application/json"},
+        );
+
+        summary = json.decode(response
+            .body);
+      }
       if(summary == null){
         summary = 'Please input a summary';
       }
@@ -90,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             child: Text('Submit'),
                                             onPressed: () {
                                               var url =
-                                                  'http://167.172.59.89:5000/';   //Change URL
+                                                  'http://167.172.59.89:5000/summary';   //Change URL
                                               print({
                                                 'New Summary': sum.text,
                                               });
