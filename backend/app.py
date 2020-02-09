@@ -180,14 +180,19 @@ api.add_resource(PostSkills, '/postskills')
 
 
 class AddUserSkill(Resource):
-    def put(self):
-        allSkills = Skills.query.all()
-        skillList = []
-        for i in allSkills:
-            skilldict = {"id": i.id, "name": i.name, "description": i.description}
-            skillList.append(skilldict)
+    def post(self):
+        #if User_Skills.query.filter_by(id=usrid).first() is None:
+            addskill = User_Skills(user_id=usrid, skill_id=skillid, skillLevel=10)
 
-        return skillList
+            # Add account to the database
+            db.session.add(addskill)
+            db.session.commit()
+            status = "success"
+
+
+            #status = "failed"
+    #return status
+
 
 
 api.add_resource(AddUserSkill, '/adduserskill')
