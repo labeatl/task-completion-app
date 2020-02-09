@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Colors.blueGrey,
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: FlatButton(  //This Line till 74ish
+                    child: FlatButton(
                       onPressed: () {
                         showDialog(
                             context: context,
