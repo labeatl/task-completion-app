@@ -73,6 +73,10 @@ class Summary(Resource):
         summary = request.form['summary']
         user_id = request.form['user_id']
 
+        newSummary = Summary(summary = summary, user_id = user_id)
+        db.session.add(newSummary)
+        db.session.commit()
+
         return 'success'
 
 
