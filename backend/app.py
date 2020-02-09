@@ -197,6 +197,11 @@ class AddUserSkill(Resource):
             #status = "failed"
     #return status
 
+class GetUserSkills(Resource):
+    def get(self):
+        userSkills = Accounts.query.filter_by(user_id=0).all()
+
+        return userSkills
 
 
 api.add_resource(AddUserSkill, '/adduserskill')
