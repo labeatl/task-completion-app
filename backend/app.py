@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
-import os
+import os, base64
 from werkzeug import secure_filename
 
 
@@ -224,8 +224,12 @@ class ImageUpload(Resource):
         if not os.path.isdir(target):
             os.mkdir(target)
 
-        f = request.files["name"]
-        f.save(secure_filename(f.filename))
-        return "file uploaded successfully"
+        fileName = request.request.form['name']
+        image = request.request.form['image']
+        def convert_and_save(b64_string):
+            with open("./images/imageToSave.png", "wb") as fh:
+                fh.write(base64.decodebytes(b64_string.encode()))
+
+        convert_and_save(image)
 
 api.add_resource(ImageUpload, "/imageUpload")
