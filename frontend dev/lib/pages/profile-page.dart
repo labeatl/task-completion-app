@@ -14,6 +14,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String _status = 'none';
   final _formKey = GlobalKey<FormState>();
+
   File _pickedImage;
 
   void _selectImage(File pickedImage) {
@@ -23,21 +24,30 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<String> addskill() async {
     var url = 'http://167.172.59.89:5000/adduserskill';
 
-
-
-    var response = await http.post(url, body: {
-      'usrid': 0, //Change this
-      'skill_id': 9,
-      'skillLevel': 10
-    });
-    print("WORKS");
-    String responseString = response.body;
-    //Conver the response to a bool
-    print(response.body.runtimeType);
-
-    return responseString;
-  }
   Widget build(BuildContext context) {
+
+
+
+
+    Future<String> getSkills() async {
+      http.Response response = await http.get(
+        Uri.encodeFull("http://167.172.59.89:5000/postskills"),
+        headers: {"Accept": "application/json"},
+      );
+
+      List data = json.decode(response
+          .body); //only works when first changing type????
+      var counter = 0;
+      print(response.body);
+      while (counter < data.length) {
+        int skill_id = data[counter]["skill_id"];
+        String skilllevel = data[counter]["skilllevel"];
+      }
+
+    }
+
+
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -52,6 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Text("Small profile summary fjgdgfkgdhf "
                   "fgofdgoif fgoihdofg"),
             ),
+
             Container(
               height: 200,
               child: GridView.count(
@@ -60,6 +71,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 // horizontal, this produces 2 rows.
                 crossAxisCount: 2,
                 // Generate 100 widgets that display their index in the List.
+
+
+
+
+
+
+
+
                 children: List.generate(6, (index) {
                   print(index);
                   return Center(
@@ -107,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                              http.post(url, body: {
                               'usrid': 0.toString(), //Change this
-                              'skill_id': 9.toString(),
+                              'skill_id': 1.toString(),
                               'skillLevel': 10.toString(),
                             });
                             print("WORKS");
@@ -138,26 +157,7 @@ setState(() {
                           title: Text("Add skills"),
                           content: Column(
                               children:
-                              [FlatButton(
-                                  onPressed: () {
-                                    print("dfgdshriohghiuhgiu");
-
-                                    var url = 'http://167.172.59.89:5000/adduserskill';
-
-
-
-                                    http.put(url, body: {
-                                      'usrid': "0", //Change this
-                                      'skill_id': "0",
-                                      'skillLevel': "0",
-                                    });
-                                    print("WORKS");
-                                    //Conver the response to a bool
-
-                                  },
-
-                                  child: Text(
-                                      "Flagstaff"))] //Can probably remove the method and directly put the list done jsut for testing
+                              skillsList, //Can probably remove the method and directly put the list done jsut for testing
 
                               ),
                         );
