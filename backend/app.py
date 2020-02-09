@@ -218,14 +218,15 @@ api.add_resource(TasksAdded, '/listusertasks')
 
 class ImageUpload(Resource):
     def post(self):
-        print("asdasd")
         target = os.path.join(APP_ROOT, "images/")
-        #if not os.path.isdir(target):
-        os.mkdir(target)
+        if not os.path.isdir(target):
+            os.mkdir(target)
 
         for file in request.files.getlist("file"):
+            print(file)
             filename = file.filename
             destination = "/".join([target, filename])
+            print(destination)
             file.save(destination)
 
 api.add_resource(ImageUpload, "/imageUpload")
