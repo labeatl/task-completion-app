@@ -4,9 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:http/http.dart' as http;
 
-class ProfilePage extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+class ProfilePage extends StatefulWidget {
+  State<StatefulWidget> createState() => new _ProfilePageState();
+}
 
+class _ProfilePageState extends State<ProfilePage> {
+  String _status = 'none';
+  final _formKey = GlobalKey<FormState>();
+  Future<String> addskill() async {
+    var url = 'http://167.172.59.89:5000/adduserskill';
+
+
+
+    var response = await http.post(url, body: {
+      'usrid': 0, //Change this
+      'skill_id': 9,
+      'skillLevel': 10
+    });
+    print("WORKS");
+    String responseString = response.body;
+    //Conver the response to a bool
+    print(response.body.runtimeType);
+
+    return responseString;
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -44,6 +65,7 @@ class ProfilePage extends StatelessWidget {
                 color: Colors.blueGrey,
                 icon: Icon(Icons.edit), //`Icon` to display
                 label: Text('Edit Skills'), //`Text` to display
+
                 onPressed: () {
                   List<Widget> skillsList = [];
                   Future<String> getData() async {
@@ -60,41 +82,42 @@ class ProfilePage extends StatelessWidget {
                       int id = data[counter]["id"];
                       String name = data[counter]["name"];
                       String description = data[counter]["description"];
+
+
                       var aButton = new FlatButton(
                           onPressed: () {
-                            var fg = id;
-                            print(id);
+                            print("dfgdshriohghiuhgiu");
 
-                            Future<String> addskill() async {
-                              var url =
-                                  'http://167.172.59.89:5000/adduserskill';
 
-                              var response = await http.post(url, body: {
-                                'usrid': 0, //Change this
-                                'skill_id': id,
-                                'skillLevel': 10
-                              });
-                              String responseString = response.body;
-                              //Conver the response to a bool
-                              print(response.body.runtimeType);
 
-                              return responseString;
-                            }
+                            var url = 'http://167.172.59.89:5000/adduserskill';
 
-                            addskill();
+
+
+                             http.post(url, body: {
+                              'usrid': 0, //Change this
+                              'skill_id': 9,
+                              'skillLevel': 10
+                            });
+                            print("WORKS");
+                            //Conver the response to a bool
                           },
+
                           child: Text(
                               name)); //TODO: Add send message to backend to add skill on click
-                      skillsList.add(aButton);
-
-                      counter++;
+                      setState(() {
+                        skillsList.add(aButton);
+                      });
+                      setState(() {
+                        counter++;
+                      });
                     }
                   }
+setState(() {
+
 
                   getData();
-                  returnSkillButtons() {
-                    return skillsList;
-                  }
+});
 
                   showDialog(
                       context: context,
@@ -104,12 +127,31 @@ class ProfilePage extends StatelessWidget {
                           title: Text("Add skills"),
                           content: Column(
                               children:
-                                  returnSkillButtons() //Can probably remove the method and directly put the list done jsut for testing
+                              [FlatButton(
+                                  onPressed: () {
+                                    print("dfgdshriohghiuhgiu");
+
+                                    var url = 'http://167.172.59.89:5000/adduserskill';
+
+
+
+                                    http.put(url, body: {
+                                      'usrid': 0, //Change this
+                                      'skill_id': 9,
+                                      'skillLevel': 10
+                                    });
+                                    print("WORKS");
+                                    //Conver the response to a bool
+
+                                  },
+
+                                  child: Text(
+                                      "Flagstaff"))] //Can probably remove the method and directly put the list done jsut for testing
 
                               ),
                         );
                       });
-                },
+                }, //***********************************************
               ),
             ),
             Container(

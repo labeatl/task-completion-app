@@ -180,7 +180,7 @@ api.add_resource(PostSkills, '/postskills')
 
 
 class AddUserSkill(Resource):
-    def post(self):
+    def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
         #if User_Skills.query.filter_by(id=usrid).first() is None:
