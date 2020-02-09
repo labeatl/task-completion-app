@@ -45,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Image_pick(_selectImage),
-            SizedBox(height: 314,),
+            SizedBox(height: 25,),
             Container(
               margin: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 20),
               //We can remove left and right just leaving in case we need them to save time
