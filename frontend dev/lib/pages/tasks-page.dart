@@ -96,8 +96,41 @@ class TaskPageState extends State<TasksPage> {
               ),
               Column(
                 children: tasks.map((task) {
-                  return Card(
-                    margin: EdgeInsets.all(10),
+                  EdgeInsets.only(left: 20.0, right: 20.0);
+                  return RaisedButton(
+                    onPressed: () {
+                      print(task.description);
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Container(
+                                height: 300,
+                                width: 350,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text('Job Title:'),
+                                      Text(task.title),
+                                      Text(''),
+                                      Text('Job Description:'),
+                                      Text(task.description),
+                                      Text(''),
+                                      Text('Job Price:'),
+                                      Text(task.price.toString()),
+                                      Text(''),
+                                      Text('Job Location:'),
+                                      Text(task.location),
+                                      Text(''),
+                                      Text('Estimated Time (in minutes):'),
+                                      Text(task.et.toString()),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -181,7 +214,7 @@ class TaskPageState extends State<TasksPage> {
                     ),
                   );
                 }).toList(),
-              )
+              ),
             ],
           ),
         ),

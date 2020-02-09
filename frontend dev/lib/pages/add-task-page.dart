@@ -73,8 +73,11 @@ class _CreateTaskState extends State<CreateTask> {
                 width: 250,
                 padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: new TextFormField(
+                  keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(labelText: "Job Description"),
                   controller: jobDescriptionController,
+                  minLines: 1,
+                  maxLines: 2,
                 ),
               ),
             ),

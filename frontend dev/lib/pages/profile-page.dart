@@ -14,6 +14,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String _status = 'none';
   final _formKey = GlobalKey<FormState>();
+  final sum = TextEditingController();
+
+  String summary;
 
   File _pickedImage;
 
@@ -38,6 +41,9 @@ class _ProfilePageState extends State<ProfilePage> {
           String skilllevel = data[counter]["skilllevel"];
         }
       }
+      if(summary == null){
+        summary = 'Please input a summary';
+      }
 
 
       return Scaffold(
@@ -51,8 +57,63 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 margin: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 20),
                 //We can remove left and right just leaving in case we need them to save time
-                child: Text("Small profile summary fjgdgfkgdhf "
-                    "fgofdgoif fgoihdofg"),
+                child: Card(
+                  margin: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                  color: Colors.blueGrey,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: FlatButton(  //This Line till 74ish
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: Container(
+                                  width: 300,
+                                  child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 10.0),
+                                          child: TextFormField(
+                                            keyboardType: TextInputType.multiline,
+                                            decoration: InputDecoration(
+                                                labelText: summary),
+                                            controller: sum,
+                                            minLines: 1,
+                                            maxLines: 8,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(10.0),
+                                          child: RaisedButton(
+                                            child: Text('Submit'),
+                                            onPressed: () {
+                                              var url =
+                                                  'http://167.172.59.89:5000/';   //Change URL
+                                              print({
+                                                'New Summary': sum.text,
+                                              });
+                                              http.put(url, body: {
+                                                'New Summary': sum.text,
+                                              });
+                                            },
+                                          ),
+                                        ),
+
+                                      ]
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      child: new Text(
+                        'User Summary',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
               ),
 
               Container(
