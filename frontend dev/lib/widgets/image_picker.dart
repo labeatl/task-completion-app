@@ -73,8 +73,8 @@ class _Image_pickState extends State<Image_pick> {
     });
     Navigator.of(context).pop();
     final appDir = await syspath.getApplicationDocumentsDirectory();
-    final fileName = path.basename(imageFile.path);
-    final savedImage = await imageFile.copy("${appDir.path}/${fileName}");
+    //final fileName = path.basename(imageFile.path);
+    //final savedImage = await imageFile.copy("${appDir.path}/${fileName}");
   }
 
 
