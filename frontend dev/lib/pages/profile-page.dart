@@ -33,10 +33,7 @@ class ProfilePage extends StatelessWidget {
                   return Center(
                     child: Text(
                       'Skill $index',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .body1,
+                      style: Theme.of(context).textTheme.body1,
                     ),
                   );
                 }),
@@ -55,15 +52,34 @@ class ProfilePage extends StatelessWidget {
                       headers: {"Accept": "application/json"},
                     );
 
-
-                    List data = json.decode(response.body);
+                    List data = json.decode(response
+                        .body); //only works when first changing type????
                     var counter = 0;
                     print(response.body);
                     while (counter < data.length) {
                       int id = data[counter]["id"];
                       String name = data[counter]["name"];
                       String description = data[counter]["description"];
-                      var aButton = new FlatButton(onPressed: null,
+                      var aButton = new FlatButton(
+                          onPressed: () {
+                            var fg = id;
+                            print(id);
+                            Future<String> login(String _email,String _password) async {
+                              var url = 'http://167.172.59.89:5000/adduserskill';
+
+                              var response = await http.post(url, body: {
+                                'usrid': 0, //Change this
+                                'skill_id': id,
+                                'skillLevel': 10
+                              });
+                              String responseString;
+                              //Conver the response to a bool
+                              print(response.body.runtimeType);
+
+
+                              return responseString;
+                            }
+                          },
                           child: Text(
                               name)); //TODO: Add send message to backend to add skill on click
                       skillsList.add(aButton);
@@ -71,23 +87,25 @@ class ProfilePage extends StatelessWidget {
                       counter++;
                     }
                   }
+
                   getData();
                   returnSkillButtons() {
                     return skillsList;
                   }
-              showDialog(context: context,
-              builder: (BuildContext context) {
 
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          //Put list of skill buttons here
+                          title: Text("Add skills"),
+                          content: Column(
+                              children:
+                                  returnSkillButtons() //Can probably remove the method and directly put the list done jsut for testing
 
-                  return AlertDialog(
-                    //Put list of skill buttons here
-                    title: Text("Add skills"),
-                    content: Column(
-                        children: returnSkillButtons() //Can probably remove the method and directly put the list done jsut for testing
-
-                    ),
-                  );
-                  });
+                              ),
+                        );
+                      });
                 },
               ),
             ),
@@ -162,7 +180,7 @@ class ProfilePage extends StatelessWidget {
                                               });
                                               Navigator.of(context)
                                                   .pushReplacementNamed(
-                                                  '/login');
+                                                      '/login');
                                             }
                                           },
                                         ),
