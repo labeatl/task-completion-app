@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
 import os
+from werkzeug import secure_filename
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -218,15 +220,12 @@ api.add_resource(TasksAdded, '/listusertasks')
 
 class ImageUpload(Resource):
     def post(self):
-        target = os.path.join(APP_ROOT, "flowers/")
+        target = os.path.join(APP_ROOT, "images/")
         if not os.path.isdir(target):
             os.mkdir(target)
 
-        for file in request.files.getlist("file"):
-            filename = file.filename
-            print(filename)
-            destination = "/".join([target, filename])
-            print(destination)
-            file.save(destination)
+        f = request.files["name"]
+        f.save(secure_filename(f.filename))
+        return "file uploaded successfully"
 
 api.add_resource(ImageUpload, "/imageUpload")
