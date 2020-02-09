@@ -19,7 +19,9 @@ theKey = 'thEejrdaR5$wE3yY4wsehn4wASHR'
 db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
-#TODO Move models to models file
+
+
+# TODO Move models to models file
 class Accounts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
@@ -39,7 +41,8 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
     author = db.Column(db.Integer, primary_key=True)  # link to user
 
-#Adding skill: INSERT INTO skills *press enter* VALUE (0,Programming,"Building stuff with electrical impulses");
+
+# Adding skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
 class Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -175,6 +178,19 @@ class PostSkills(Resource):
 
 api.add_resource(PostSkills, '/postskills')
 
+
+class AddUserSkill(Resource):
+    def put(self):
+        allSkills = Skills.query.all()
+        skillList = []
+        for i in allSkills:
+            skilldict = {"id": i.id, "name": i.name, "description": i.description}
+            skillList.append(skilldict)
+
+        return skillList
+
+
+api.add_resource(AddUserSkill, '/adduserskill')
 '''
 class ListUserTasks(Resource):
     def post(self):
