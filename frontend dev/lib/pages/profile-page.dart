@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:http/http.dart' as http;
+import "../widgets/image_picker.dart";
+import 'dart:io';
 
 class ProfilePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _ProfilePageState();
@@ -12,6 +14,15 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String _status = 'none';
   final _formKey = GlobalKey<FormState>();
+
+  File _pickedImage;
+
+  void _selectImage(File pickedImage) {
+    _pickedImage = pickedImage;
+  }
+
+  Future<String> addskill() async {
+    var url = 'http://167.172.59.89:5000/adduserskill';
 
   Widget build(BuildContext context) {
 
@@ -41,8 +52,10 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            Image_pick(_selectImage),
+            SizedBox(height: 314,),
             Container(
               margin: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 20),
               //We can remove left and right just leaving in case we need them to save time
