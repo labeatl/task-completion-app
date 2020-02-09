@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import "../widgets/image_picker.dart";
+import 'dart:io';
 
 class ProfilePage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  File _pickedImage;
+
+  void _selectImage(File pickedImage) {
+    _pickedImage = pickedImage;
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          Image_pick(_selectImage),
+          SizedBox(height: 314,),
           Container(
             child: Card(
               margin: EdgeInsets.fromLTRB(7, 4, 7, 4),
