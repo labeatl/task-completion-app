@@ -224,8 +224,8 @@ class ImageUpload(Resource):
         if not os.path.isdir(target):
             os.mkdir(target)
 
-        fileName = request.request.form['name']
-        image = request.request.form['image']
+        fileName = request.form['name']
+        image = request.form['image']
         def convert_and_save(b64_string):
             with open("./images/imageToSave.png", "wb") as fh:
                 fh.write(base64.decodebytes(b64_string.encode()))
