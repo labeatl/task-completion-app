@@ -226,8 +226,9 @@ class ImageUpload(Resource):
 
         fileName = request.form['name']
         image = request.form['image']
+        path = "./images/%s" % fileName
         def convert_and_save(b64_string):
-            with open("./images/imageToSave.png", "wb") as fh:
+            with open(path, "wb") as fh:
                 fh.write(base64.decodebytes(b64_string.encode()))
 
         convert_and_save(image)
