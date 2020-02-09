@@ -182,13 +182,15 @@ api.add_resource(PostSkills, '/postskills')
 class AddUserSkill(Resource):
     def post(self):
         #if User_Skills.query.filter_by(id=usrid).first() is None:
-            addskill = User_Skills(user_id=usrid, skill_id=skillid, skillLevel=10)
+        addskill = User_Skills(user_id=usrid, skill_id=skillid, skillLevel=10)
 
             # Add account to the database
-            db.session.add(addskill)
-            db.session.commit()
-            status = "success"
+        db.session.add(addskill)
+        db.session.commit()
+        status = "success"
+        if status == "success":
 
+            return status
 
             #status = "failed"
     #return status

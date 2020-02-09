@@ -64,21 +64,24 @@ class ProfilePage extends StatelessWidget {
                           onPressed: () {
                             var fg = id;
                             print(id);
-                            Future<String> login(String _email,String _password) async {
-                              var url = 'http://167.172.59.89:5000/adduserskill';
+
+                            Future<String> addskill() async {
+                              var url =
+                                  'http://167.172.59.89:5000/adduserskill';
 
                               var response = await http.post(url, body: {
                                 'usrid': 0, //Change this
                                 'skill_id': id,
                                 'skillLevel': 10
                               });
-                              String responseString;
+                              String responseString = response.body;
                               //Conver the response to a bool
                               print(response.body.runtimeType);
 
-
                               return responseString;
                             }
+
+                            addskill();
                           },
                           child: Text(
                               name)); //TODO: Add send message to backend to add skill on click
