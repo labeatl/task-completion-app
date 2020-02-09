@@ -95,9 +95,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
                              http.post(url, body: {
-                              'usrid': 0, //Change this
-                              'skill_id': 9,
-                              'skillLevel': 10
+                              'usrid': 0.toString(), //Change this
+                              'skill_id': 9.toString(),
+                              'skillLevel': 10.toString(),
                             });
                             print("WORKS");
                             //Conver the response to a bool
@@ -136,9 +136,9 @@ setState(() {
 
 
                                     http.put(url, body: {
-                                      'usrid': 0, //Change this
-                                      'skill_id': 9,
-                                      'skillLevel': 10
+                                      'usrid': "0", //Change this
+                                      'skill_id': "0",
+                                      'skillLevel': "0",
                                     });
                                     print("WORKS");
                                     //Conver the response to a bool
