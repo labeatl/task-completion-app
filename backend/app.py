@@ -69,30 +69,30 @@ class hello(Resource):
 
 api.add_resource(hello, '/')
 
-class Summary(Resource):
-    def put(self):
-        Summary = request.form['summary']
-        User_id = request.form['user_id']
-        # userAccount = db.Accounts.query.filter_by(id=1).first()
-        # userAccount.userBio = summary
-        sum = User_Summary(summary=Summary)
-        db.session.add(Summary)
-        db.session.commit()
-        print("Summary:")
-        print(Summary)
-        return 'success'
-
-
-api.add_resource(Summary, '/summary')
-
-class getSummary(Resource):
-    def get(self):
-        # sum = db.session.query(Accounts.id, Accounts.userBio).filter_by(id=1).first()
-        sum = User_Summary.query
-        return sum
-
-
-api.add_resource(getSummary, '/getSummary')
+# class Summary(Resource):
+#     def put(self):
+#         Summary = request.form['summary']
+#         User_id = request.form['user_id']
+#         # userAccount = db.Accounts.query.filter_by(id=1).first()
+#         # userAccount.userBio = summary
+#         sum = User_Summary(summary=Summary)
+#         db.session.add(Summary)
+#         db.session.commit()
+#         print("Summary:")
+#         print(Summary)
+#         return 'success'
+#
+#
+# api.add_resource(Summary, '/summary')
+#
+# class getSummary(Resource):
+#     def get(self):
+#         # sum = db.session.query(Accounts.id, Accounts.userBio).filter_by(id=1).first()
+#         sum = User_Summary.query
+#         return sum
+#
+#
+# api.add_resource(getSummary, '/getSummary')
 
 class UserSignUp(Resource):
     def put(self):
