@@ -124,7 +124,7 @@ class TasksAdded(Resource):
         Price = request.form['price']
         Location = request.form['location']
         createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price,
-                           location=Location)
+                           location=Location,author=0s)
         db.session.add(createTask)
         db.session.commit()
 
