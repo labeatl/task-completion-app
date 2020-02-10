@@ -248,7 +248,7 @@ class ImageUpload(Resource):
         target = os.path.join(APP_ROOT, "images/")
         target_tasks = os.path.join(APP_ROOT, "tasks/")
 
-        if request.form["id"] == 0:
+        if request.form["id"] == "0":
             if not os.path.isdir(target):
                 os.mkdir(target)
 
