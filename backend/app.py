@@ -1,13 +1,15 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
+import os, base64
+from flask import send_file
 
 app = Flask(__name__)
 api = Api(app)
-
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Database connection information
 
 dbParam = 'mysql+pymysql://taskuser:LENAnalytics2019@localhost/taskr'
@@ -223,15 +225,20 @@ class AddUserSkill(Resource):
 
             #status = "failed"
     #return status
+api.add_resource(AddUserSkill, '/adduserskill')
+
 
 class GetUserSkills(Resource):
     def get(self):
-        userSkills = Accounts.query.filter_by(user_id=0).all()
+        userSkills = User_Skills.query.filter_by(user_id=1).all()
+        skillList = []
+        for i in userSkills:
+            skilldict = {"skill_id": i.skill_id, "skilllevel": i.skillLevel}
+            skillList.append(skilldict)
+        return skillList
 
-        return userSkills
 
-
-api.add_resource(AddUserSkill, '/adduserskill')
+api.add_resource(GetUserSkills, '/getuserskill')
 '''
 class ListUserTasks(Resource):
     def post(self):
@@ -241,3 +248,27 @@ class ListUserTasks(Resource):
 
 api.add_resource(TasksAdded, '/listusertasks')
 '''
+
+class ImageUpload(Resource):
+    def post(self):
+        target = os.path.join(APP_ROOT, "images/")
+        target_tasks = os.path.join(APP_ROOT, "tasks/")
+
+        if not os.path.isdir(target):
+            os.mkdir(target)
+
+        fileName = request.form['name']
+        image = request.form['image']
+        path = "./images/%s" % fileName
+        def convert_and_save(b64_string):
+            with open(path, "wb") as fh:
+                fh.write(base64.decodebytes(b64_string.encode()))
+
+        convert_and_save(image)
+
+
+    def get(self):
+        filename = "./images/scaled_rick.jpg"
+        return send_file(filename, mimetype="image/jpg")
+
+api.add_resource(ImageUpload, "/imageUpload")

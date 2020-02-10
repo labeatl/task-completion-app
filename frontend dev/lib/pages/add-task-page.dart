@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../widgets/tasks_Images.dart';
+import 'dart:io';
 
 class CreateTask extends StatefulWidget {
+
   State<StatefulWidget> createState() {
     return _CreateTaskState();
   }
@@ -9,6 +12,13 @@ class CreateTask extends StatefulWidget {
 
 class _CreateTaskState extends State<CreateTask> {
   String dropdownValue = "Choose a Category";
+  File _pickedImage;
+
+
+  void _selectImage(File pickedImage) {
+    _pickedImage = pickedImage;
+  }
+
 
   Widget build(BuildContext context) {
     final priceController = TextEditingController();
@@ -23,6 +33,7 @@ class _CreateTaskState extends State<CreateTask> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Tasks_Image(),
             new Card(
               margin: EdgeInsets.fromLTRB(10, 25, 10, 10),
               child: new Container(

@@ -18,17 +18,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   String summary;
 
-  File _pickedImage;
-
-  void _selectImage(File pickedImage) {
-    _pickedImage = pickedImage;
-  }
-
-
+  List<Widget> skills = [];
+  bool ranThis = false;
     Widget build(BuildContext context) {
-      Future<String> getSkills() async {
-        http.Response response = await http.get(
-          Uri.encodeFull("http://167.172.59.89:5000/postskills"),
+
+      Future<List> getSkills() async {
+          http.Response response = await http.get(
+          Uri.encodeFull("http://167.172.59.89:5000/getuserskill"),
           headers: {"Accept": "application/json"},
         );
 
@@ -36,10 +32,21 @@ class _ProfilePageState extends State<ProfilePage> {
             .body); //only works when first changing type????
         var counter = 0;
         print(response.body);
-        while (counter < data.length) {
-          int skill_id = data[counter]["skill_id"];
-          String skilllevel = data[counter]["skilllevel"];
+            while (counter < data.length) {
+          int skillId = data[counter]["skill_id"];
+          int skilllevel = data[counter]["skilllevel"];
+          var containerSkill = new Container(child: Text("Programming" + skilllevel.toString()));
+          skills.add(containerSkill);        setState(() {});
+
+          //eCtrl.clear();     // Clear the Text area
+          counter++;
         }
+
+        setState(() {});
+
+
+
+          return skills;
       }
       Future<String> getSummary() async {
         http.Response response = await http.get(
@@ -54,6 +61,9 @@ class _ProfilePageState extends State<ProfilePage> {
         summary = 'Please input a summary';
       }
 
+    getSkills();
+    setState(() {});
+
 
       return Scaffold(
         body: SingleChildScrollView(
@@ -61,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Image_pick(_selectImage),
+              Image_pick(),
               SizedBox(height: 25,),
               Container(
                 margin: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 20),
@@ -123,6 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+
               ),
 
               Container(
@@ -135,18 +146,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   // Generate 100 widgets that display their index in the List.
 
 
-                  children: List.generate(6, (index) {
-                    print(index);
-                    return Center(
-                      child: Text(
-                        'Skill $index',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .body1,
-                      ),
-                    );
-                  }),
+                  children: skills,
+
                 ),
               ),
               Container(
@@ -181,8 +182,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               var url = 'http://167.172.59.89:5000/adduserskill';
 
 
-                              http.post(url, body: {
-                                'usrid': 0.toString(), //Change this
+                              http.put(url, body: {
+                                'usrid': 1.toString(), //Change this
                                 'skill_id': 1.toString(),
                                 'skillLevel': 10.toString(),
                               });
@@ -193,11 +194,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                                 name)); //TODO: Add send message to backend to add skill on click
                         setState(() {
-                          skillsList.add(aButton);
+                          skillsList.add
+                            (aButton);
                         });
-                        setState(() {
                           counter++;
-                        });
+
                       }
                     }
                     setState(() {
