@@ -154,7 +154,7 @@ class TaskPageState extends State<TasksPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.fromLTRB(5, 10, 0, 10),
+                          margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -230,7 +230,7 @@ class TaskPageState extends State<TasksPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                          margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
                           width: 90,
                           height: 90,
                           decoration: BoxDecoration(
@@ -239,10 +239,13 @@ class TaskPageState extends State<TasksPage> {
                               color: Colors.grey,
                             ),
                           ),
-                          child: _selectedPicture != null
-                              ? Image.file(_selectedPicture)
-                              : Text("No Image Taken", textAlign: TextAlign.center),
-                          alignment: Alignment.center,
+                            child: Image.network(
+                              'http://167.172.59.89:5000/imageUpload',
+                            ),
+//                          child: _selectedPicture != null
+//                              ? Image.file(_selectedPicture)
+//                              : Text("No Image Taken", textAlign: TextAlign.center),
+//                          alignment: Alignment.center,
                         ),
                       ],
                     ),
