@@ -17,7 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final sum = TextEditingController();
 
   String summary;
-
+  bool chosen = true;
   List<Widget> skills = [];
   bool ranThis = false;
     Widget build(BuildContext context) {
@@ -62,7 +62,14 @@ class _ProfilePageState extends State<ProfilePage> {
       }
 
     getSkills();
-    setState(() {});
+      getSummary();
+
+     if(chosen == true) {
+       setState(() {});
+       chosen = false;
+       print('chosen');
+
+     }
 
 
       return Scaffold(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../widgets/tasks_Images.dart';
+//import '../widgets/tasks_Images.dart';
 import 'dart:io';
 
 class CreateTask extends StatefulWidget {
@@ -33,7 +33,7 @@ class _CreateTaskState extends State<CreateTask> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Tasks_Image(),
+//            Tasks_Image(),
             new Card(
               margin: EdgeInsets.fromLTRB(10, 25, 10, 10),
               child: new Container(

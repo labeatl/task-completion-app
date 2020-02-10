@@ -57,11 +57,6 @@ class User_Skills(db.Model):
     skill_id = db.Column(db.Integer, nullable=False)  # link to skill
     skillLevel = db.Column(db.Integer, nullable=False)  # On scale of 1 to 10
 
-class User_Summary(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)  # link to user
-    summary = db.Column(db.String(512), nullable=False)  # link to summary
-
 
 class hello(Resource):
     def get(self):
@@ -74,9 +69,8 @@ class Summary(Resource):
     def put(self):
         summary = request.form['summary']
         user_id = request.form['user_id']
-
-        newSummary = Summary(summary = summary, user_id = user_id)
-        db.session.add(newSummary)
+        userAccount = Accounts.query.filter_by(idd=1).first()
+        userAccount.userBio = summary
         db.session.commit()
 
         return 'success'
@@ -86,7 +80,7 @@ api.add_resource(Summary, '/summary')
 
 class getSummary(Resource):
     def get(self):
-        sum = Accounts.query.filter_by(user_id=0).all()
+        sum = Accounts.query(Accounts.id, Accounts.userBio).filter_by(id=1).first()
 
         return sum
 
