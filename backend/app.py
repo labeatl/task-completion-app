@@ -206,7 +206,7 @@ class GetUserSkills(Resource):
         userSkills = User_Skills.query.filter_by(user_id=1).all()
         skillList = []
         for i in userSkills:
-            skilldict = {"skill_id": i.skill_id, "skilllevel": i.skilllLevel}
+            skilldict = {"skill_id": i.skill_id, "skilllevel": i.skillLevel}
             skillList.append(skilldict)
         return skillList
 
