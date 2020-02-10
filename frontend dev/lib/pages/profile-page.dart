@@ -120,8 +120,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                               print({
                                                 'New Summary': sum.text,
                                               });
-                                              http.put(url, body: {
-                                                'New Summary': sum.text,
+                                              http.post(url, body: {
+                                                'Summary': sum.text,
                                               });
                                             },
                                           ),

@@ -8,9 +8,7 @@ import 'package:path_provider/path_provider.dart' as syspath;
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 
-
 class Tasks_Image extends StatefulWidget {
-
   _Tasks_ImageState createState() => _Tasks_ImageState();
 }
 
@@ -26,7 +24,10 @@ class _Tasks_ImageState extends State<Tasks_Image> {
               child: ListBody(
                 children: <Widget>[
                   GestureDetector(
-                    child: FlatButton.icon(icon: Icon(Icons.image), label: Text(" Gallery"),),
+                    child: FlatButton.icon(
+                      icon: Icon(Icons.image),
+                      label: Text(" Gallery"),
+                    ),
                     onTap: () {
                       _openGallery(context);
                     },
@@ -35,13 +36,15 @@ class _Tasks_ImageState extends State<Tasks_Image> {
                     padding: EdgeInsets.all(8),
                   ),
                   GestureDetector(
-                    child: FlatButton.icon(icon: Icon(Icons.camera), label: Text(" Camera")),
+                    child: FlatButton.icon(
+                        icon: Icon(Icons.camera), label: Text(" Camera")),
                     onTap: () {
                       _takePicture(context);
                     },
                   ),
                   GestureDetector(
-                    child: FlatButton.icon(icon: Icon(Icons.camera), label: Text(" Upload")),
+                    child: FlatButton.icon(
+                        icon: Icon(Icons.camera), label: Text(" Upload")),
                     onTap: () {
                       _upload();
                     },
@@ -78,7 +81,6 @@ class _Tasks_ImageState extends State<Tasks_Image> {
     final savedImage = await imageFile.copy("${appDir.path}/${fileName}");
   }
 
-
   void _upload() {
     if (_storedImage == null) return;
     String base64Image = base64Encode(_storedImage.readAsBytesSync());
@@ -94,19 +96,21 @@ class _Tasks_ImageState extends State<Tasks_Image> {
     });
   }
 
-
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         Container(
-            margin: EdgeInsets.fromLTRB(20, 15, 35, 5),
-            child: _storedImage != null
-                ? CircleAvatar(
-                maxRadius: 47, backgroundImage: FileImage(_storedImage))
-                : CircleAvatar(
-              maxRadius: 47,
-              backgroundColor: Colors.black,
-            )),
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            border: Border.all(width: 1, color: Colors.grey),
+          ),
+          margin: EdgeInsets.fromLTRB(20, 15, 35, 5),
+          child: _storedImage != null
+              ? Image.file(_storedImage)
+              : Text("No Image Taken", textAlign: TextAlign.center,),
+          alignment: Alignment.center,
+        ),
         SizedBox(
           width: 10,
         ),
