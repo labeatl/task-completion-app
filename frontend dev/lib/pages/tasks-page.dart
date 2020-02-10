@@ -27,6 +27,10 @@ void updateTasks(String category) {
 class TaskPageState extends State<TasksPage> {
   File _selectedPicture;
 
+  void toSelectPic(File selectedPicture) {
+    _selectedPicture = selectedPicture;
+  }
+
   Future<String> getData() async {
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/tasks"),
@@ -51,6 +55,13 @@ class TaskPageState extends State<TasksPage> {
       );
       counter++;
     }
+  }
+
+  Future<String> getImage() async {
+    http.Response response = await http.get(
+      Uri.encodeFull("http://167.172.59.89:5000/imageUpload"),
+    );
+
   }
 
   @override
@@ -165,7 +176,7 @@ class TaskPageState extends State<TasksPage> {
                                 children: <Widget>[
                                   IconButton(
                                     icon: Icon(Icons.access_time),
-                                    onPressed: () {},
+                                    onPressed: getImage,
                                   ),
                                   Text(
                                     "${task.et} min",

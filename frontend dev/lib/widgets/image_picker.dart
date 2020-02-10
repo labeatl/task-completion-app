@@ -84,6 +84,7 @@ class _Image_pickState extends State<Image_pick> {
     String fileName = _storedImage.path.split("/").last;
     var url = 'http://167.172.59.89:5000/imageUpload';
     http.post(url, body: {
+    "id": 0,
     "image": base64Image,
     "name": fileName,
     }).then((res) {
