@@ -249,30 +249,18 @@ class ImageUpload(Resource):
         target = os.path.join(APP_ROOT, "images/")
         target_tasks = os.path.join(APP_ROOT, "tasks/")
 
-        if request.form["id"] == "0":
-            if not os.path.isdir(target):
-                os.mkdir(target)
+        if not os.path.isdir(target):
+            os.mkdir(target)
 
-            fileName = request.form['name']
-            image = request.form['image']
-            path = "./images/%s" % fileName
-            def convert_and_save(b64_string):
-                with open(path, "wb") as fh:
-                    fh.write(base64.decodebytes(b64_string.encode()))
+        fileName = request.form['name']
+        image = request.form['image']
+        path = "./images/%s" % fileName
+        def convert_and_save(b64_string):
+            with open(path, "wb") as fh:
+                fh.write(base64.decodebytes(b64_string.encode()))
 
-            convert_and_save(image)
-        else:
-            if not os.path.isdir(target_tasks):
-                os.mkdir(target_tasks)
+        convert_and_save(image)
 
-            fileName = request.form['name']
-            image = request.form['image']
-            path = "./tasks/%s" % fileName
-            def convert_and_save(b64_string):
-                with open(path, "wb") as fh:
-                    fh.write(base64.decodebytes(b64_string.encode()))
-
-            convert_and_save(image)
 
 
     def get(self):

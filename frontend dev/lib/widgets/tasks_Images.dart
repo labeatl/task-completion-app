@@ -85,7 +85,6 @@ class _Tasks_ImageState extends State<Tasks_Image> {
     String fileName = _storedImage.path.split("/").last;
     var url = 'http://167.172.59.89:5000/imageUpload';
     http.put(url, body: {
-      "id": 1,
       "image": base64Image,
       "name": fileName,
     }).then((res) {
