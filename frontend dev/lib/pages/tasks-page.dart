@@ -239,10 +239,13 @@ class TaskPageState extends State<TasksPage> {
                               color: Colors.grey,
                             ),
                           ),
-                          child: _selectedPicture != null
-                              ? Image.file(_selectedPicture)
-                              : Text("No Image Taken", textAlign: TextAlign.center),
-                          alignment: Alignment.center,
+                            child: Image.network(
+                              'http://167.172.59.89:5000/imageUpload',
+                            ),
+//                          child: _selectedPicture != null
+//                              ? Image.file(_selectedPicture)
+//                              : Text("No Image Taken", textAlign: TextAlign.center),
+//                          alignment: Alignment.center,
                         ),
                       ],
                     ),
