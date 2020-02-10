@@ -57,8 +57,8 @@ class User_Skills(db.Model):
     skill_id = db.Column(db.Integer, nullable=False)  # link to skill
     skillLevel = db.Column(db.Integer, nullable=False)  # On scale of 1 to 10
 
-class User_Summary(db.Model):
-    summary = db.Column(db.String(256), nullable=True)
+#class User_Summary(db.Model):
+#    summary = db.Column(db.String(256), nullable=True)
 
 
 
