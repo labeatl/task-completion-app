@@ -198,6 +198,8 @@ class AddUserSkill(Resource):
 
             #status = "failed"
     #return status
+api.add_resource(AddUserSkill, '/adduserskill')
+
 
 class GetUserSkills(Resource):
     def get(self):
@@ -206,7 +208,7 @@ class GetUserSkills(Resource):
         return userSkills
 
 
-api.add_resource(AddUserSkill, '/adduserskill')
+api.add_resource(GetUserSkills, '/getuserskill')
 '''
 class ListUserTasks(Resource):
     def post(self):
