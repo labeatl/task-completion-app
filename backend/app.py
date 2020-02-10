@@ -203,7 +203,7 @@ api.add_resource(AddUserSkill, '/adduserskill')
 
 class GetUserSkills(Resource):
     def get(self):
-        userSkills = Accounts.query.filter_by(user_id=0).all()
+        userSkills = User_Skills.query.filter_by(user_id=1).all()
 
         return userSkills
 
