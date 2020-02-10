@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-
+import 'dart:io';
 class Task {
   final String title;
   final String description;
@@ -8,6 +8,7 @@ class Task {
   final int price;
   final String location;
   final DateTime date;
+  final File image;
 
   Task({
       @required this.title,
@@ -16,5 +17,6 @@ class Task {
       @required this.et,
       @required this.price,
       @required this.location,
-      @required this.date});
+      @required this.date,
+      this.image});
 }
