@@ -5,8 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
 import os, base64
-from werkzeug import secure_filename
-
+from flask import send_file
 
 app = Flask(__name__)
 api = Api(app)
@@ -221,6 +220,7 @@ api.add_resource(TasksAdded, '/listusertasks')
 class ImageUpload(Resource):
     def post(self):
         target = os.path.join(APP_ROOT, "images/")
+
         if not os.path.isdir(target):
             os.mkdir(target)
 
@@ -232,5 +232,10 @@ class ImageUpload(Resource):
                 fh.write(base64.decodebytes(b64_string.encode()))
 
         convert_and_save(image)
+
+
+    def get(self):
+        filename = "./images/scaled_rick.jpg"
+        return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUpload, "/imageUpload")
