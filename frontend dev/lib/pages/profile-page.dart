@@ -21,10 +21,11 @@ class _ProfilePageState extends State<ProfilePage> {
     _pickedImage = pickedImage;
   }
 
+  List<Widget> skills = [];
 
-    Widget build(BuildContext context) {
-      Future<String> getSkills() async {
-        http.Response response = await http.get(
+    StatefulWidget build(BuildContext context) {
+      Future<List> getSkills() async {
+          http.Response response = await http.get(
           Uri.encodeFull("http://167.172.59.89:5000/postskills"),
           headers: {"Accept": "application/json"},
         );
@@ -33,12 +34,19 @@ class _ProfilePageState extends State<ProfilePage> {
             .body); //only works when first changing type????
         var counter = 0;
         print(response.body);
-        while (counter < data.length) {
-          int skill_id = data[counter]["skill_id"];
-          String skilllevel = data[counter]["skilllevel"];
-        }
-      }
+            while (counter < data.length) {
+          int skillId = data[counter]["skill_id"];
+          int skilllevel = data[counter]["skilllevel"];
+          var containerSkill = new Container(child: Text("dfg" + skilllevel.toString()));
+          skills.add(containerSkill);
+          //eCtrl.clear();     // Clear the Text area
+          counter++;
+        }          setState(() {});
 
+
+          return skills;
+      }
+      getSkills();
 
       return Scaffold(
         body: SingleChildScrollView(
@@ -65,18 +73,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   // Generate 100 widgets that display their index in the List.
 
 
-                  children: List.generate(6, (index) {
-                    print(index);
-                    return Center(
-                      child: Text(
-                        'Skill $index',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .body1,
-                      ),
-                    );
-                  }),
+                  children: skills,
+
                 ),
               ),
               Container(
@@ -123,11 +121,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                                 name)); //TODO: Add send message to backend to add skill on click
                         setState(() {
-                          skillsList.add(aButton);
+                          skillsList.add
+                            (aButton);
                         });
-                        setState(() {
                           counter++;
-                        });
+                        setState(() {});
+
                       }
                     }
                     setState(() {
