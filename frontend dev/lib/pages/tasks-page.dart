@@ -143,6 +143,11 @@ class TaskPageState extends State<TasksPage> {
                                       Text(''),
                                       Text('Estimated Time (in minutes):'),
                                       Text(task.et.toString()),
+                                      Text(''),
+                                      Image.network(
+                                        'http://167.172.59.89:5000/imageUpload',
+                                      ),
+                                      Text(''),
                                     ],
                                   ),
                                 ),
