@@ -53,8 +53,10 @@ class _ProfilePageState extends State<ProfilePage> {
           Uri.encodeFull("http://167.172.59.89:5000/getSummary"),
           headers: {"Accept": "application/json"},
         );
-        summary = json.decode(response.body);
-        return summary;
+        String _summary = json.decode(response.body);
+        setState(() {
+          summary = _summary;
+        });
       }
 
     getSkills();
@@ -99,6 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Padding(
                                           padding: EdgeInsets.only(top: 10.0),
                                           child: TextFormField(
+
                                             keyboardType: TextInputType.multiline,
                                             decoration: InputDecoration(
                                                 labelText: summary),
