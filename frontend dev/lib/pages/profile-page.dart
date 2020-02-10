@@ -16,7 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
   final sum = TextEditingController();
 
-  String summary;
+  String summary = "Please Enter your Bio";
   bool chosen = true;
   List<Widget> skills = [];
   bool ranThis = false;
@@ -54,11 +54,11 @@ class _ProfilePageState extends State<ProfilePage> {
           headers: {"Accept": "application/json"},
         );
         String _summary = json.decode(response.body);
+        summary = _summary;
         setState(() {
-          summary = _summary;
         });
       }
-
+      getSummary();
     getSkills();
 
 
@@ -88,7 +88,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     alignment: Alignment.bottomCenter,
                     child: FlatButton(
                       onPressed: () {
-                        getSummary();
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
