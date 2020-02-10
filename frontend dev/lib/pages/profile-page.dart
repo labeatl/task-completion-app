@@ -14,6 +14,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String _status = 'none';
   final _formKey = GlobalKey<FormState>();
+  final sum = TextEditingController();
+
+  String summary;
 
   List<Widget> skills = [];
   bool ranThis = false;
@@ -45,6 +48,18 @@ class _ProfilePageState extends State<ProfilePage> {
 
           return skills;
       }
+      Future<String> getSummary() async {
+        http.Response response = await http.get(
+          Uri.encodeFull("http://167.172.59.89:5000/getSummary"),
+          headers: {"Accept": "application/json"},
+        );
+
+        summary = json.decode(response
+            .body);
+      }
+      if(summary == null){
+        summary = 'Please input a summary';
+      }
 
     getSkills();
     setState(() {});
@@ -61,8 +76,64 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 margin: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 20),
                 //We can remove left and right just leaving in case we need them to save time
-                child: Text("Small profile summary "
-                    "information about the user"),
+                child: Card(
+                  margin: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                  color: Colors.blueGrey,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: FlatButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: Container(
+                                  width: 300,
+                                  child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 10.0),
+                                          child: TextFormField(
+                                            keyboardType: TextInputType.multiline,
+                                            decoration: InputDecoration(
+                                                labelText: summary),
+                                            controller: sum,
+                                            minLines: 1,
+                                            maxLines: 8,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(10.0),
+                                          child: RaisedButton(
+                                            child: Text('Submit'),
+                                            onPressed: () {
+                                              var url =
+                                                  'http://167.172.59.89:5000/summary';   //Change URL
+                                              print({
+                                                'New Summary': sum.text,
+                                              });
+                                              http.put(url, body: {
+                                                'New Summary': sum.text,
+                                              });
+                                            },
+                                          ),
+                                        ),
+
+                                      ]
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      child: new Text(
+                        'User Summary',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+
               ),
 
               Container(
