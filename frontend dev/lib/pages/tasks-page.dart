@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../task.dart';
@@ -61,6 +62,11 @@ class TaskPageState extends State<TasksPage> {
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/imageUpload"),
     );
+    print(response.bodyBytes);
+    print(response.body);
+    print(response.headers);
+    print(response.request);
+    print(response.toString());
 
   }
 
@@ -84,9 +90,9 @@ class TaskPageState extends State<TasksPage> {
                       alignment: Alignment.topLeft,
                       child: IconButton(
                         icon: Icon(Icons.graphic_eq),
-                        onPressed: () {
+                        onPressed: getImage,
                           /*...*/
-                        },
+
                       ),
                     ),
                   ),
