@@ -69,10 +69,11 @@ class Summary(Resource):
     def put(self):
         summary = request.form['summary']
         user_id = request.form['user_id']
-        userAccount = Accounts.query.filter_by(idd=1).first()
+        userAccount = db.Accounts.query.filter_by(id=1).first()
         userAccount.userBio = summary
         db.session.commit()
-
+        print("Summary:")
+        print(summary)
         return 'success'
 
 
