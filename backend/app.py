@@ -183,8 +183,8 @@ api.add_resource(PostSkills, '/postskills')
 
 class AddUserSkill(Resource):
     def put(self):
-        usrid = request.args['userid']
-        skillid = request.args['skill_id']
+        usrid = request.form['userid']
+        skillid = request.form['skill_id']
         #if User_Skills.query.filter_by(id=usrid).first() is None:
         addskill = User_Skills(user_id=usrid, skill_id=skillid, skillLevel=10)
 
