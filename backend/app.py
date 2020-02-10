@@ -59,7 +59,7 @@ class User_Skills(db.Model):
 
 class User_Summary(db.Model):
     summary = db.Column(db.String(256), nullable=True)
-    
+
 
 
 class hello(Resource):
@@ -87,8 +87,8 @@ api.add_resource(Summary, '/summary')
 
 class getSummary(Resource):
     def get(self):
-        sum = db.session.query(Accounts.id, Accounts.userBio).filter_by(id=1).first()
-
+        # sum = db.session.query(Accounts.id, Accounts.userBio).filter_by(id=1).first()
+        sum = User_Summary.query
         return sum
 
 
