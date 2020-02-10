@@ -15,12 +15,13 @@ class _ProfilePageState extends State<ProfilePage> {
   String _status = 'none';
   final _formKey = GlobalKey<FormState>();
 
+  List<Widget> skills = [];
+  bool ranThis = false;
+    Widget build(BuildContext context) {
 
-
-    StatefulWidget build(BuildContext context) {
       Future<List> getSkills() async {
           http.Response response = await http.get(
-          Uri.encodeFull("http://167.172.59.89:5000/postskills"),
+          Uri.encodeFull("http://167.172.59.89:5000/getuserskill"),
           headers: {"Accept": "application/json"},
         );
 
@@ -31,16 +32,23 @@ class _ProfilePageState extends State<ProfilePage> {
             while (counter < data.length) {
           int skillId = data[counter]["skill_id"];
           int skilllevel = data[counter]["skilllevel"];
-          var containerSkill = new Container(child: Text("dfg" + skilllevel.toString()));
-          skills.add(containerSkill);
+          var containerSkill = new Container(child: Text("Programming" + skilllevel.toString()));
+          skills.add(containerSkill);        setState(() {});
+
           //eCtrl.clear();     // Clear the Text area
           counter++;
-        }          setState(() {});
+        }
+
+        setState(() {});
+
 
 
           return skills;
       }
-      getSkills();
+
+    getSkills();
+    setState(() {});
+
 
       return Scaffold(
         body: SingleChildScrollView(
@@ -53,8 +61,8 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 margin: EdgeInsets.only(left: 0, right: 0, top: 10, bottom: 20),
                 //We can remove left and right just leaving in case we need them to save time
-                child: Text("Small profile summary fjgdgfkgdhf "
-                    "fgofdgoif fgoihdofg"),
+                child: Text("Small profile summary "
+                    "information about the user"),
               ),
 
               Container(
@@ -103,8 +111,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               var url = 'http://167.172.59.89:5000/adduserskill';
 
 
-                              http.post(url, body: {
-                                'usrid': 0.toString(), //Change this
+                              http.put(url, body: {
+                                'usrid': 1.toString(), //Change this
                                 'skill_id': 1.toString(),
                                 'skillLevel': 10.toString(),
                               });
@@ -119,7 +127,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             (aButton);
                         });
                           counter++;
-                        setState(() {});
 
                       }
                     }
