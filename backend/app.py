@@ -224,7 +224,7 @@ api.add_resource(AddUserSkill, '/adduserskill')
 
 class GetUserSkills(Resource):
     def get(self):
-        userSkills = Accounts.query.filter_by(user_id=1).all()
+        userSkills = Accounts.query.filter_by(id_user=1).all()
         skillList = []
         for i in userSkills:
             skilldict = {"skill_id": i.skill.name}
