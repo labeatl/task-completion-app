@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 user_skills = db.Table('user_skills',
-                       db.Column('user_id', db.Integer, db.ForeignKey('acccounts.id'), primary_key=True),
+                       db.Column('user_id', db.Integer, db.ForeignKey('Acccounts.id'), primary_key=True),
                        db.Column('skill_id', db.Integer, db.ForeignKey('skills.id'), primary_key=True,
                                  ))
 
