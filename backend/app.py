@@ -206,6 +206,7 @@ class AddUserSkill(Resource):
     def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
+        print(usrid + skillid)
         #if User_Skills.query.filter_by(id=usrid).first() is None:
         addskill = Accounts.skills(id_user=usrid, id=skillid)
 

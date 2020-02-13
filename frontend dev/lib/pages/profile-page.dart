@@ -84,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
                 http.put(url, body: {
-                  'usrid': 1.toString(), //Change this
+                  'userid': 1.toString(), //Change this
                   'skill_id': 1.toString(),
                   'skillLevel': 10.toString(),
                 });
