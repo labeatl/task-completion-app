@@ -211,7 +211,7 @@ class AddUserSkill(Resource):
         #addskill = Accounts.skills.append(id_user=usrid, id=skillid)
         #Accounts.append(id_user=usrid, id=skillid)
         theUser = Accounts.query.filter_by(id_user=usrid).first()
-        theSkill = Skills.query.filter_by(id=skillid)
+        theSkill = Skills.query.filter_by(id=skillid).first()
         theUser.skills.append(theSkill)
         # Add account to the database
         #db.session.add(addskill)
