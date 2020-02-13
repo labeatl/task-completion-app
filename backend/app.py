@@ -23,13 +23,13 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 user_skills = db.Table('user_skills',
-                       db.Column('id', db.Integer, db.ForeignKey('accounts.id'), primary_key=True),
-                       db.Column('id_skills', db.Integer, db.ForeignKey('skills.id_skills'), primary_key=True,
+                       db.Column('id_user', db.Integer, db.ForeignKey('accounts.id_user'), primary_key=True),
+                       db.Column('id', db.Integer, db.ForeignKey('skills.id'), primary_key=True,
                                  ))
 
 # TODO Move models to models file
 class Accounts(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     surName = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
@@ -52,7 +52,7 @@ class Tasks(db.Model):
 
 # Adding skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
 class Skills(db.Model):
-    id_skills = db.Column(db.Integer, primary_key=True, )
+    id = db.Column(db.Integer, primary_key=True, )
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(50), nullable=False)
 
