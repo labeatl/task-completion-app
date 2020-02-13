@@ -23,8 +23,8 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 user_skills = db.Table('user_skills',
-                       db.Column('user_id', db.Integer, db.ForeignKey('accounts.id'), primary_key=True),
-                       db.Column('skill_id', db.Integer, db.ForeignKey('skills.id'), primary_key=True,
+                       db.Column('id', db.Integer, db.ForeignKey('accounts.id'), primary_key=True),
+                       db.Column('id', db.Integer, db.ForeignKey('skills.id'), primary_key=True,
                                  ))
 
 # TODO Move models to models file
