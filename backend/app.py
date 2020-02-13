@@ -35,7 +35,7 @@ class Accounts(db.Model):
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=False)
-    skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id', lazy=True))
+    skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
 
 
 
