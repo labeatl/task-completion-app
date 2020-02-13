@@ -22,15 +22,20 @@ db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
 
+user_skills = db.Table('user_skills',
+                       db.Column('id_user', db.Integer, db.ForeignKey('accounts.id_user'), primary_key=True),
+                       db.Column('id', db.Integer, db.ForeignKey('skills.id'), primary_key=True,
+                                 ))
 
 # TODO Move models to models file
 class Accounts(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     surName = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.Text)
-    userBio = db.Column(db.String(256), nullable=False)
+    userBio = db.Column(db.String(256), nullable=True)
+    skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
 
 
 
@@ -47,16 +52,10 @@ class Tasks(db.Model):
 
 # Adding skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
 class Skills(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, )
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(50), nullable=False)
 
-
-class User_Skills(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)  # link to user
-    skill_id = db.Column(db.Integer, nullable=False)  # link to skill
-    skillLevel = db.Column(db.Integer, nullable=False)  # On scale of 1 to 10
 
 
 class hello(Resource):
@@ -82,7 +81,7 @@ api.add_resource(Summary, '/summary')
 
 class getSummary(Resource):
     def get(self):
-        sum = db.session.query(Accounts.userBio).filter_by(id=1).first()
+        sum = db.session.query(Accounts.userBio).filter_by(id_user=1).first()
         return sum[0]
 
 
@@ -207,11 +206,15 @@ class AddUserSkill(Resource):
     def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
+        print("Hmm:" + usrid + skillid)
         #if User_Skills.query.filter_by(id=usrid).first() is None:
-        addskill = User_Skills(user_id=usrid, skill_id=skillid, skillLevel=10)
-
+        #addskill = Accounts.skills.append(id_user=usrid, id=skillid)
+        #Accounts.append(id_user=usrid, id=skillid)
+        theUser = Accounts.query.filter_by(id_user=usrid).first()
+        theSkill = Skills.query.filter_by(id=skillid).first()
+        theUser.skills.append(theSkill)
         # Add account to the database
-        db.session.add(addskill)
+        #db.session.add(addskill)
         db.session.commit()
         status = "success"
         if status == "success":
@@ -225,10 +228,10 @@ api.add_resource(AddUserSkill, '/adduserskill')
 
 class GetUserSkills(Resource):
     def get(self):
-        userSkills = User_Skills.query.filter_by(user_id=1).all()
+        userSkills = Accounts.query.filter_by(id_user=1).all()
         skillList = []
         for i in userSkills:
-            skilldict = {"skill_id": i.skill_id, "skilllevel": i.skillLevel}
+            skilldict = {"skill_id": i.skills[0].name}
             skillList.append(skilldict)
         return skillList
 
