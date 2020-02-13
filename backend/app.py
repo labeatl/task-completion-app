@@ -207,7 +207,7 @@ class AddUserSkill(Resource):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
         #if User_Skills.query.filter_by(id=usrid).first() is None:
-        addskill = Accounts(id_user=usrid, skill_id=skillid, skillLevel=10)
+        addskill = Accounts.skills(id_user=usrid, id=skillid)
 
         # Add account to the database
         db.session.add(addskill)

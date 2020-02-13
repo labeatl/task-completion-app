@@ -198,53 +198,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   label: Text('Edit Skills'), //`Text` to display
 
                   onPressed: () {
-<<<<<<< HEAD
-=======
-                    List<Widget> skillsList = [];
-                    Future<String> getData() async {
-                      http.Response response = await http.get(
-                        Uri.encodeFull("http://167.172.59.89:5000/postskills"),
-                        headers: {"Accept": "application/json"},
-                      );
 
-                      List data = json.decode(response
-                          .body); //only works when first changing type????
-                      var counter = 0;
-                      print(response.body);
-                      while (counter < data.length) {
-                        int id = data[counter]["id"];
-                        String name = data[counter]["name"];
-                        String description = data[counter]["description"];
-
-
-                        var aButton = new FlatButton(
-                            onPressed: () {
-                              print("dfgdshriohghiuhgiu");
-
-
-                              var url = 'http://167.172.59.89:5000/adduserskill';
-
-
-                              http.put(url, body: {
-                                'userid': 1.toString(), //Change this
-                                'skill_id': id.toString(),
-                                'skillLevel': 10.toString(),
-                              });
-                              print("WORKS");
-                              //Conver the response to a bool
-                            },
-
-                            child: Text(
-                                name)); //TODO: Add send message to backend to add skill on click
-
-                          skillsList.add
-                            (aButton);
-
-                          counter++;
-
-                      }
-                    }
->>>>>>> 1bb58bfefad5bf58c26c116570e7011ef9155e4f
                     setState(() {
                     });
 
