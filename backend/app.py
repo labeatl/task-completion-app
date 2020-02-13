@@ -47,7 +47,7 @@ class Tasks(db.Model):
 
 # Adding skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
 class Skills(db.Model):
-    id = db.Column(db.Integer, db.ForeignKey('skillid.id'), primary_key=True, )
+    id = db.Column(db.Integer, db.ForeignKey('skillid.skill_id'), primary_key=True, )
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(50), nullable=False)
 
