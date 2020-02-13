@@ -55,7 +55,7 @@ class Skills(db.Model):
 class User_Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)  # link to user
-    #skill_id = db.Column(db.Integer, nullable=False)
+    skill_id = db.Column(db.Integer, nullable=False)
     skills = db.relationship("Skills", backref="skillid", lazy=True)  # link to skill
     skillLevel = db.Column(db.Integer, nullable=False)  # On scale of 1 to 10
 
