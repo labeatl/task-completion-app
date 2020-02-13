@@ -36,7 +36,18 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
+    profile_pic = db.Column(db.String, nullable=False)
+    # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
+
+# class ProfilePic(db.Model):
+#     filename = db.Column(db.String, primary_key=True)
+#     person_id = db.Column(db.Integer, db.ForeignKey("acc.id"), nullable=False)
+#
+#
+# class Tasks(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     taskName = db.Column(db.String, nullable=False)
 
 
 class Tasks(db.Model):
@@ -257,6 +268,11 @@ class ImageUpload(Resource):
 
         fileName = request.form['name']
         image = request.form['image']
+
+        userAccount = Accounts.query.filter_by(id=1).first()
+        userAccount.profile_pic = fileName
+        db.session.commit()
+
         path = "./images/%s" % fileName
         def convert_and_save(b64_string):
             with open(path, "wb") as fh:
@@ -267,7 +283,8 @@ class ImageUpload(Resource):
 
 
     def get(self):
-        filename = "./images/scaled_rick.jpg"
+        profile_PIC = db.session.query(Accounts.profile_pic).filter_by(id_user=1).first()
+        filename = "./images/%s" % profile_PIC
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUpload, "/imageUpload")
