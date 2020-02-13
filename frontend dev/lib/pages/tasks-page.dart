@@ -220,7 +220,7 @@ class TaskPageState extends State<TasksPage> {
                                 children: <Widget>[
                                   IconButton(
                                     icon: Icon(Icons.access_time),
-                                    onPressed: getImage,
+                                    onPressed: () {},
                                   ),
                                   Text(
                                     "${task.et} min",

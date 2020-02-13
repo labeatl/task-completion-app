@@ -35,19 +35,15 @@ class _ProfilePageState extends State<ProfilePage> {
             while (counter < data.length) {
           int skillId = data[counter]["skill_id"];
           int skilllevel = data[counter]["skilllevel"];
-          var containerSkill = new Container(child: Text("Programming" + skilllevel.toString()));
+          var containerSkill = new Container(child: Text("Programming skill: " + skilllevel.toString()));
           skills.add(containerSkill);
 
           //eCtrl.clear();     // Clear the Text area
           counter++;
         }
-
-
-
-
-
           return skills;
       }
+
       Future<String> getSummary() async {
         http.Response response = await http.get(
           Uri.encodeFull("http://167.172.59.89:5000/getSummary"),
@@ -55,19 +51,14 @@ class _ProfilePageState extends State<ProfilePage> {
         );
         String _summary = json.decode(response.body);
         summary = _summary;
-        setState(() {
-        });
+//        setState(() {
+//
+//        });
       }
       getSummary();
     getSkills();
 
 
-     if(chosen == true) {
-       setState(() {});
-       chosen = false;
-       print('chosen');
-
-     }
 
 
       return Scaffold(
@@ -199,10 +190,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
                             child: Text(
                                 name)); //TODO: Add send message to backend to add skill on click
-                        setState(() {
+
                           skillsList.add
                             (aButton);
-                        });
+
                           counter++;
 
                       }
