@@ -208,10 +208,10 @@ class AddUserSkill(Resource):
         skillid = request.form['skill_id']
         print("Hmm:" + usrid + skillid)
         #if User_Skills.query.filter_by(id=usrid).first() is None:
-        addskill = Accounts.skills(id_user=usrid, id=skillid)
-
+        #addskill = Accounts.skills.append(id_user=usrid, id=skillid)
+        Accounts.skills.append(id_user=usrid, id=skillid)
         # Add account to the database
-        db.session.add(addskill)
+        #db.session.add(addskill)
         db.session.commit()
         status = "success"
         if status == "success":
