@@ -209,7 +209,7 @@ class AddUserSkill(Resource):
         print("Hmm:" + usrid + skillid)
         #if User_Skills.query.filter_by(id=usrid).first() is None:
         #addskill = Accounts.skills.append(id_user=usrid, id=skillid)
-        Accounts.skills.append(id_user=usrid, id=skillid)
+        Skills.accounts.id_user.append(id_user=usrid, id=skillid)
         # Add account to the database
         #db.session.add(addskill)
         db.session.commit()
