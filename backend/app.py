@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 user_skills = db.Table('user_skills',
-                       db.Column('user_id', db.Integer, db.ForeignKey('account.id'), primary_key=True),
+                       db.Column('user_id', db.Integer, db.ForeignKey('accounts.id'), primary_key=True),
                        db.Column('skill_id', db.Integer, db.ForeignKey('skills.id'), primary_key=True,
                                  ))
 
@@ -35,7 +35,7 @@ class Accounts(db.Model):
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=False)
-    skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref = db.backref('account', lazy=True))
+    skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id', lazy=True))
 
 
 
