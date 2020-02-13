@@ -55,7 +55,7 @@ class Skills(db.Model):
 class User_Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)  # link to user
-    skill_id = db.relationship("Skills", backref="skillid", lazy=True)  # link to skill
+    skill = db.relationship("Skills", backref="skillid", lazy=True)  # link to skill
     skillLevel = db.Column(db.Integer, nullable=False)  # On scale of 1 to 10
 
 
@@ -228,7 +228,7 @@ class GetUserSkills(Resource):
         userSkills = User_Skills.query.filter_by(user_id=1).all()
         skillList = []
         for i in userSkills:
-            skilldict = {"skill_id": i.skill_id, "skilllevel": i.skillLevel}
+            skilldict = {"skill_id": i.skill.name, "skilllevel": i.skillLevel}
             skillList.append(skilldict)
         return skillList
 
