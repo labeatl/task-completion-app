@@ -33,6 +33,7 @@ class Accounts(db.Model):
     userBio = db.Column(db.String(256), nullable=False)
 
 
+
 class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
