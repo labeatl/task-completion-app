@@ -24,7 +24,7 @@ migrate = Migrate(app, db)
 
 user_skills = db.Table('user_skills',
                        db.Column('id', db.Integer, db.ForeignKey('accounts.id'), primary_key=True),
-                       db.Column('id_skills', db.Integer, db.ForeignKey('skills.id'), primary_key=True,
+                       db.Column('id_skills', db.Integer, db.ForeignKey('skills.id_skills'), primary_key=True,
                                  ))
 
 # TODO Move models to models file
