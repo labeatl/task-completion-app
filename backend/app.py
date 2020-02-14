@@ -286,8 +286,7 @@ class ImageUpload(Resource):
     def get(self):
         profile_PIC = db.session.query(Accounts.profile_pic).filter_by(id_user=1).first()
         userID = db.session.query(Accounts.id_user).first()
-        filename = os.path.join(APP_ROOT, "/%d/images/%s" % (userID[0], profile_PIC[0]))
-        print(filename)
+        filename = "./%d/images/%s" % (userID[0], profile_PIC[0])
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUpload, "/imageUpload")
@@ -320,7 +319,7 @@ class ImageUploadTask(Resource):
     def get(self):
         task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
         taskID = db.session.query(Tasks.id).first()
-        filename = os.path.join(APP_ROOT, "/" + taskID[0] + "/tasks/" + task_PIC[0])
+        filename = "./" + taskID[0] + "/tasks/" + task_PIC[0]
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")
