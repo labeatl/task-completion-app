@@ -59,7 +59,7 @@ class Tasks(db.Model):
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
     author = db.Column(db.Integer, primary_key=True)  # link to user
-    picture = db.Column(db.String(80), nullable=False)
+    picture = db.Column(db.String(80), nullable=True)
 
 
 # Adding skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
