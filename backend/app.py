@@ -36,7 +36,7 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
-    profile_pic = db.Column(db.String(50), nullable=False)
+    profile_pic = db.Column(db.String(80), nullable=False)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
 
@@ -79,7 +79,7 @@ api.add_resource(hello, '/')
 class Summary(Resource):
      def post(self):
          summary = request.form['Summary']
-         userAccount = Accounts.query.filter_by(id=1).first()
+         userAccount = Accounts.query.filter_by(id_user=1).first()
          userAccount.userBio = summary
          db.session.commit()
          print("Summary:")
@@ -269,7 +269,7 @@ class ImageUpload(Resource):
         fileName = request.form['name']
         image = request.form['image']
 
-        userAccount = Accounts.query.filter_by(id=1).first()
+        userAccount = Accounts.query.filter_by(id_user=1).first()
         userAccount.profile_pic = fileName
         db.session.commit()
 
