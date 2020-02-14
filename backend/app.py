@@ -36,7 +36,7 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
-    profile_pic = db.Column(db.String(80), nullable=False)
+    profile_pic = db.Column(db.String(200), nullable=False)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
 
