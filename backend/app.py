@@ -59,6 +59,7 @@ class Tasks(db.Model):
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
     author = db.Column(db.Integer, primary_key=True)  # link to user
+    picture = db.Column(db.String(80), nullable=False)
 
 
 # Adding skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
@@ -284,7 +285,41 @@ class ImageUpload(Resource):
 
     def get(self):
         profile_PIC = db.session.query(Accounts.profile_pic).filter_by(id_user=1).first()
-        filename = "./images/" + profile_PIC[0]
+        userID = db.session.query(Accounts.id_user).first()
+        filename = "/" + userID[0] + "/images/" + profile_PIC[0]
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUpload, "/imageUpload")
+
+
+class ImageUploadTask(Resource):
+    def post(self):
+        userID = db.session.query(Accounts.id_user).first()
+        target = os.path.join(APP_ROOT, "%s/tasks/" % userID[0])
+
+        if not os.path.isdir(target):
+            os.makedirs(target)
+
+        fileName = request.form['name']
+        image = request.form['image']
+
+        taskID = Tasks.query.filter_by(id=1).first()
+        taskID.picture = fileName
+        db.session.commit()
+
+        path = target + fileName
+        def convert_and_save(b64_string):
+            with open(path, "wb") as fh:
+                fh.write(base64.decodebytes(b64_string.encode()))
+
+        convert_and_save(image)
+
+
+
+    def get(self):
+        task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
+        taskID = db.session.query(Tasks.id).first()
+        filename = "/" + taskID[0] + "/tasks/" + task_PIC[0]
+        return send_file(filename, mimetype="image/jpg")
+
+api.add_resource(ImageUploadTask, "/imageUploadTask")

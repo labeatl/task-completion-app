@@ -85,7 +85,7 @@ class _Tasks_ImageState extends State<Tasks_Image> {
     if (_storedImage == null) return;
     String base64Image = base64Encode(_storedImage.readAsBytesSync());
     String fileName = _storedImage.path.split("/").last;
-    var url = 'http://167.172.59.89:5000/imageUpload';
+    var url = 'http://167.172.59.89:5000/imageUploadTask';
     http.post(url, body: {
       "image": base64Image,
       "name": fileName,

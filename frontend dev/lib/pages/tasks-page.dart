@@ -145,7 +145,7 @@ class TaskPageState extends State<TasksPage> {
                                       Text(task.et.toString()),
                                       Text(''),
                                       Image.network(
-                                        'http://167.172.59.89:5000/imageUpload',
+                                        'http://167.172.59.89:5000/imageUploadTask',
                                       ),
                                       Text(''),
                                     ],
@@ -245,7 +245,7 @@ class TaskPageState extends State<TasksPage> {
                             ),
                           ),
                             child: Image.network(
-                              'http://167.172.59.89:5000/imageUpload',
+                              'http://167.172.59.89:5000/imageUploadTask',
                             ),
 //                          child: _selectedPicture != null
 //                              ? Image.file(_selectedPicture)
