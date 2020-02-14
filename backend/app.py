@@ -284,8 +284,7 @@ class ImageUpload(Resource):
 
     def get(self):
         profile_PIC = db.session.query(Accounts.profile_pic).filter_by(id_user=1).first()
-        print(profile_PIC[0])
-        filename = "./images/" + profile_PIC
+        filename = "./images/" + profile_PIC[0]
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUpload, "/imageUpload")
