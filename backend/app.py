@@ -261,7 +261,7 @@ api.add_resource(TasksAdded, '/listusertasks')
 class ImageUpload(Resource):
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
-        target = os.path.join(APP_ROOT, "%s/images/" % userID[0])
+        target = os.path.join(APP_ROOT, "%s/images" % userID[0])
 
         if not os.path.isdir(target):
             os.mkdir(target)
@@ -273,7 +273,7 @@ class ImageUpload(Resource):
         userAccount.profile_pic = fileName
         db.session.commit()
 
-        path = "./images/%s" % fileName
+        path = target + fileName
         def convert_and_save(b64_string):
             with open(path, "wb") as fh:
                 fh.write(base64.decodebytes(b64_string.encode()))
