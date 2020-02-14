@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
+                                          padding: EdgeInsets.all(10),
                                           child: RaisedButton(
                                             child: Text('Submit'),
                                             onPressed: () {
@@ -180,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
 
               Container(
-                height: 200,
+                height: 165,
                 child: GridView.count(
                   shrinkWrap: true,
                   // Create a grid with 2 columns. If you change the scrollDirection to
