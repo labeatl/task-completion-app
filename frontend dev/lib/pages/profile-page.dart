@@ -57,8 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
       }
       getSummary();
     getSkills();
-
-
+      sum.text = summary;
 
 
       return Scaffold(
@@ -91,10 +90,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Padding(
                                           padding: EdgeInsets.only(top: 10.0),
                                           child: TextFormField(
-
                                             keyboardType: TextInputType.multiline,
                                             decoration: InputDecoration(
-                                                labelText: summary),
+                                              hintText: 'Tell us something about yourself'
+                                            ),
                                             controller: sum,
                                             minLines: 1,
                                             maxLines: 8,
