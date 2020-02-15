@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
             while (counter < data.length) {
           int skillId = data[counter]["skill_id"];
           int skilllevel = data[counter]["skilllevel"];
-          var containerSkill = new Container(child: Text("Programming skill: " + skilllevel.toString()));
+          var containerSkill = new Container(child: Text(skillId.toString() + "Programming skill: " + skilllevel.toString()));
           skills.add(containerSkill);
 
           //eCtrl.clear();     // Clear the Text area
