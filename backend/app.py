@@ -94,7 +94,7 @@ api.add_resource(Summary, '/summary')
 class getSummary(Resource):
     def get(self):
         sum = db.session.query(Accounts.userBio).filter_by(id_user=1).first()
-        return sum
+        return sum[0]
 
 
 api.add_resource(getSummary, '/getSummary')
