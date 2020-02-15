@@ -33,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
           headers: {"Accept": "application/json"},
         );
         String _summary = json.decode(response.body);
-        summary = _summary;
+        summary = _summary.toString();
 //        setState(() {
 //
 //        });
