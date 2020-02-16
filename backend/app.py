@@ -181,11 +181,15 @@ def verify_password(username, password):
     try:  #Check if username is a valid token
         data = s.loads(username)
     except SignatureExpired:
-        return None
+        return False
     else:  # If invalid then check if username and password are a valid login
-        user = Accounts.query.filter_by(email=username).first()
-        if check_password_hash(user.password, password):
-            return True
+        if Accounts.query.filter_by(email=username).first() is not None:
+
+            user = Accounts.query.filter_by(email=username).first()
+            if check_password_hash(user.password, password):
+                return True
+            else:
+                return False
         else:
             return False
 
@@ -204,20 +208,7 @@ class UserLogin(Resource):
         hashedPassword = generate_password_hash(unhashedPassword)
 
 
-        # Make sure the email exists
-        if Accounts.query.filter_by(email=usrEmail).first() is not None:
-            user = Accounts.query.filter_by(email=usrEmail).first()
-            if check_password_hash(user.password, unhashedPassword):
-                status = 0
-                print("Correct password")
-            else:
-                status = 1
-                print("InCorrect Password")
-
-            # Add account to the database
-        else:
-            status = 1
-            print("Email does not exist")
+        status = verify_password(usrEmail, unhashedPassword)
         return status
 
 
