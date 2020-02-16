@@ -162,20 +162,21 @@ def generate_token(id, self, expiration=1200):
 def verify_password(username, password):
     s = Serializer(app.config['SECRET_KEY'])
     try:  #Check if username is a valid token
-        data = s.loads(username)
+        loggedUser = s.loads(username)
     except SignatureExpired:
-        return False
+        return None
     else:  # If invalid then check if username and password are a valid login
         if Accounts.query.filter_by(email=username).first() is not None:
 
             user = Accounts.query.filter_by(email=username).first()
             if check_password_hash(user.password, password):
                 return True
+                loggedUser = user.id
             else:
-                return False
+                return None
         else:
-            return False
-    
+            return None
+    return user
 
 
 
