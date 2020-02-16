@@ -27,7 +27,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # Flask secret key
-theKey = 'thEejrdaR5$wE3yY4wsehn4wASHR' #Change this for production
+app.config['SECRET_KEY'] = 'thEejrdaR5$wE3yY4wsehn4wASHR' #Change this for production
 
 
 user_skills = db.Table('user_skills',
