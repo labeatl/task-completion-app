@@ -3,3 +3,4 @@ Flask-Restful
 Flask-HTTPAuth
 PyMySQL
 Flask-Migrate
+itsdangerous
