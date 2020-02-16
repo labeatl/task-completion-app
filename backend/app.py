@@ -4,8 +4,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
-import os, base64
 from flask import send_file, g
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+import os
+import base64
+
+
 
 
 
@@ -166,15 +170,40 @@ class TasksAdded(Resource):
 api.add_resource(TasksAdded, '/addtask')
 
 
+def generate_token(id, self, expiration=1200):
+    s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+    return s.dumps({'id': id})
+
+
+@auth.verify_password
+def verify_password(username, password):
+    s = Serializer(app.config['SECRET_KEY'])
+    try:  #Check if username is a valid token
+        data = s.loads(username)
+    except SignatureExpired:
+        return None
+    else:  # If invalid then check if username and password are a valid login
+        user = Accounts.query.filter_by(email=username).first()
+        if check_password_hash(user.password, password):
+            return True
+        else:
+            return False
+
+
+
+
+
+
 class UserLogin(Resource):
     def post(self):
+
+
         usrEmail = request.form['email']
         unhashedPassword = request.form['password']
         # check password is same on frontend
         hashedPassword = generate_password_hash(unhashedPassword)
 
 
-''''
         # Make sure the email exists
         if Accounts.query.filter_by(email=usrEmail).first() is not None:
             user = Accounts.query.filter_by(email=usrEmail).first()
@@ -190,7 +219,7 @@ class UserLogin(Resource):
             status = 1
             print("Email does not exist")
         return status
-'''
+
 
 api.add_resource(UserLogin, '/login')
 
