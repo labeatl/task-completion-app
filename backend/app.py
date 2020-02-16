@@ -170,13 +170,14 @@ def verify_password(username, password):
 
             user = Accounts.query.filter_by(email=username).first()
             if check_password_hash(user.password, password):
-                return True
                 loggedUser = user.id
+
+                return loggedUser
             else:
                 return None
         else:
             return None
-    return user
+    return loggedUser
 
 
 
