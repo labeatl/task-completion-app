@@ -193,6 +193,10 @@ class UserLogin(Resource):
 
 
         status = verify_password(usrEmail, unhashedPassword)
+        if status == None:
+            status = 0
+        else:
+            status = 1
         return status
 
 
