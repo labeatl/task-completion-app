@@ -79,23 +79,6 @@ class Skills(db.Model):
 #END MODELS
 
 
-@auth.verify_password
-def verify_password(email, password):
-    user = Accounts.query.filter_by(email=email).first()
-    if not user or not user.verify_password(password):
-        return False
-    g.user = user
-    return True
-
-
-
-
-
-
-
-
-
-
 
 class hello(Resource):
     def get(self):
