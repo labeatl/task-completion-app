@@ -5,22 +5,26 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
 import os, base64
-from flask import send_file
+from flask import send_file, g
+
+
 
 app = Flask(__name__)
 api = Api(app)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-# Database connection information
+auth = HTTPBasicAuth()
 
+
+
+# Database connection information
 dbParam = 'mysql+pymysql://taskuser:LENAnalytics2019@localhost/taskr'
 app.config['SQLALCHEMY_DATABASE_URI'] = dbParam
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # Flask secret key
-theKey = 'thEejrdaR5$wE3yY4wsehn4wASHR'
+theKey = 'thEejrdaR5$wE3yY4wsehn4wASHR' #Change this for production
 
-db = SQLAlchemy(app)
-
-migrate = Migrate(app, db)
 
 user_skills = db.Table('user_skills',
                        db.Column('id_user', db.Integer, db.ForeignKey('accounts.id_user'), primary_key=True),
@@ -67,6 +71,25 @@ class Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True, )
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(50), nullable=False)
+
+#END MODELS
+
+
+@auth.verify_password
+def verify_password(email, password):
+    user = Accounts.query.filter_by(email=email).first()
+    if not user or not user.verify_password(password):
+        return False
+    g.user = user
+    return True
+
+
+
+
+
+
+
+
 
 
 
@@ -150,6 +173,8 @@ class UserLogin(Resource):
         # check password is same on frontend
         hashedPassword = generate_password_hash(unhashedPassword)
 
+
+''''
         # Make sure the email exists
         if Accounts.query.filter_by(email=usrEmail).first() is not None:
             user = Accounts.query.filter_by(email=usrEmail).first()
@@ -165,12 +190,13 @@ class UserLogin(Resource):
             status = 1
             print("Email does not exist")
         return status
-
+'''
 
 api.add_resource(UserLogin, '/login')
 
 
 class TasksList(Resource):
+    @auth.login_required
     def get(self):
         tasks = Tasks.query
         list = []
@@ -186,6 +212,7 @@ api.add_resource(TasksList, '/tasks')
 
 # TODO: Implement frontend for deletion
 class AccountDeletion(Resource):
+    @auth.login_required
     def put(self):
         accEmailToDelete = request.form['email']
         if Accounts.query.filter_by(email=accEmailToDelete).first() is not None:
@@ -201,6 +228,7 @@ api.add_resource(AccountDeletion, '/deleteaccount')
 
 # Display skills to user, adding will be done with relational db in another class/func
 class PostSkills(Resource):
+    @auth.login_required
     def get(self):
         allSkills = Skills.query.all()
         skillList = []
@@ -215,6 +243,7 @@ api.add_resource(PostSkills, '/postskills')
 
 
 class AddUserSkill(Resource):
+    @auth.login_required
     def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
@@ -239,6 +268,8 @@ api.add_resource(AddUserSkill, '/adduserskill')
 
 
 class GetUserSkills(Resource):
+    @auth.login_required
+
     def get(self):
         userSkills = Accounts.query.filter_by(id_user=1).all()
         skillList = []
@@ -260,6 +291,9 @@ api.add_resource(TasksAdded, '/listusertasks')
 '''
 
 class ImageUpload(Resource):
+    @auth.login_required
+
+
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
         target = os.path.join(APP_ROOT, "%s/images/" % userID[0])
@@ -293,6 +327,8 @@ api.add_resource(ImageUpload, "/imageUpload")
 
 
 class ImageUploadTask(Resource):
+    @auth.login_required
+
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
         target = os.path.join(APP_ROOT, "%s/tasks/" % userID[0])
