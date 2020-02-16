@@ -195,7 +195,9 @@ class UserLogin(Resource):
         status = verify_password(usrEmail, unhashedPassword)
         if status == None:
             status = 0
+            print("Failed")
         else:
+            print("Success")
             status = 1
         return status
 
