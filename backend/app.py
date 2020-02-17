@@ -304,8 +304,8 @@ class ImageUploadTask(Resource):
         image = request.form['image']
 
         if Tasks.query.filter_by(id=1).first() is not None:
-            task = Tasks.query
-            task.picture = fileName
+            taskID = Tasks.query.filter_by(id=1).first()
+            taskID.picture = fileName
             db.session.commit()
 
         path = target + fileName
