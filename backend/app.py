@@ -243,7 +243,7 @@ class GetUserSkills(Resource):
         userSkills = Accounts.query.filter_by(id_user=1)
         rows = userSkills.statement.execute().fetchall()
         for row in rows:
-            print rows
+            print(row)
         skillList = []
         counter = 0;
         for i in userSkills:
