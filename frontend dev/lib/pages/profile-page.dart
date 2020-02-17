@@ -40,6 +40,9 @@ class _ProfilePageState extends State<ProfilePage> {
       }
       getSummary();
 
+    getSkills();
+      sum.text = summary;
+
       List<Widget> skillsList = [];
       Future<String> getData() async {
         http.Response response = await http.get(
@@ -117,10 +120,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Padding(
                                           padding: EdgeInsets.only(top: 10.0),
                                           child: TextFormField(
-
                                             keyboardType: TextInputType.multiline,
                                             decoration: InputDecoration(
-                                                labelText: summary),
+                                              hintText: 'Tell us something about yourself'
+                                            ),
                                             controller: sum,
                                             minLines: 1,
                                             maxLines: 8,

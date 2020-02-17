@@ -148,6 +148,15 @@ class TaskPageState extends State<TasksPage> {
                                         'http://167.172.59.89:5000/imageUploadTask',
                                       ),
                                       Text(''),
+
+                                      RaisedButton(
+                                        onPressed: () {},
+
+                                        child: new Text(
+                                          'Apply',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
