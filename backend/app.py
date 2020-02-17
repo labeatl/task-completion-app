@@ -153,6 +153,7 @@ class UserLogin(Resource):
         # Make sure the email exists
         if Accounts.query.filter_by(email=usrEmail).first() is not None:
             user = Accounts.query.filter_by(email=usrEmail).first()
+            print(user.password, user.email)
             if check_password_hash(user.password, unhashedPassword):
                 status = 0
                 print("Correct password")
