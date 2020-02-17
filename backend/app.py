@@ -22,15 +22,32 @@ db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
 
+user_skills = db.Table('user_skills',
+                       db.Column('id_user', db.Integer, db.ForeignKey('accounts.id_user'), primary_key=True),
+                       db.Column('id', db.Integer, db.ForeignKey('skills.id'), primary_key=True,
+                                 ))
 
 # TODO Move models to models file
 class Accounts(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     surName = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.Text)
-    userBio = db.Column(db.String(256), nullable=False)
+    userBio = db.Column(db.String(256), nullable=True)
+    skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
+    profile_pic = db.Column(db.String(200), nullable=False)
+    # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
+
+
+# class ProfilePic(db.Model):
+#     filename = db.Column(db.String, primary_key=True)
+#     person_id = db.Column(db.Integer, db.ForeignKey("acc.id"), nullable=False)
+#
+#
+# class Tasks(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     taskName = db.Column(db.String, nullable=False)
 
 
 class Tasks(db.Model):
@@ -42,20 +59,15 @@ class Tasks(db.Model):
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
     author = db.Column(db.Integer, primary_key=True)  # link to user
+    picture = db.Column(db.String(80), nullable=True)
 
 
 # Adding skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
 class Skills(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, )
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(50), nullable=False)
 
-
-class User_Skills(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)  # link to user
-    skill_id = db.Column(db.Integer, nullable=False)  # link to skill
-    skillLevel = db.Column(db.Integer, nullable=False)  # On scale of 1 to 10
 
 
 class hello(Resource):
@@ -68,7 +80,7 @@ api.add_resource(hello, '/')
 class Summary(Resource):
      def post(self):
          summary = request.form['Summary']
-         userAccount = Accounts.query.filter_by(id=1).first()
+         userAccount = Accounts.query.filter_by(id_user=1).first()
          userAccount.userBio = summary
          db.session.commit()
          print("Summary:")
@@ -81,7 +93,7 @@ api.add_resource(Summary, '/summary')
 
 class getSummary(Resource):
     def get(self):
-        sum = db.session.query(Accounts.userBio).filter_by(id=1).first()
+        sum = db.session.query(Accounts.userBio).filter_by(id_user=1).first()
         return sum[0]
 
 
@@ -206,11 +218,15 @@ class AddUserSkill(Resource):
     def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
+        print("Hmm:" + usrid + skillid)
         #if User_Skills.query.filter_by(id=usrid).first() is None:
-        addskill = User_Skills(user_id=usrid, skill_id=skillid, skillLevel=10)
-
+        #addskill = Accounts.skills.append(id_user=usrid, id=skillid)
+        #Accounts.append(id_user=usrid, id=skillid)
+        theUser = Accounts.query.filter_by(id_user=usrid).first()
+        theSkill = Skills.query.filter_by(id=skillid).first()
+        theUser.skills.append(theSkill)
         # Add account to the database
-        db.session.add(addskill)
+        #db.session.add(addskill)
         db.session.commit()
         status = "success"
         if status == "success":
@@ -224,10 +240,10 @@ api.add_resource(AddUserSkill, '/adduserskill')
 
 class GetUserSkills(Resource):
     def get(self):
-        userSkills = User_Skills.query.filter_by(user_id=1).all()
+        userSkills = Accounts.query.filter_by(id_user=1).all()
         skillList = []
         for i in userSkills:
-            skilldict = {"skill_id": i.skill_id, "skilllevel": i.skillLevel}
+            skilldict = {"skill_id": i.skills[0].name}
             skillList.append(skilldict)
         return skillList
 
@@ -245,15 +261,20 @@ api.add_resource(TasksAdded, '/listusertasks')
 
 class ImageUpload(Resource):
     def post(self):
-        target = os.path.join(APP_ROOT, "images/")
-        target_tasks = os.path.join(APP_ROOT, "tasks/")
+        userID = db.session.query(Accounts.id_user).first()
+        target = os.path.join(APP_ROOT, "%s/images/" % userID[0])
 
         if not os.path.isdir(target):
-            os.mkdir(target)
+            os.makedirs(target)
 
         fileName = request.form['name']
         image = request.form['image']
-        path = "./images/%s" % fileName
+
+        userAccount = Accounts.query.filter_by(id_user=1).first()
+        userAccount.profile_pic = fileName
+        db.session.commit()
+
+        path = target + fileName
         def convert_and_save(b64_string):
             with open(path, "wb") as fh:
                 fh.write(base64.decodebytes(b64_string.encode()))
@@ -263,7 +284,42 @@ class ImageUpload(Resource):
 
 
     def get(self):
-        filename = "./images/scaled_rick.jpg"
+        profile_PIC = db.session.query(Accounts.profile_pic).filter_by(id_user=1).first()
+        userID = db.session.query(Accounts.id_user).first()
+        filename = "./%d/images/%s" % (userID[0], profile_PIC[0])
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUpload, "/imageUpload")
+
+
+class ImageUploadTask(Resource):
+    def post(self):
+        userID = db.session.query(Accounts.id_user).first()
+        target = os.path.join(APP_ROOT, "%s/tasks/" % userID[0])
+
+        if not os.path.isdir(target):
+            os.makedirs(target)
+
+        fileName = request.form['name']
+        image = request.form['image']
+
+        taskID = Tasks.query.filter_by(id=1).first()
+        taskID.picture = fileName
+        db.session.commit()
+
+        path = target + fileName
+        def convert_and_save(b64_string):
+            with open(path, "wb") as fh:
+                fh.write(base64.decodebytes(b64_string.encode()))
+
+        convert_and_save(image)
+
+
+
+    def get(self):
+        task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
+        taskID = db.session.query(Tasks.id).first()
+        filename = "./" + taskID[0] + "/tasks/" + task_PIC[0]
+        return send_file(filename, mimetype="image/jpg")
+
+api.add_resource(ImageUploadTask, "/imageUploadTask")

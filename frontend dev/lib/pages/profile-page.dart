@@ -8,6 +8,7 @@ import 'dart:io';
 
 class ProfilePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _ProfilePageState();
+
 }
 
 
@@ -15,34 +16,16 @@ class _ProfilePageState extends State<ProfilePage> {
   String _status = 'none';
   final _formKey = GlobalKey<FormState>();
   final sum = TextEditingController();
-
+  List<Widget> skills = [];
+  _ProfilePageState() {
+    getSkills().then((val) => setState(() {
+      skills = val;
+    }));
+    }
   String summary = "Please Enter your Bio";
   bool chosen = true;
-  List<Widget> skills = [];
   bool ranThis = false;
     Widget build(BuildContext context) {
-
-      Future<List> getSkills() async {
-          http.Response response = await http.get(
-          Uri.encodeFull("http://167.172.59.89:5000/getuserskill"),
-          headers: {"Accept": "application/json"},
-        );
-
-        List data = json.decode(response
-            .body); //only works when first changing type????
-        var counter = 0;
-        print(response.body);
-            while (counter < data.length) {
-          int skillId = data[counter]["skill_id"];
-          int skilllevel = data[counter]["skilllevel"];
-          var containerSkill = new Container(child: Text("Programming skill: " + skilllevel.toString()));
-          skills.add(containerSkill);
-
-          //eCtrl.clear();     // Clear the Text area
-          counter++;
-        }
-          return skills;
-      }
 
       Future<String> getSummary() async {
         http.Response response = await http.get(
@@ -50,14 +33,63 @@ class _ProfilePageState extends State<ProfilePage> {
           headers: {"Accept": "application/json"},
         );
         String _summary = json.decode(response.body);
-        summary = _summary;
+        summary = _summary.toString();
 //        setState(() {
 //
 //        });
       }
       getSummary();
+<<<<<<< HEAD
     getSkills();
       sum.text = summary;
+=======
+
+      List<Widget> skillsList = [];
+      Future<String> getData() async {
+        http.Response response = await http.get(
+          Uri.encodeFull("http://167.172.59.89:5000/postskills"),
+          headers: {"Accept": "application/json"},
+        );
+
+        List data = json.decode(response
+            .body); //only works when first changing type????
+        var counter = 0;
+        print(response.body);
+        while (counter < data.length) {
+          int id = data[counter]["id"];
+          String name = data[counter]["name"];
+          String description = data[counter]["description"];
+
+
+          var aButton = new FlatButton(
+              onPressed: () {
+
+
+                var url = 'http://167.172.59.89:5000/adduserskill';
+
+
+                http.put(url, body: {
+                  'userid': 1.toString(), //Change this
+                  'skill_id': 1.toString(),
+                  'skillLevel': 10.toString(),
+                });
+                print("WORKS");
+                //Conver the response to a bool
+              },
+
+              child: Text(
+                  name)); //TODO: Add send message to backend to add skill on click
+
+          skillsList.add
+            (aButton);
+
+          counter++;
+        }
+      }
+
+      getData();
+
+>>>>>>> d747156c2f66fa96df56bc044221f993416b77a6
 
 
       return Scaffold(
@@ -100,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(10.0),
+                                          padding: EdgeInsets.all(10),
                                           child: RaisedButton(
                                             child: Text('Submit'),
                                             onPressed: () {
@@ -133,7 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
 
               Container(
-                height: 200,
+                height: 165,
                 child: GridView.count(
                   shrinkWrap: true,
                   // Create a grid with 2 columns. If you change the scrollDirection to
@@ -153,52 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   label: Text('Edit Skills'), //`Text` to display
 
                   onPressed: () {
-                    List<Widget> skillsList = [];
-                    Future<String> getData() async {
-                      http.Response response = await http.get(
-                        Uri.encodeFull("http://167.172.59.89:5000/postskills"),
-                        headers: {"Accept": "application/json"},
-                      );
-
-                      List data = json.decode(response
-                          .body); //only works when first changing type????
-                      var counter = 0;
-                      print(response.body);
-                      while (counter < data.length) {
-                        int id = data[counter]["id"];
-                        String name = data[counter]["name"];
-                        String description = data[counter]["description"];
-
-
-                        var aButton = new FlatButton(
-                            onPressed: () {
-                              print("dfgdshriohghiuhgiu");
-
-
-                              var url = 'http://167.172.59.89:5000/adduserskill';
-
-
-                              http.put(url, body: {
-                                'usrid': 1.toString(), //Change this
-                                'skill_id': 1.toString(),
-                                'skillLevel': 10.toString(),
-                              });
-                              print("WORKS");
-                              //Conver the response to a bool
-                            },
-
-                            child: Text(
-                                name)); //TODO: Add send message to backend to add skill on click
-
-                          skillsList.add
-                            (aButton);
-
-                          counter++;
-
-                      }
-                    }
                     setState(() {
-                      getData();
                     });
 
                     showDialog(
@@ -313,4 +300,37 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
     }
+
+
+  Future<List> getSkills() async {
+    List<Widget> tempSkills = [];
+    http.Response response = await http.get(
+      Uri.encodeFull("http://167.172.59.89:5000/getuserskill"),
+      headers: {"Accept": "application/json"},
+    );
+
+    List data = json.decode(response
+        .body); //only works when first changing type????
+    print(response.body);
+    var counter = 0;
+    while (counter < data.length) {
+      var skillId = data[counter]["skill_id"];
+      print("Ran get skills");
+      //print("Should make widget" + skillId.toString());
+      //var containerSkill = new Container(padding: EdgeInsets.all(8), child: Text(skillId), color: Colors.teal[100]);
+      var containerSkill = new Text(skillId);
+
+      tempSkills.add(containerSkill);
+
+      //eCtrl.clear();     // Clear the Text area
+      counter++;
+    }
+
+    print("Skills : ");
+    print(skills);
+
+    return tempSkills;
+  }
+
+
   }
