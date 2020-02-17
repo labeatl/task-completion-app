@@ -153,7 +153,6 @@ class UserLogin(Resource):
         # Make sure the email exists
         if Accounts.query.filter_by(email=usrEmail).first() is not None:
             user = Accounts.query.filter_by(email=usrEmail).first()
-            print(user.password, user.email)
             if check_password_hash(user.password, unhashedPassword):
                 status = 0
                 print("Correct password")
@@ -287,7 +286,7 @@ class ImageUpload(Resource):
     def get(self):
         profile_PIC = db.session.query(Accounts.profile_pic).filter_by(id_user=1).first()
         userID = db.session.query(Accounts.id_user).first()
-        filename = "./%d/images/%s" % (userID[0], profile_PIC[0])
+        filename = "%d/images/%s" % (userID[0], profile_PIC[0])
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUpload, "/imageUpload")
