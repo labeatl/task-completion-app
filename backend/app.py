@@ -244,9 +244,11 @@ class GetUserSkills(Resource):
         skillList = []
         counter = 0;
         for i in userSkills:
+            print(i)
             skilldict = {"skill_id": i.skills[counter].name}
             counter+=1
             skillList.append(skilldict)
+        print(skillList)
         return skillList
 
 
