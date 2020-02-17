@@ -242,8 +242,10 @@ class GetUserSkills(Resource):
     def get(self):
         userSkills = Accounts.query.filter_by(id_user=1).all()
         skillList = []
+        counter = 0;
         for i in userSkills:
-            skilldict = {"skill_id": i.skills[0].name}
+            skilldict = {"skill_id": i.skills[counter].name}
+            counter+=1
             skillList.append(skilldict)
         return skillList
 
