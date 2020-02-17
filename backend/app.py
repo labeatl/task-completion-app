@@ -262,10 +262,10 @@ api.add_resource(TasksAdded, '/listusertasks')
 class ImageUpload(Resource):
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
-        target = os.path.join(APP_ROOT, "%s/images/" % userID[0])
+        target = os.path.join(APP_ROOT, "%d/images/" % userID[0])
 
         if not os.path.isdir(target):
-            os.makedirs(target)
+            os.mkdir(target)
 
         fileName = request.form['name']
         image = request.form['image']
