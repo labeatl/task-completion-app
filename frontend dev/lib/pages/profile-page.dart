@@ -39,10 +39,9 @@ class _ProfilePageState extends State<ProfilePage> {
 //        });
       }
       getSummary();
-<<<<<<< HEAD
+
     getSkills();
       sum.text = summary;
-=======
 
       List<Widget> skillsList = [];
       Future<String> getData() async {
@@ -89,7 +88,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
       getData();
 
->>>>>>> d747156c2f66fa96df56bc044221f993416b77a6
 
 
       return Scaffold(
