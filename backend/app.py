@@ -240,9 +240,9 @@ api.add_resource(AddUserSkill, '/adduserskill')
 
 class GetUserSkills(Resource):
     def get(self):
-        userSkills = Accounts.query.filter_by(Accounts.id_user < 2)
-        reslist = userSkills.all()
-        print(reslist)
+        userSkills = Accounts.query.filter_by(id_user=1)
+        list = userSkills.all()
+        print(list)
         skillList = []
         counter = 0;
         for i in userSkills:
