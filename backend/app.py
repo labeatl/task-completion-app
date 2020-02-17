@@ -240,18 +240,17 @@ api.add_resource(AddUserSkill, '/adduserskill')
 
 class GetUserSkills(Resource):
     def get(self):
-        userSkills = Accounts.query.filter_by(id_user=1)
-        rows = userSkills.statement.execute().fetchall()
-        for row in rows:
-            print(row)
+        query = session.query(Accounts).filter(Accounts.id_user < 2)
+        reslist = query.all()
+        print(reslist)
         skillList = []
         counter = 0;
-        for i in userSkills:
-            print(i)
-            skilldict = {"skill_id": i.skills[counter].name}
-            counter+=1
-            skillList.append(skilldict)
-        print(skillList)
+        # for i in userSkills:
+        #     print(i)
+        #     skilldict = {"skill_id": i.skills[counter].name}
+        #     counter+=1
+        #     skillList.append(skilldict)
+        # print(skillList)
         return skillList
 
 
