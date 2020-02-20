@@ -204,9 +204,11 @@ class PostSkills(Resource):
     def get(self):
         allSkills = Skills.query.all()
         skillList = []
-        for i in allSkills:
-            skilldict = {"id": i.id, "name": i.name, "description": i.description}
+        i = 0
+        while i < len(allSkills):
+            skilldict = {"id": allSkills[i].id, "name": allSkills[i].name, "description": allSkills[i].description}
             skillList.append(skilldict)
+            i = i +1
 
         return skillList
 
@@ -244,12 +246,12 @@ class GetUserSkills(Resource):
         skillList = []
         counter = 0
         for i in userSkills:
-            print(i)
-            skilldict = {"skill_id": i.skills[counter].name}
-            print(skilldict)
-            counter+=1
-            skillList.append(skilldict)
-        return skillList
+		for  j in i.skills:
+              		print(i)
+              		skilldict = {"skill_id": j.name}
+              		print(skilldic)
+              		skillList.append(skilldict)
+              		return skillList
 
 
 api.add_resource(GetUserSkills, '/getuserskill')
