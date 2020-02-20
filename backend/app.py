@@ -239,27 +239,23 @@ class AddUserSkill(Resource):
     #return status
 api.add_resource(AddUserSkill, '/adduserskill')
 
-
 class GetUserSkills(Resource):
     def get(self):
         userSkills = Accounts.query.filter_by(id_user=1).all()
         skillList = []
         counter = 0
         for i in userSkills:
-		for  j in i.skills:
-              		print(i)
-              		skilldict = {"skill_id": j.name}
-              		print(skilldic)
-              		skillList.append(skilldict)
-              		return skillList
-
-
+            for j in i.skills:
+                print(i)
+                skilldict = {"skill_id": j.name}
+                print(skilldict)
+                skillList.append(skilldict)
+        return skillList
 api.add_resource(GetUserSkills, '/getuserskill')
 '''
 class ListUserTasks(Resource):
     def post(self):
         allSkills = Skills.query.all()
-        
         return allSkills
 
 api.add_resource(TasksAdded, '/listusertasks')
