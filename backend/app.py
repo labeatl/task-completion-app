@@ -328,3 +328,4 @@ class ImageUploadTask(Resource):
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")
+

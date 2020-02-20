@@ -2,6 +2,9 @@ import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+
+enum AuthFormType {reset}
+
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _LoginPageState();
@@ -57,7 +60,9 @@ class _LoginPageState extends State<LoginPage> {
                     child: new FlatButton(
                       textColor: Colors.blueGrey,
                       child: new Text("Forgotten password?"),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushReplacementNamed('/passwordReset');
+                      },
                     ),
                   ),
                 ),
