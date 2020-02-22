@@ -153,7 +153,7 @@ class TasksAdded(Resource):
 api.add_resource(TasksAdded, '/addtask')
 
 
-def generate_token(id, self, expiration=1200):
+def generate_token(id, self, expiration=5000):
     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
     return s.dumps({'id': id})
 
@@ -172,7 +172,7 @@ def verify_password(username, password):
             if check_password_hash(user.password, password):
                 loggedUser = user.id_user
 
-                return loggedUser
+                return loggedUser, generate_token(user.id_user)
             else:
                 return None
         else:
@@ -194,13 +194,15 @@ class UserLogin(Resource):
 
 
         status = verify_password(usrEmail, unhashedPassword)
-        if status == None:
+        userToken = status[1]
+        if status[0] == None:
             status = 1
             print("Failed")
         else:
             print("Success")
             status = 0
-        return status
+            userToken = None
+        return status, userToken
 
 
 api.add_resource(UserLogin, '/login')
