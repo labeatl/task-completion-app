@@ -4,23 +4,31 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
-import os, base64
-from flask import send_file
+from flask import send_file, g
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+import os
+import base64
+
+
+
+
 
 app = Flask(__name__)
 api = Api(app)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-# Database connection information
+auth = HTTPBasicAuth()
 
+
+
+# Database connection information
 dbParam = 'mysql+pymysql://taskuser:LENAnalytics2019@localhost/taskr'
 app.config['SQLALCHEMY_DATABASE_URI'] = dbParam
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # Flask secret key
-theKey = 'thEejrdaR5$wE3yY4wsehn4wASHR'
+app.config['SECRET_KEY'] = 'thEejrdaR5$wE3yY4wsehn4wASHR' #Change this for production
 
-db = SQLAlchemy(app)
-
-migrate = Migrate(app, db)
 
 user_skills = db.Table('user_skills',
                        db.Column('id_user', db.Integer, db.ForeignKey('accounts.id_user'), primary_key=True),
@@ -67,6 +75,8 @@ class Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True, )
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(50), nullable=False)
+
+#END MODELS
 
 
 
@@ -143,27 +153,53 @@ class TasksAdded(Resource):
 api.add_resource(TasksAdded, '/addtask')
 
 
+def generate_token(id, self, expiration=1200):
+    s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+    return s.dumps({'id': id})
+
+
+@auth.verify_password
+def verify_password(username, password):
+    s = Serializer(app.config['SECRET_KEY'])
+    try:  #Check if username is a valid token
+        loggedUser = s.loads(username)
+    except SignatureExpired:
+        return None
+    except BadSignature:  # If invalid then check if username and password are a valid login
+        if Accounts.query.filter_by(email=username).first() is not None:
+
+            user = Accounts.query.filter_by(email=username).first()
+            if check_password_hash(user.password, password):
+                loggedUser = user.id_user
+
+                return loggedUser
+            else:
+                return None
+        else:
+            return None
+    return loggedUser
+
+
+
+
+
 class UserLogin(Resource):
     def post(self):
+
+
         usrEmail = request.form['email']
         unhashedPassword = request.form['password']
         # check password is same on frontend
         hashedPassword = generate_password_hash(unhashedPassword)
 
-        # Make sure the email exists
-        if Accounts.query.filter_by(email=usrEmail).first() is not None:
-            user = Accounts.query.filter_by(email=usrEmail).first()
-            if check_password_hash(user.password, unhashedPassword):
-                status = 0
-                print("Correct password")
-            else:
-                status = 1
-                print("InCorrect Password")
 
-            # Add account to the database
-        else:
+        status = verify_password(usrEmail, unhashedPassword)
+        if status == None:
             status = 1
-            print("Email does not exist")
+            print("Failed")
+        else:
+            print("Success")
+            status = 0
         return status
 
 
@@ -171,6 +207,7 @@ api.add_resource(UserLogin, '/login')
 
 
 class TasksList(Resource):
+    @auth.login_required
     def get(self):
         tasks = Tasks.query
         list = []
@@ -186,6 +223,7 @@ api.add_resource(TasksList, '/tasks')
 
 # TODO: Implement frontend for deletion
 class AccountDeletion(Resource):
+    @auth.login_required
     def put(self):
         accEmailToDelete = request.form['email']
         if Accounts.query.filter_by(email=accEmailToDelete).first() is not None:
@@ -201,6 +239,7 @@ api.add_resource(AccountDeletion, '/deleteaccount')
 
 # Display skills to user, adding will be done with relational db in another class/func
 class PostSkills(Resource):
+    @auth.login_required
     def get(self):
         allSkills = Skills.query.all()
         skillList = []
@@ -217,6 +256,7 @@ api.add_resource(PostSkills, '/postskills')
 
 
 class AddUserSkill(Resource):
+    @auth.login_required
     def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
@@ -252,6 +292,7 @@ class GetUserSkills(Resource):
                 skillList.append(skilldict)
         return skillList
 api.add_resource(GetUserSkills, '/getuserskill')
+
 '''
 class ListUserTasks(Resource):
     def post(self):
@@ -262,6 +303,9 @@ api.add_resource(TasksAdded, '/listusertasks')
 '''
 
 class ImageUpload(Resource):
+    @auth.login_required
+
+
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
         target = os.path.join(APP_ROOT, "%d/images/" % userID[0])
@@ -295,6 +339,8 @@ api.add_resource(ImageUpload, "/imageUpload")
 
 
 class ImageUploadTask(Resource):
+    @auth.login_required
+
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
         target = os.path.join(APP_ROOT, "%s/tasks/" % userID[0])
