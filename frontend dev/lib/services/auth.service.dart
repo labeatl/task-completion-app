@@ -16,7 +16,7 @@ class AuthService {
     bool responseBool;
     //Conver the response to a bool
     print(response.body.runtimeType);
-    if (int.parse(response.body) == 0) {
+    if (int.parse(response.body[0]) == 0) {
       print('Successful login');
       responseBool = true;
     }
