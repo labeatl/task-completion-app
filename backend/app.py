@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, g
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -163,15 +163,18 @@ def verify_password(username, password):
     s = Serializer(app.config['SECRET_KEY'])
     try:  #Check if username is a valid token
         loggedUser = s.loads(username)
+        user = Accounts.query.filter_by(email=loggedUser).first()
+        g.user = user.id_user
+
     except SignatureExpired:
         return None
-    except BadSignature:  # If invalid then check if username and password are a valid login
+    except BadSignature:  #     If invalid then check if username and password are a valid login
         if Accounts.query.filter_by(email=username).first() is not None:
 
             user = Accounts.query.filter_by(email=username).first()
             if check_password_hash(user.password, password):
                 loggedUser = user.id_user
-
+                g.user = loggedUser
                 return loggedUser, generate_token(user.id_user)
             else:
                 return None
