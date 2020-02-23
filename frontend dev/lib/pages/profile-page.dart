@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
       skills = val;
     }));
     }
-  String summary = "Please Enter your Bio";
+  String summary = "";
   bool chosen = true;
   bool ranThis = false;
     Widget build(BuildContext context) {
