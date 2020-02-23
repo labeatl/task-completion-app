@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/passwordReset-page.dart';
 import 'package:flutter_app/pages/tasks-page.dart';
 import "./pages/login-page.dart";
 import "./pages/home-page.dart";
@@ -22,6 +23,7 @@ void main() async {
       '/home': (BuildContext context) => new HomePage(),
       '/login': (BuildContext context) => new LoginPage(),
       '/tasks': (BuildContext context) => new TasksPage(),
+      '/passwordReset': (BuildContext context) => new PasswordReset(),
     },
   ));
 }

@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 http.put(url, body: {
                   'userid': 1.toString(), //Change this
-                  'skill_id': 1.toString(),
+                  'skill_id': id.toString(),
                   'skillLevel': 10.toString(),
                 });
                 print("WORKS");
