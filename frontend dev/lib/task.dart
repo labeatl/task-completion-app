@@ -8,7 +8,7 @@ class Task {
   final int price;
   final String location;
   final DateTime date;
-  final File image;
+  final File picture;
 
   Task({
       @required this.title,
@@ -18,5 +18,5 @@ class Task {
       @required this.price,
       @required this.location,
       @required this.date,
-      this.image});
+      this.picture});
 }

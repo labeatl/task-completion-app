@@ -144,8 +144,9 @@ class TasksAdded(Resource):
         Et = request.form['et']
         Price = request.form['price']
         Location = request.form['location']
+        Picture = request.form['picture']
         createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price,
-                           location=Location,author=1)
+                           location=Location,author=1, picture=Picture)
         db.session.add(createTask)
         db.session.commit()
 
@@ -198,7 +199,7 @@ class UserLogin(Resource):
 
         #status = verify_password(usrEmail, unhashedPassword)
         #userToken = status[1]
-        if True == None:
+        if False:
             status = 1
             print("Failed")
         else:

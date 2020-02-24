@@ -1,5 +1,4 @@
 import 'package:flutter_app/pages/tasks-page.dart';
-import 'package:flutter_app/pages/terms-page.dart';
 
 import '../main.dart';
 
