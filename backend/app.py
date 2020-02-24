@@ -59,7 +59,7 @@ class Accounts(db.Model):
 
 
 class Tasks(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    #id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(512), nullable=False)
     category = db.Column(db.String(20), nullable=False)
