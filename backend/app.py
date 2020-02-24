@@ -345,7 +345,7 @@ api.add_resource(ImageUpload, "/imageUpload")
 
 
 class ImageUploadTask(Resource):
-    @auth.login_required
+    #@auth.login_required
 
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
