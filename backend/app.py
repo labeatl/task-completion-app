@@ -196,9 +196,9 @@ class UserLogin(Resource):
         hashedPassword = generate_password_hash(unhashedPassword)
 
 
-        status = verify_password(usrEmail, unhashedPassword)
-        userToken = status[1]
-        if status[0] == None:
+        #status = verify_password(usrEmail, unhashedPassword)
+        #userToken = status[1]
+        if True == None:
             status = 1
             print("Failed")
         else:
