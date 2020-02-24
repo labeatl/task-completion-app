@@ -1,4 +1,9 @@
+import 'package:flutter_app/pages/tasks-page.dart';
+import 'package:flutter_app/pages/terms-page.dart';
+
 import '../main.dart';
+
+//import '../terms.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   String _status = 'no-action';
   final username = TextEditingController();
   final password = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) => new Scaffold(
@@ -110,6 +114,15 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         //The below strings store the form data entered.
                         String name, surName, email, password, confirmPassword;
+                        bool _isChecked = false;
+
+                        void onChanged(bool value) {
+                          setState(() {
+                            _isChecked = value;
+                            print(_isChecked);
+                          });
+                        }
+
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -124,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                                           padding: EdgeInsets.all(10.0),
                                           child: TextFormField(
                                             decoration: InputDecoration(
-                                                labelText: "name"),
+                                                labelText: "First Name"),
                                             validator: (value) {
                                               if (value.isEmpty) {
                                                 return 'Please enter some text';
@@ -140,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                                           padding: EdgeInsets.all(10.0),
                                           child: TextFormField(
                                             decoration: InputDecoration(
-                                                labelText: "surname"),
+                                                labelText: "Surname"),
                                             validator: (value) {
                                               if (value.isEmpty) {
                                                 return 'Please enter some text';
@@ -157,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                                           padding: EdgeInsets.all(10.0),
                                           child: TextFormField(
                                             decoration: InputDecoration(
-                                                labelText: "email address"),
+                                                labelText: "Email Address"),
                                             validator: (value) {
                                               if (value.isEmpty) {
                                                 return 'Please enter some text';
@@ -175,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                                             obscureText: true,
                                             //Make this input hidden
                                             decoration: InputDecoration(
-                                                labelText: "password"),
+                                                labelText: "Password"),
                                             validator: (value) {
                                               password = value;
                                               if (value.isEmpty) {
@@ -211,6 +224,46 @@ class _LoginPageState extends State<LoginPage> {
                                             },
                                           ),
                                         ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: new InkWell(
+                                            child: Text("Terms and Conditions"),
+                                            onTap: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      content: Container(
+                                                        width: 300,
+                                                        height: 600,
+                                                        child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: <Widget>[
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        top:
+                                                                            10.0),
+                                                                child: new Text(
+                                                                    "The follwing is the terms and conditionx"),
+                                                              ),
+                                                            ]),
+                                                      ),
+                                                    );
+                                                  });
+                                            },
+                                          ),
+                                        ),
+                                        new Checkbox(
+                                            value: _isChecked,
+                                            onChanged: (bool value) {
+                                                _isChecked = !value;
+                                                print(value);
+                                                setState(() {});
+                                            }),
                                         Padding(
                                           padding: const EdgeInsets.all(10.0),
                                           child: RaisedButton(
