@@ -218,49 +218,50 @@ class _LoginPageState extends State<LoginPage> {
                                             },
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: new InkWell(
-                                            child: Text("Terms and Conditions"),
-                                            onTap: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      content: Container(
-                                                        width: 300,
-                                                        height: 600,
-                                                        child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: <Widget>[
-                                                              Padding(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        top:
-                                                                            10.0),
-                                                                child: new Text(
-                                                                  "The follwing is the terms and conditions",
+                                        Row(children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: new InkWell(
+                                              child: Text("Terms and Conditions"),
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        content: Container(
+                                                          width: 300,
+                                                          height: 600,
+                                                          child: Column(
+                                                              mainAxisSize:
+                                                              MainAxisSize
+                                                                  .min,
+                                                              children: <Widget>[
+                                                                Padding(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                      top:
+                                                                      10.0),
+                                                                  child: new Text(
+                                                                    "The follwing is the terms and conditions",
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ]),
-                                                      ),
-                                                    );
-                                                  });
-                                            },
+                                                              ]),
+                                                        ),
+                                                      );
+                                                    });
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                        new Text(
-                                            "By creating an account you agree to our terms and conditions."),
-                                        new Checkbox(
-                                            value: _isChecked,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                _isChecked = !_isChecked;
-                                              });
-                                            }),
+                                          new Checkbox(
+                                              value: _isChecked,
+                                              onChanged: (val) {
+                                                setState(() {
+                                                  _isChecked = !_isChecked;
+                                                });
+                                              }),
+                                        ],),
+
                                         Padding(
                                           padding: const EdgeInsets.all(10.0),
                                           child: RaisedButton(
