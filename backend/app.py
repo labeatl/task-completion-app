@@ -59,7 +59,7 @@ class Accounts(db.Model):
 
 
 class Tasks(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    #id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(512), nullable=False)
     category = db.Column(db.String(20), nullable=False)
@@ -144,8 +144,9 @@ class TasksAdded(Resource):
         Et = request.form['et']
         Price = request.form['price']
         Location = request.form['location']
-        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price,
-                           location=Location,author=1)
+        Picture = request.form['picture']
+
+        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, author=1, picture=Picture)
         db.session.add(createTask)
         db.session.commit()
 
@@ -196,9 +197,9 @@ class UserLogin(Resource):
         hashedPassword = generate_password_hash(unhashedPassword)
 
 
-        status = verify_password(usrEmail, unhashedPassword)
-        userToken = status[1]
-        if status[0] == None:
+        #status = verify_password(usrEmail, unhashedPassword)
+        #userToken = status[1]
+        if False:
             status = 1
             print("Failed")
         else:
@@ -344,7 +345,7 @@ api.add_resource(ImageUpload, "/imageUpload")
 
 
 class ImageUploadTask(Resource):
-    @auth.login_required
+    #@auth.login_required
 
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
@@ -356,10 +357,10 @@ class ImageUploadTask(Resource):
         fileName = request.form['name']
         image = request.form['image']
 
-        if Tasks.query.filter_by(id=1).first() is not None:
-            taskID = Tasks.query.filter_by(id=1).first()
-            taskID.picture = fileName
-            db.session.commit()
+        # if Tasks.query.filter_by(id=1).first() is not None:
+        #     taskID = Tasks.query.filter_by(id=1).first()
+        #     taskID.picture = fileName
+        #     db.session.commit()
 
         path = target + fileName
         def convert_and_save(b64_string):
