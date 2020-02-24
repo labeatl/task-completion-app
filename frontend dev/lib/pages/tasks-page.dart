@@ -122,46 +122,51 @@ class TaskPageState extends State<TasksPage> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: Container(
-                                height: 300,
-                                width: 350,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text('Job Title:'),
-                                      Text(task.title),
-                                      Text(''),
-                                      Text('Job Description:'),
-                                      Text(task.description),
-                                      Text(''),
-                                      Text('Job Price:'),
-                                      Text(task.price.toString()),
-                                      Text(''),
-                                      Text('Job Location:'),
-                                      Text(task.location),
-                                      Text(''),
-                                      Text('Estimated Time (in minutes):'),
-                                      Text(task.et.toString()),
-                                      Text(''),
-                                      Image.network(
-                                        'http://167.172.59.89:5000/imageUploadTask',
-                                      ),
-                                      Text(''),
-                                      RaisedButton(
-                                        onPressed: () {
-                                          _x = "Applied";
-                                        },
-                                        child: new Text(
-                                          _x,
-                                          style: TextStyle(color: Colors.white),
+                            return StatefulBuilder(
+                                builder: (context, setState) {
+                              return AlertDialog(
+                                content: Container(
+                                  height: 300,
+                                  width: 350,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text('Job Title:'),
+                                        Text(task.title),
+                                        Text(''),
+                                        Text('Job Description:'),
+                                        Text(task.description),
+                                        Text(''),
+                                        Text('Job Price:'),
+                                        Text(task.price.toString()),
+                                        Text(''),
+                                        Text('Job Location:'),
+                                        Text(task.location),
+                                        Text(''),
+                                        Text('Estimated Time (in minutes):'),
+                                        Text(task.et.toString()),
+                                        Image.network(
+                                          'http://167.172.59.89:5000/imageUploadTask',
                                         ),
-                                      )
-                                    ],
+                                        Text(''),
+                                        RaisedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _x = "Applied";
+                                            });
+                                          },
+                                          child: new Text(
+                                            _x,
+                                            style:
+                                                TextStyle(color: Colors.blueAccent),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
+                              );
+                            });
                           });
                     },
                     child: Row(

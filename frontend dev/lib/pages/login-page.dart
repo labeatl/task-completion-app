@@ -119,183 +119,190 @@ class _LoginPageState extends State<LoginPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return StatefulBuilder(
-                                builder: (context, setState){
-                              return AlertDialog(
-                                content: Form(
-                                  key: _formKey,
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                                labelText: "First Name"),
-                                            validator: (value) {
-                                              if (value.isEmpty) {
-                                                return 'Please enter some text';
-                                              }
-                                              return null;
-                                            },
-                                            onSaved: (String val) {
-                                              name = val;
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                                labelText: "Surname"),
-                                            validator: (value) {
-                                              if (value.isEmpty) {
-                                                return 'Please enter some text';
-                                              }
-
-                                              return null;
-                                            },
-                                            onSaved: (String val) {
-                                              surName = val;
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                                labelText: "Email Address"),
-                                            validator: (value) {
-                                              if (value.isEmpty) {
-                                                return 'Please enter some text';
-                                              }
-                                              return null;
-                                            },
-                                            onSaved: (String val) {
-                                              email = val;
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: TextFormField(
-                                            obscureText: true,
-                                            //Make this input hidden
-                                            decoration: InputDecoration(
-                                                labelText: "Password"),
-                                            validator: (value) {
-                                              password = value;
-                                              if (value.isEmpty) {
-                                                return 'Please enter some text';
-                                              }
-                                              return null;
-                                            },
-                                            onSaved: (String val) {
-                                              password = val;
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(10.0),
-                                          child: TextFormField(
-                                            obscureText: true,
-                                            //Make this input hidden
-
-                                            decoration: InputDecoration(
-                                                labelText: "Confirm Password"),
-                                            validator: (value) {
-                                              if (value.isEmpty) {
-                                                return 'Please enter some text';
-                                              } else if (value
-                                                      .compareTo(password) !=
-                                                  0) {
-                                                return 'Passwords do not match';
-                                              }
-                                              return null;
-                                            },
-                                            onSaved: (String val) {
-                                              confirmPassword = val;
-                                            },
-                                          ),
-                                        ),
-                                        Row(children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: new InkWell(
-                                              child: Text("Terms and Conditions"),
-                                              onTap: () {
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return AlertDialog(
-                                                        content: Container(
-                                                          width: 300,
-                                                          height: 600,
-                                                          child: Column(
-                                                              mainAxisSize:
-                                                              MainAxisSize
-                                                                  .min,
-                                                              children: <Widget>[
-                                                                Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                      top:
-                                                                      10.0),
-                                                                  child: new Text(
-                                                                    "The follwing is the terms and conditions",
-                                                                  ),
-                                                                ),
-                                                              ]),
-                                                        ),
-                                                      );
-                                                    });
-                                              },
+                                builder: (context, setState) {
+                                  return AlertDialog(
+                                    content: Form(
+                                      key: _formKey,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: TextFormField(
+                                                decoration: InputDecoration(
+                                                    labelText: "First Name"),
+                                                validator: (value) {
+                                                  if (value.isEmpty) {
+                                                    return 'Please enter some text';
+                                                  }
+                                                  return null;
+                                                },
+                                                onSaved: (String val) {
+                                                  name = val;
+                                                },
+                                              ),
                                             ),
-                                          ),
-                                          new Checkbox(
-                                              value: _isChecked,
-                                              onChanged: (val) {
-                                                setState(() {
-                                                  _isChecked = !_isChecked;
-                                                });
-                                              }),
-                                        ],),
+                                            Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: TextFormField(
+                                                decoration: InputDecoration(
+                                                    labelText: "Surname"),
+                                                validator: (value) {
+                                                  if (value.isEmpty) {
+                                                    return 'Please enter some text';
+                                                  }
+                                                  return null;
+                                                },
+                                                onSaved: (String val) {
+                                                  surName = val;
+                                                },
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: TextFormField(
+                                                decoration: InputDecoration(
+                                                    labelText: "Email Address"),
+                                                validator: (value) {
+                                                  if (value.isEmpty) {
+                                                    return 'Please enter some text';
+                                                  }
+                                                  return null;
+                                                },
+                                                onSaved: (String val) {
+                                                  email = val;
+                                                },
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: TextFormField(
+                                                obscureText: true,
+                                                //Make this input hidden
+                                                decoration: InputDecoration(
+                                                    labelText: "Password"),
+                                                validator: (value) {
+                                                  password = value;
+                                                  if (value.isEmpty) {
+                                                    return 'Please enter some text';
+                                                  }
+                                                  return null;
+                                                },
+                                                onSaved: (String val) {
+                                                  password = val;
+                                                },
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: TextFormField(
+                                                obscureText: true,
+                                                //Make this input hidden
 
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: RaisedButton(
-                                            child: Text("Submit"),
-                                            onPressed: () {
-                                              if (_formKey.currentState
-                                                  .validate()) {
-                                                _formKey.currentState.save();
+                                                decoration: InputDecoration(
+                                                    labelText:
+                                                        "Confirm Password"),
+                                                validator: (value) {
+                                                  if (value.isEmpty) {
+                                                    return 'Please enter some text';
+                                                  } else if (value.compareTo(
+                                                          password) !=
+                                                      0) {
+                                                    return 'Passwords do not match';
+                                                  }
+                                                  return null;
+                                                },
+                                                onSaved: (String val) {
+                                                  confirmPassword = val;
+                                                },
+                                              ),
+                                            ),
+                                            Row(
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: new InkWell(
+                                                    child: Text(
+                                                        "Terms and Conditions"),
+                                                    onTap: () {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              content:
+                                                                  Container(
+                                                                width: 300,
+                                                                height: 600,
+                                                                child: Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .min,
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Padding(
+                                                                        padding:
+                                                                            EdgeInsets.only(top: 10.0),
+                                                                        child:
+                                                                            new Text(
+                                                                          "The follwing is the terms and conditions",
+                                                                        ),
+                                                                      ),
+                                                                    ]),
+                                                              ),
+                                                            );
+                                                          });
+                                                    },
+                                                  ),
+                                                ),
+                                                new Checkbox(
+                                                    value: _isChecked,
+                                                    onChanged: (val) {
+                                                      setState(() {
+                                                        _isChecked =
+                                                            !_isChecked;
+                                                      });
+                                                    }),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: RaisedButton(
+                                                child: Text("Submit"),
+                                                onPressed: () {
+                                                  if (_formKey.currentState
+                                                      .validate()) {
+                                                    _formKey.currentState
+                                                        .save();
 
-                                                var url =
-                                                    'http://167.172.59.89:5000/signup';
-                                                print({
-                                                  'name': name,
-                                                  'surName': surName,
-                                                  'email': email,
-                                                  'password': password
-                                                });
-                                                http.put(url, body: {
-                                                  'name': name,
-                                                  'surName': surName,
-                                                  'email': email,
-                                                  'password': password
-                                                });
-                                              }
-                                            },
-                                          ),
-                                        )
-                                      ],
+                                                    var url =
+                                                        'http://167.172.59.89:5000/signup';
+                                                    print({
+                                                      'name': name,
+                                                      'surName': surName,
+                                                      'email': email,
+                                                      'password': password
+                                                    });
+                                                    http.put(url, body: {
+                                                      'name': name,
+                                                      'surName': surName,
+                                                      'email': email,
+                                                      'password': password
+                                                    });
+                                                  }
+                                                },
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              );
+                                  );
                                 },
-                                );
+                              );
                             });
                       },
                     ),
