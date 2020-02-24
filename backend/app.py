@@ -221,6 +221,7 @@ class TasksList(Resource):
             dict_task = {"title": task.title, "description": task.description, "et": task.et, "category": task.category,
                          "price": task.price, "location": task.location}
             list.append(dict_task)
+            print(dict_task)
         return list
 
 
