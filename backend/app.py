@@ -357,10 +357,10 @@ class ImageUploadTask(Resource):
         fileName = request.form['name']
         image = request.form['image']
 
-        if Tasks.query.filter_by(id=1).first() is not None:
-            taskID = Tasks.query.filter_by(id=1).first()
-            taskID.picture = fileName
-            db.session.commit()
+        # if Tasks.query.filter_by(id=1).first() is not None:
+        #     taskID = Tasks.query.filter_by(id=1).first()
+        #     taskID.picture = fileName
+        #     db.session.commit()
 
         path = target + fileName
         def convert_and_save(b64_string):
@@ -371,10 +371,10 @@ class ImageUploadTask(Resource):
 
 
 
-    def get(self):
-        task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
-        taskID = db.session.query(Tasks.id).first()
-        filename = "./" + taskID[0] + "/tasks/" + task_PIC[0]
-        return send_file(filename, mimetype="image/jpg")
+    # def get(self):
+        # task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
+        # taskID = db.session.query(Tasks.id).first()
+        # filename = "./" + taskID[0] + "/tasks/" + task_PIC[0]
+        # return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")
