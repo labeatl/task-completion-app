@@ -59,14 +59,13 @@ class Accounts(db.Model):
 
 
 class Tasks(db.Model):
-    #id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(512), nullable=False)
     category = db.Column(db.String(20), nullable=False)
     et = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
-    author = db.Column(db.Integer, primary_key=True)  # link to user
     picture = db.Column(db.String(80), nullable=True)
 
 
@@ -146,7 +145,7 @@ class TasksAdded(Resource):
         Location = request.form['location']
         Picture = request.form['picture']
 
-        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, author=1, picture=Picture)
+        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture)
         db.session.add(createTask)
         db.session.commit()
 
@@ -357,10 +356,10 @@ class ImageUploadTask(Resource):
         fileName = request.form['name']
         image = request.form['image']
 
-        # if Tasks.query.filter_by(id=1).first() is not None:
-        #     taskID = Tasks.query.filter_by(id=1).first()
-        #     taskID.picture = fileName
-        #     db.session.commit()
+        if Tasks.query.filter_by(id=1).first() is not None:
+            taskID = Tasks.query.filter_by(id=1).first()
+            taskID.picture = fileName
+            db.session.commit()
 
         path = target + fileName
         def convert_and_save(b64_string):

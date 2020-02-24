@@ -9,7 +9,6 @@ class Task {
   final String location;
   final DateTime date;
   final File picture;
-  final int author;
 
   Task({
       @required this.title,
@@ -19,6 +18,5 @@ class Task {
       @required this.price,
       @required this.location,
       @required this.date,
-      this.author,
       this.picture});
 }
