@@ -1,5 +1,4 @@
 import 'package:flutter_app/pages/tasks-page.dart';
-import 'package:flutter_app/pages/terms-page.dart';
 
 import '../main.dart';
 
@@ -8,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 
-enum AuthFormType {reset}
+enum AuthFormType { reset }
 
 class LoginPage extends StatefulWidget {
   @override
@@ -21,7 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  Widget build(BuildContext context) => new Scaffold(
+  Widget build(BuildContext context) =>
+      new Scaffold(
         body: SingleChildScrollView(
           child: new Container(
             height: 800,
@@ -65,7 +65,8 @@ class _LoginPageState extends State<LoginPage> {
                       textColor: Colors.blueGrey,
                       child: new Text("Forgotten password?"),
                       onPressed: () {
-                        Navigator.of(context).pushReplacementNamed('/passwordReset');
+                        Navigator.of(context).pushReplacementNamed(
+                            '/passwordReset');
                       },
                     ),
                   ),
@@ -213,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                                               if (value.isEmpty) {
                                                 return 'Please enter some text';
                                               } else if (value
-                                                      .compareTo(password) !=
+                                                  .compareTo(password) !=
                                                   0) {
                                                 return 'Passwords do not match';
                                               }
@@ -239,16 +240,17 @@ class _LoginPageState extends State<LoginPage> {
                                                         height: 600,
                                                         child: Column(
                                                             mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
+                                                            MainAxisSize
+                                                                .min,
                                                             children: <Widget>[
                                                               Padding(
                                                                 padding: EdgeInsets
                                                                     .only(
-                                                                        top:
-                                                                            10.0),
+                                                                    top:
+                                                                    10.0),
                                                                 child: new Text(
-                                                                    "The follwing is the terms and conditionx"),
+                                                                    "The follwing is the terms and conditions",
+                                                                    ),
                                                               ),
                                                             ]),
                                                       ),
@@ -257,13 +259,16 @@ class _LoginPageState extends State<LoginPage> {
                                             },
                                           ),
                                         ),
-                                        new Checkbox(
-                                            value: _isChecked,
-                                            onChanged: (bool value) {
-                                                _isChecked = !value;
-                                                print(value);
-                                                setState(() {});
-                                            }),
+                                        new Text (
+                                            "By creating an account you agree to our terms and conditions."
+                                        ),
+//                                        new Checkbox(
+//                                            value: _isChecked,
+//                                            onChanged: (bool value) {
+//                                                _isChecked = !value;
+//                                                print(value);
+//                                                setState(() {});
+//                                            }),
                                         Padding(
                                           padding: const EdgeInsets.all(10.0),
                                           child: RaisedButton(
