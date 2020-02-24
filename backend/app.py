@@ -217,6 +217,7 @@ class TasksList(Resource):
     def get(self):
         tasks = Tasks.query
         list = []
+        print("shakara")
         for task in tasks:
             dict_task = {"title": task.title, "description": task.description, "et": task.et, "category": task.category,
                          "price": task.price, "location": task.location}
