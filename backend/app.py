@@ -147,6 +147,7 @@ class TasksAdded(Resource):
 
         createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture)
         db.session.add(createTask)
+        print(createTask)
         db.session.commit()
 
 
