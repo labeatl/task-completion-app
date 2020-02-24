@@ -217,7 +217,6 @@ class TasksList(Resource):
     def get(self):
         tasks = Tasks.query
         list = []
-        print("shakara")
         for task in tasks:
             dict_task = {"title": task.title, "description": task.description, "et": task.et, "category": task.category,
                          "price": task.price, "location": task.location}
@@ -374,7 +373,7 @@ class ImageUploadTask(Resource):
     def get(self):
         task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
         taskID = db.session.query(Tasks.id).first()
-        filename = "./" + taskID[0] + "/tasks/" + task_PIC[0]
+        filename = "./1" + "/tasks/" + task_PIC[0]
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")
