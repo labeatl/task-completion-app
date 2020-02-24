@@ -10,7 +10,6 @@ class TasksPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new TaskPageState();
 }
-
 List data;
 List<Task> tasks = [];
 
@@ -69,7 +68,7 @@ class TaskPageState extends State<TasksPage> {
     print(response.toString());
 
   }
-
+  String _x = "Apply";
   @override
   void initState() {
     this.getData();
@@ -113,6 +112,7 @@ class TaskPageState extends State<TasksPage> {
                   ),
                 ],
               ),
+
               Column(
                 children: tasks.map((task) {
                   EdgeInsets.only(left: 20.0, right: 20.0);
@@ -148,12 +148,13 @@ class TaskPageState extends State<TasksPage> {
                                         'http://167.172.59.89:5000/imageUploadTask',
                                       ),
                                       Text(''),
-
                                       RaisedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          _x = "Applied";
+                                        },
 
                                         child: new Text(
-                                          'Apply',
+                                          _x,
                                           style: TextStyle(color: Colors.white),
                                         ),
                                       )
