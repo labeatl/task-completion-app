@@ -59,7 +59,7 @@ class Accounts(db.Model):
 
 
 class Tasks(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    #id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(512), nullable=False)
     category = db.Column(db.String(20), nullable=False)
@@ -145,8 +145,8 @@ class TasksAdded(Resource):
         Price = request.form['price']
         Location = request.form['location']
         Picture = request.form['picture']
-        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price,
-                           location=Location, author=1, picture=Picture)
+
+        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, author=1, picture=Picture)
         db.session.add(createTask)
         db.session.commit()
 
