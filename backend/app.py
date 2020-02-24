@@ -208,7 +208,7 @@ class PostSkills(Resource):
         while i < len(allSkills):
             skilldict = {"id": allSkills[i].id, "name": allSkills[i].name, "description": allSkills[i].description}
             skillList.append(skilldict)
-            i = i +1
+            i = i + 1
 
         return skillList
 
