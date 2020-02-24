@@ -59,8 +59,8 @@ class Accounts(db.Model):
 
 
 class Tasks(db.Model):
-    #id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(512), nullable=False)
     category = db.Column(db.String(20), nullable=False)
     et = db.Column(db.Integer, nullable=False)
@@ -309,7 +309,7 @@ api.add_resource(TasksAdded, '/listusertasks')
 '''
 
 class ImageUpload(Resource):
-    #@auth.login_required
+    @auth.login_required
 
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
@@ -344,7 +344,7 @@ api.add_resource(ImageUpload, "/imageUpload")
 
 
 class ImageUploadTask(Resource):
-    #@auth.login_required
+    @auth.login_required
 
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
@@ -356,10 +356,10 @@ class ImageUploadTask(Resource):
         fileName = request.form['name']
         image = request.form['image']
 
-        # if Tasks.query.filter_by(id=1).first() is not None:
-        #     taskID = Tasks.query.filter_by(id=1).first()
-        #     taskID.picture = fileName
-        #     db.session.commit()
+        if Tasks.query.filter_by(id=1).first() is not None:
+            taskID = Tasks.query.filter_by(id=1).first()
+            taskID.picture = fileName
+            db.session.commit()
 
         path = target + fileName
         def convert_and_save(b64_string):
@@ -370,10 +370,10 @@ class ImageUploadTask(Resource):
 
 
 
-    # def get(self):
-        # task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
-        # taskID = db.session.query(Tasks.id).first()
-        # filename = "./" + taskID[0] + "/tasks/" + task_PIC[0]
-        # return send_file(filename, mimetype="image/jpg")
+    def get(self):
+        task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
+        taskID = db.session.query(Tasks.id).first()
+        filename = "./" + taskID[0] + "/tasks/" + task_PIC[0]
+        return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")
