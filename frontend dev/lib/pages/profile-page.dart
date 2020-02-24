@@ -154,7 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Container(
-              height: 165,
+              height: 210,
               child: GridView.count(
                 shrinkWrap: true,
                 // Create a grid with 2 columns. If you change the scrollDirection to

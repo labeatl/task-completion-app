@@ -10,6 +10,7 @@ class TasksPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new TaskPageState();
 }
+
 List data;
 List<Task> tasks = [];
 
@@ -66,9 +67,10 @@ class TaskPageState extends State<TasksPage> {
     print(response.headers);
     print(response.request);
     print(response.toString());
-
   }
+
   String _x = "Apply";
+
   @override
   void initState() {
     this.getData();
@@ -90,8 +92,7 @@ class TaskPageState extends State<TasksPage> {
                       child: IconButton(
                         icon: Icon(Icons.graphic_eq),
                         onPressed: getImage,
-                          /*...*/
-
+                        /*...*/
                       ),
                     ),
                   ),
@@ -112,7 +113,6 @@ class TaskPageState extends State<TasksPage> {
                   ),
                 ],
               ),
-
               Column(
                 children: tasks.map((task) {
                   EdgeInsets.only(left: 20.0, right: 20.0);
@@ -152,7 +152,6 @@ class TaskPageState extends State<TasksPage> {
                                         onPressed: () {
                                           _x = "Applied";
                                         },
-
                                         child: new Text(
                                           _x,
                                           style: TextStyle(color: Colors.white),
@@ -254,9 +253,9 @@ class TaskPageState extends State<TasksPage> {
                               color: Colors.grey,
                             ),
                           ),
-                            child: Image.network(
-                              'http://167.172.59.89:5000/imageUploadTask',
-                            ),
+                          child: Image.network(
+                            'http://167.172.59.89:5000/imageUploadTask',
+                          ),
 //                          child: _selectedPicture != null
 //                              ? Image.file(_selectedPicture)
 //                              : Text("No Image Taken", textAlign: TextAlign.center),
