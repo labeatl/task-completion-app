@@ -213,7 +213,7 @@ api.add_resource(UserLogin, '/login')
 
 
 class TasksList(Resource):
-    @auth.login_required
+    #@auth.login_required
     def get(self):
         tasks = Tasks.query
         list = []
@@ -221,7 +221,6 @@ class TasksList(Resource):
             dict_task = {"title": task.title, "description": task.description, "et": task.et, "category": task.category,
                          "price": task.price, "location": task.location}
             list.append(dict_task)
-            print(dict_task)
         return list
 
 
