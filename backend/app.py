@@ -44,7 +44,7 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
-    profile_pic = db.Column(db.String(200), nullable=False)
+    profile_pic = db.Column(db.String(200), nullable=True)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
 
@@ -357,8 +357,8 @@ class ImageUploadTask(Resource):
         image = request.form['image']
 
         if Tasks.query.filter_by(id=1).first() is not None:
-            taskID = Tasks.query.filter_by(id=1).first()
-            taskID.picture = fileName
+            task = Tasks.query.filter_by(id=1).first()
+            task.picture = fileName
             db.session.commit()
 
         path = target + fileName
@@ -369,12 +369,11 @@ class ImageUploadTask(Resource):
         convert_and_save(image)
 
 
-
     def get(self):
+
+        userID = db.session.query(Accounts.id_user).first()
         task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
-        print(task_PIC)
-        filename = "./1/tasks/" + task_PIC[0]
-        print(filename)
+        filename = "%d/tasks/%s" % (userID[0], task_PIC[0])
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")

@@ -26,11 +26,6 @@ void updateTasks(String category) {
 }
 
 class TaskPageState extends State<TasksPage> {
-  File _selectedPicture;
-
-  void toSelectPic(File selectedPicture) {
-    _selectedPicture = selectedPicture;
-  }
 
   Future<String> getData() async {
     http.Response response = await http.get(
@@ -58,17 +53,6 @@ class TaskPageState extends State<TasksPage> {
     }
   }
 
-  Future<String> getImage() async {
-    http.Response response = await http.get(
-      Uri.encodeFull("http://167.172.59.89:5000/imageUpload"),
-    );
-    print(response.bodyBytes);
-    print(response.body);
-    print(response.headers);
-    print(response.request);
-    print(response.toString());
-  }
-
   String _x = "Apply";
 
   @override
@@ -91,7 +75,6 @@ class TaskPageState extends State<TasksPage> {
                       alignment: Alignment.topLeft,
                       child: IconButton(
                         icon: Icon(Icons.graphic_eq),
-                        onPressed: getImage,
                         /*...*/
                       ),
                     ),
