@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, g
+from flask import Flask, jsonify, request, render_template
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -9,7 +9,7 @@ from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSign
 from itsdangerous.url_safe import URLSafeSerializer
 import os
 import base64
-from flask_mail import Mail, Message
+#from flask_mail import Mail, Message
 
 
 
