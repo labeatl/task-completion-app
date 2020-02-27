@@ -6,8 +6,10 @@ from flask_restful import Resource, Api
 from flask_migrate import Migrate
 from flask import send_file, g
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+from itsdangerous.url_safe import URLSafeSerializer
 import os
 import base64
+from flask_mail import Mail, Message
 
 
 
@@ -33,7 +35,17 @@ app.config['SECRET_KEY'] = 'thEejrdaR5$wE3yY4wsehn4wASHR' #Change this for produ
 user_skills = db.Table('user_skills',
                        db.Column('id_user', db.Integer, db.ForeignKey('accounts.id_user'), primary_key=True),
                        db.Column('id', db.Integer, db.ForeignKey('skills.id'), primary_key=True,
+
+
                                  ))
+
+app.config['MAIL_SERVER'] = "smtp.gmail.com"
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_DEFAULT_SENDER'] = "lendevelopmentmail@gmail.com"
+app.config['MAIL_USERNAME'] = "lendevelopmentmail@gmail.com"
+app.config['MAIL_PASSWORD'] = "R^$Jwkmr^4wkr"
+mail = Mail(app)
 
 # TODO Move models to models file
 class Accounts(db.Model):
@@ -378,3 +390,12 @@ class ImageUploadTask(Resource):
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")
+'''
+class passwordResetRequest(Resource):
+    def post(self):
+        #Get user id from email,send email with encoded userId link. On link click call another method that decodes and allows pw change 
+        userId = id from database
+        s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
+        encodedUser = s.dumps(userId)
+        
+'''
