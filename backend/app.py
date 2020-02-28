@@ -403,4 +403,4 @@ class passwordResetRequest(Resource):
         msg.html = "<b>Hello test</b>"
         mail.send(msg)
 
-api.add_resource(ImageUploadTask, "/resetpassword")
+api.add_resource(passwordResetRequest, "/resetpassword")
