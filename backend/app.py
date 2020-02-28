@@ -144,7 +144,8 @@ class UserSignUp(Resource):
             encodedUser = s.dumps(usrEmail)
             msg = Message('Confirm Email',
                   recipients=[usrEmail])
-            msg.body = "Plase click the link to confirm your email http://167.172.59.89:5000/" + encodedUser
+            emailBody = "Plase click the link to confirm your email http://167.172.59.89:5000/" + encodedUser
+            msg.body = emailBody
             mail.send(msg)
 
         else:
