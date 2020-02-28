@@ -418,7 +418,7 @@ class ConfirmEmail(Resource):
     def get(self, reset_id):
         resetID = reset_id
         decoded = s.loads(resetID)
-        confirmUser = Accounts.query.filter_by(id_user=decoded).first()
+        confirmUser = Accounts.query.filter_by(email=decoded).first()
         confirmUser.confirmed = True
         db.session.commit()
 api.add_resource(ConfirmEmail, "/<string:reset_id>")
