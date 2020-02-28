@@ -415,7 +415,7 @@ class PasswordResetRequest(Resource):
 api.add_resource(PasswordResetRequest, "/resetpassword")
 
 class ConfirmEmail(Resource):
-    def get(self):
+    def get(self, reset_id):
         resetID = reset_id
         decoded = s.loads(resetID)
         confirmUser = Accounts.query.filter_by(id_user=decoded).first()
