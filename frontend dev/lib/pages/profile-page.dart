@@ -340,7 +340,7 @@ class _ProfilePageState extends State<ProfilePage> {
     var counter = 0;
     while (counter < data.length) {
       var skillId = data[counter]["skill_id"];
-      print("Ran get skills");
+
       //print("Should make widget" + skillId.toString());
       //var containerSkill = new Container(padding: EdgeInsets.all(8), child: Text(skillId), color: Colors.teal[100]);
       var containerSkill = new Text(skillId);
