@@ -57,6 +57,7 @@ class Accounts(db.Model):
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
     profile_pic = db.Column(db.String(200), nullable=True)
+    confirmed = db.Column(db.Boolean, default=False)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
 
@@ -390,7 +391,7 @@ class ImageUploadTask(Resource):
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")
 
-class passwordResetRequest(Resource):
+class PasswordResetRequest(Resource):
     def post(self):
         #Get user id from email,send email with encoded userId link. On link click call another method that decodes and allows pw changetest@test.com
         email = request.form['email']
@@ -403,4 +404,13 @@ class passwordResetRequest(Resource):
         msg.html = "<b>Hello test</b>"
         mail.send(msg)
 
-api.add_resource(passwordResetRequest, "/resetpassword")
+api.add_resource(PasswordResetRequest, "/resetpassword")
+
+class ConfirmEmail(Resource):
+    def post(self):
+        resetID = reset_id
+        decoded = s.loads(resetID)
+        confirmUser = Accounts.query.filter_by(id_user=decoded).first()
+        confirmUser.confirmed = True
+        db.session.commit()
+api.add_resource(ConfirmEmail, "/<string:reset_id>")
