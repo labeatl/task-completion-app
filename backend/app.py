@@ -209,9 +209,9 @@ class UserLogin(Resource):
         hashedPassword = generate_password_hash(unhashedPassword)
 
 
-        #status = verify_password(usrEmail, unhashedPassword)
+        status = verify_password(usrEmail, unhashedPassword)
         #userToken = status[1]
-        if False:
+        if status == False:
             status = 1
             print("Failed")
         else:
@@ -390,12 +390,18 @@ class ImageUploadTask(Resource):
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")
-'''
+
 class passwordResetRequest(Resource):
     def post(self):
-        #Get user id from email,send email with encoded userId link. On link click call another method that decodes and allows pw change 
-        userId = id from database
+        #Get user id from email,send email with encoded userId link. On link click call another method that decodes and allows pw changetest@test.com
+        email = request.form['email']
+        user = Accounts.query.filter_by(email=email).first()
+        userID = user.id_user
         s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
-        encodedUser = s.dumps(userId)
-        
-'''
+        encodedUser = s.dumps(user)
+        msg = Message('[ImageShare] Password Reset Request',
+                      recipients=[email])
+        msg.html = "<b>Hello test</b>"
+        mail.send(msg)
+
+api.add_resource(ImageUploadTask, "/resetpassword")
