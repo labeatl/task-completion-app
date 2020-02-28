@@ -47,6 +47,8 @@ app.config['MAIL_USERNAME'] = "lendevelopmentmail@gmail.com"
 app.config['MAIL_PASSWORD'] = "R^$Jwkmr^4wkr"
 mail = Mail(app)
 
+s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
+
 # TODO Move models to models file
 class Accounts(db.Model):
     id_user = db.Column(db.Integer, primary_key=True)
@@ -139,6 +141,11 @@ class UserSignUp(Resource):
             db.session.add(createAccount)
             db.session.commit()
             status = "success"
+            encodedUser = s.dumps(usrEmail)
+            msg = Message('Confirm Email',
+                  recipients=[usrEmail])
+            msg.html = "<b>Hello test</b>"
+            mail.send(msg)
 
         else:
             status = "failed"
@@ -399,7 +406,7 @@ class PasswordResetRequest(Resource):
         userID = user.id_user
         s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
         encodedUser = s.dumps(user)
-        msg = Message('[ImageShare] Password Reset Request',
+        msg = Message('Password Reset Request',
                       recipients=[email])
         msg.html = "<b>Hello test</b>"
         mail.send(msg)
