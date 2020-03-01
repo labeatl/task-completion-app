@@ -199,7 +199,7 @@ def verify_password(username, password):
             if check_password_hash(user.password, password):
                 loggedUser = user.id_user
                 g.user = loggedUser
-                return loggedUser, generate_token(user.id_user)
+                return [loggedUser, generate_token(user.id_user)]
             else:
                 return False
         else:
