@@ -191,7 +191,7 @@ def verify_password(username, password):
         g.user = user.id_user
 
     except SignatureExpired:
-        return None
+        return False
     except:  #     If invalid then check if username and password are a valid login
         if Accounts.query.filter_by(email=username).first() is not None:
 
@@ -201,9 +201,9 @@ def verify_password(username, password):
                 g.user = loggedUser
                 return loggedUser, generate_token(user.id_user)
             else:
-                return None
+                return False
         else:
-            return None
+            return False
     return loggedUser
 
 
