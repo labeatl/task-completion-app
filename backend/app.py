@@ -231,7 +231,7 @@ class UserLogin(Resource):
             status = 0
             userToken = credentialCheck[1]
             returnDict = {"status": status, "userToken": userToken}
-        return [status, userToken]
+        return returnDict
 
 
 api.add_resource(UserLogin, '/login')
