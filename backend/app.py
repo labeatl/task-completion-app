@@ -179,7 +179,7 @@ api.add_resource(TasksAdded, '/addtask')
 
 def generate_token(id,expiration=86400):
     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-    return s.dumps({'id': id})
+    return s.dumps(id)
 
 
 @auth.verify_password
