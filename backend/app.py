@@ -118,7 +118,9 @@ api.add_resource(Summary, '/summary')
 class getSummary(Resource):
     def get(self):
         sum = db.session.query(Accounts.userBio).filter_by(id_user=1).first()
-        return sum[0]
+        if sum == None:
+            sum = "Tell us something about yourself"
+        return sum
 
 
 api.add_resource(getSummary, '/getSummary')
@@ -175,7 +177,7 @@ class TasksAdded(Resource):
 api.add_resource(TasksAdded, '/addtask')
 
 
-def generate_token(id,expiration=5000):
+def generate_token(id,expiration=86400):
     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
     return s.dumps({'id': id})
 
