@@ -188,8 +188,7 @@ def verify_password(username, password):
     s = Serializer(app.config['SECRET_KEY'])
     try:  #Check if username is a valid token
         loggedUser = s.loads(username)
-        user = Accounts.query.filter_by(email=loggedUser).first()
-        g.user = user.id_user
+
 
     except SignatureExpired:
         return False
@@ -205,6 +204,8 @@ def verify_password(username, password):
                 return False
         else:
             return False
+    user = Accounts.query.filter_by(email=loggedUser).first()
+    g.user = user.id_user
     return loggedUser
 
 
