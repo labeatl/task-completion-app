@@ -192,7 +192,7 @@ def verify_password(username, password):
 
     except SignatureExpired:
         return None
-    except BadSignature:  #     If invalid then check if username and password are a valid login
+    except:  #     If invalid then check if username and password are a valid login
         if Accounts.query.filter_by(email=username).first() is not None:
 
             user = Accounts.query.filter_by(email=username).first()
