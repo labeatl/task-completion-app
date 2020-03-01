@@ -226,12 +226,14 @@ class UserLogin(Resource):
         if credentialCheck == False:
             status = 1
             print("Failed")
+            returnList = [status]
+
         else:
             print("Success")
             status = 0
             userToken = credentialCheck[1]
-            returnDict = {"status": status, "userToken": userToken}
-        return returnDict
+            returnList = [status, userToken]
+        return returnList
 
 
 api.add_resource(UserLogin, '/login')
