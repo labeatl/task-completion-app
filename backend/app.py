@@ -226,13 +226,13 @@ class UserLogin(Resource):
         if credentialCheck == False:
             status = 1
             print("Failed")
-            returnList = [status]
+            returnList = {"status": status}
 
         else:
             print("Success")
             status = 0
             userToken = credentialCheck[1]
-            returnList = [status, userToken]
+            returnList = {"status": status, "userToken": userToken}
         return returnList
 
 
