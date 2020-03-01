@@ -222,7 +222,7 @@ class UserLogin(Resource):
 
         credentialCheck = verify_password(usrEmail, unhashedPassword)
         #userToken = status[1]
-        if credentialCheck == None:
+        if credentialCheck == False:
             status = 1
             print("Failed")
         else:
