@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 
 class AuthService {
   // Login
   Future<bool> login(String _email,String _password) async {
+    final storage = new FlutterSecureStorage();
     var url = 'http://167.172.59.89:5000/login';
 
     http.Response response = await http.post(url, body: {
@@ -16,14 +18,14 @@ class AuthService {
     });
     bool responseBool;
     var data = json.decode(response.body);
-    //Conver the response to a bool
+    //Conver the response to a belool
     //print(response.body.runtimeType);
-    print(response.body);
-    print(data[0]);
-    if (data[0] == 0) {
+    print(data["status"]);
+    if (data["status"] == 0) {
       print('Successful login');
       responseBool = true;
-      print(data[1]);
+      await storage.write(key: "token", value: data["userToken"]);
+      print(data["userToken"]);
     }
     else {
       responseBool = false;
