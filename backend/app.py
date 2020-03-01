@@ -229,7 +229,7 @@ class UserLogin(Resource):
             print("Success")
             status = 0
             userToken = credentialCheck[1]
-        return status, userToken
+        return [status, userToken]
 
 
 api.add_resource(UserLogin, '/login')
