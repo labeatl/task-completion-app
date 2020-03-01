@@ -230,6 +230,7 @@ class UserLogin(Resource):
             print("Success")
             status = 0
             userToken = credentialCheck[1]
+            returnDict = {"status": status, "userToken": userToken}
         return [status, userToken]
 
 
