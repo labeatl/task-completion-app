@@ -220,15 +220,15 @@ class UserLogin(Resource):
         hashedPassword = generate_password_hash(unhashedPassword)
 
 
-        status = verify_password(usrEmail, unhashedPassword)
+        credentialCheck = verify_password(usrEmail, unhashedPassword)
         #userToken = status[1]
-        if status == False:
+        if credentialCheck == None:
             status = 1
             print("Failed")
         else:
             print("Success")
             status = 0
-            userToken = None
+            userToken = credentialCheck[1]
         return status, userToken
 
 
