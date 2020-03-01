@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -9,16 +10,20 @@ class AuthService {
   Future<bool> login(String _email,String _password) async {
     var url = 'http://167.172.59.89:5000/login';
 
-    var response = await http.post(url, body: {
+    http.Response response = await http.post(url, body: {
       'email': _email,
       'password': _password
     });
     bool responseBool;
+    var data = json.decode(response.body);
     //Conver the response to a bool
-    print(response.body.runtimeType);
-    if (int.parse(response.body[0]) == 0) {
+    //print(response.body.runtimeType);
+    print(response.body);
+    print(data[0]);
+    if (data[0] == 0) {
       print('Successful login');
       responseBool = true;
+      print(data[1]);
     }
     else {
       responseBool = false;
