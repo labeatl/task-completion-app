@@ -180,7 +180,7 @@ api.add_resource(TasksAdded, '/addtask')
 
 def generate_token(id,expiration=86400):
     token = b.dumps(id)
-    token  = token.decode('utf8').replace("'", '"')
+    #token  = token.decode('utf8').replace("'", '"')
     return token
 
 
@@ -188,7 +188,7 @@ def generate_token(id,expiration=86400):
 def verify_password(username, password):
     print(username)
     try:  #Check if username is a valid token
-        loggedUser = b.loads(str(username))
+        loggedUser = b.loads(username)
         print("loggeduser: " + loggedUser)
 
 
