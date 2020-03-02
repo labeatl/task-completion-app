@@ -48,6 +48,7 @@ app.config['MAIL_PASSWORD'] = "R^$Jwkmr^4wkr"
 mail = Mail(app)
 
 s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
+b = Serializer(app.config['SECRET_KEY'], expires_in=860000)
 
 # TODO Move models to models file
 class Accounts(db.Model):
@@ -178,17 +179,15 @@ api.add_resource(TasksAdded, '/addtask')
 
 
 def generate_token(id,expiration=86400):
-    s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-    token = str(s.dumps(id))
+    token = str(b.dumps(id))
     return token
 
 
 @auth.verify_password
 def verify_password(username, password):
-    s = Serializer(app.config['SECRET_KEY'])
     print(username)
     try:  #Check if username is a valid token
-        loggedUser = s.loads(username)
+        loggedUser = b.loads(username)
         print("loggeduser: " + loggedUser)
 
 
