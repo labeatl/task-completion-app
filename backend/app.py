@@ -186,7 +186,7 @@ def generate_token(id,expiration=86400):
 @auth.verify_password
 def verify_password(username, password):
     s = Serializer(app.config['SECRET_KEY'])
-    print(user_skills)
+    print(username)
     try:  #Check if username is a valid token
         loggedUser = s.loads(username)
         print("loggeduser: " + loggedUser)
