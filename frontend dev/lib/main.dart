@@ -4,13 +4,20 @@ import 'package:flutter_app/pages/tasks-page.dart';
 import "./pages/login-page.dart";
 import "./pages/home-page.dart";
 import "./services/auth.service.dart";
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 
 
 AuthService appAuth = new AuthService();
+final storage = new FlutterSecureStorage();
 
+FlutterSecureStorage  getStorage() {
+  return storage;
+}
 void main() async {
   // Set default home.
   Widget _defaultHome = new LoginPage();
+
 
 
 

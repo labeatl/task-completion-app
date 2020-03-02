@@ -47,6 +47,8 @@ app.config['MAIL_USERNAME'] = "lendevelopmentmail@gmail.com"
 app.config['MAIL_PASSWORD'] = "R^$Jwkmr^4wkr"
 mail = Mail(app)
 
+s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
+
 # TODO Move models to models file
 class Accounts(db.Model):
     id_user = db.Column(db.Integer, primary_key=True)
@@ -57,6 +59,7 @@ class Accounts(db.Model):
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
     profile_pic = db.Column(db.String(200), nullable=True)
+    confirmed = db.Column(db.Boolean, default=False)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
 
@@ -115,7 +118,9 @@ api.add_resource(Summary, '/summary')
 class getSummary(Resource):
     def get(self):
         sum = db.session.query(Accounts.userBio).filter_by(id_user=1).first()
-        return sum[0]
+        if sum == None:
+            sum = "Tell us something about yourself"
+        return sum
 
 
 api.add_resource(getSummary, '/getSummary')
@@ -138,6 +143,12 @@ class UserSignUp(Resource):
             db.session.add(createAccount)
             db.session.commit()
             status = "success"
+            encodedUser = s.dumps(usrEmail)
+            msg = Message('Confirm Email',
+                  recipients=[usrEmail])
+            emailBody = "Plase click the link to confirm your email http://167.172.59.89:5000/" + encodedUser
+            msg.body = emailBody
+            mail.send(msg)
 
         else:
             status = "failed"
@@ -166,9 +177,10 @@ class TasksAdded(Resource):
 api.add_resource(TasksAdded, '/addtask')
 
 
-def generate_token(id, self, expiration=5000):
+def generate_token(id,expiration=86400):
     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-    return s.dumps({'id': id})
+    token = str(s.dumps(id))
+    return token
 
 
 @auth.verify_password
@@ -176,23 +188,24 @@ def verify_password(username, password):
     s = Serializer(app.config['SECRET_KEY'])
     try:  #Check if username is a valid token
         loggedUser = s.loads(username)
-        user = Accounts.query.filter_by(email=loggedUser).first()
-        g.user = user.id_user
+
 
     except SignatureExpired:
-        return None
-    except BadSignature:  #     If invalid then check if username and password are a valid login
+        return False
+    except:  #     If invalid then check if username and password are a valid login
         if Accounts.query.filter_by(email=username).first() is not None:
 
             user = Accounts.query.filter_by(email=username).first()
             if check_password_hash(user.password, password):
                 loggedUser = user.id_user
                 g.user = loggedUser
-                return loggedUser, generate_token(user.id_user)
+                return [loggedUser, generate_token(user.id_user)]
             else:
-                return None
+                return False
         else:
-            return None
+            return False
+    user = Accounts.query.filter_by(email=loggedUser).first()
+    g.user = user.id_user
     return loggedUser
 
 
@@ -209,16 +222,19 @@ class UserLogin(Resource):
         hashedPassword = generate_password_hash(unhashedPassword)
 
 
-        #status = verify_password(usrEmail, unhashedPassword)
+        credentialCheck = verify_password(usrEmail, unhashedPassword)
         #userToken = status[1]
-        if False:
+        if credentialCheck == False:
             status = 1
             print("Failed")
+            returnList = {"status": status}
+
         else:
             print("Success")
             status = 0
-            userToken = None
-        return status, userToken
+            userToken = credentialCheck[1]
+            returnList = {"status": status, "userToken": userToken}
+        return returnList
 
 
 api.add_resource(UserLogin, '/login')
@@ -389,12 +405,27 @@ class ImageUploadTask(Resource):
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUploadTask, "/imageUploadTask")
-'''
-class passwordResetRequest(Resource):
+
+class PasswordResetRequest(Resource):
     def post(self):
-        #Get user id from email,send email with encoded userId link. On link click call another method that decodes and allows pw change 
-        userId = id from database
+        #Get user id from email,send email with encoded userId link. On link click call another method that decodes and allows pw changetest@test.com
+        email = request.form['email']
+        user = Accounts.query.filter_by(email=email).first()
+        userID = user.id_user
         s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
-        encodedUser = s.dumps(userId)
-        
-'''
+        encodedUser = s.dumps(user)
+        msg = Message('Password Reset Request',
+                      recipients=[email])
+        msg.html = "<b>Hello test</b>"
+        mail.send(msg)
+
+api.add_resource(PasswordResetRequest, "/resetpassword")
+
+class ConfirmEmail(Resource):
+    def get(self, reset_id):
+        resetID = reset_id
+        decoded = s.loads(resetID)
+        confirmUser = Accounts.query.filter_by(email=decoded).first()
+        confirmUser.confirmed = True
+        db.session.commit()
+api.add_resource(ConfirmEmail, "/<string:reset_id>")

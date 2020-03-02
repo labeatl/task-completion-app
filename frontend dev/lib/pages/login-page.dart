@@ -5,6 +5,8 @@ import '../main.dart';
 //import '../terms.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 
 enum AuthFormType { reset }
 
@@ -19,6 +21,26 @@ class _LoginPageState extends State<LoginPage> {
   final username = TextEditingController();
   final password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  _LoginPageState() {
+   getToken();
+}
+  Future<void> getToken() async {
+    String token =  await storage.read(key: "token");
+    setState(() => this._status = "loading");
+    appAuth
+        .login(token, "")
+        .then((result) {
+      print(token);
+      if (result) {
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
+      else {
+        print("Failed");
+      }
+    });
+
+
+  }
 
   Widget build(BuildContext context) => new Scaffold(
         body: SingleChildScrollView(
