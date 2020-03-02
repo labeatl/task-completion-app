@@ -180,7 +180,7 @@ api.add_resource(TasksAdded, '/addtask')
 
 def generate_token(id,expiration=86400):
     token = b.dumps(id)
-    return token
+    return jsonify(token)
 
 
 @auth.verify_password
