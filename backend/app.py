@@ -188,7 +188,7 @@ def generate_token(id,expiration=86400):
 def verify_password(username, password):
     print(username)
     try:  #Check if username is a valid token
-        loggedUser = b.loads(username)
+        loggedUser = b.loads(str(username))
         print("loggeduser: " + loggedUser)
 
 
