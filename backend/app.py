@@ -179,7 +179,7 @@ api.add_resource(TasksAdded, '/addtask')
 
 
 def generate_token(id,expiration=86400):
-    token = b.dumps(id)
+    token = b.dumps({ 'id': id })
     #token  = token.decode('utf8').replace("'", '"')
     return token
 
