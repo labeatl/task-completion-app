@@ -104,7 +104,7 @@ api.add_resource(hello, '/')
 class Summary(Resource):
      def post(self):
          summary = request.form['Summary']
-         userAccount = Accounts.query.filter_by(id_user=1).first()
+         userAccount = Accounts.query.filter_by(id_user=g.user).first()
          userAccount.userBio = summary
          db.session.commit()
          print("Summary:")
