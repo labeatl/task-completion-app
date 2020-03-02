@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       new Positioned(
-                        top: 11,
+                        top: 13,
                         right: 14,
 
                         child: IconButton(
