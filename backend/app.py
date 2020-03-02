@@ -9,7 +9,7 @@ from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSign
 from itsdangerous.url_safe import URLSafeSerializer
 import os
 import base64
-#from flask_mail import Mail, Message
+from flask_mail import Mail, Message
 
 
 

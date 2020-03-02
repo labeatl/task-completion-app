@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String _status = 'no-action';
+  bool password_show = true;
   final username = TextEditingController();
   final password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -36,26 +37,57 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.all(10),
                       child: new TextField(
                         autofocus: true,
-                        decoration: InputDecoration(labelText: "email"),
+                        decoration: InputDecoration(
+                          hintText: 'email',
+                          filled: true,
+                        ),
                         controller: username,
                       ),
                     ),
                   ),
                 ),
-                Container(
-                  height: 65,
-                  margin: EdgeInsets.fromLTRB(8, 4, 8, 10),
-                  child: new Card(
-                    elevation: 5,
-                    child: new Container(
-                      padding: EdgeInsets.all(10),
-                      child: new TextField(
-                        decoration: InputDecoration(hintText: "password"),
-                        controller: password,
+                new Stack(
+                    alignment: const Alignment(1.0, 1.0),
+                    children: <Widget>[
+                      Container(
+                        height: 65,
+                        margin: EdgeInsets.fromLTRB(8, 4, 8, 10),
+                        child: new Card(
+                          elevation: 5,
+                          child: new Container(
+                            padding: EdgeInsets.all(10),
+                            child: new TextField(
+                              controller: password,
+                              obscureText: password_show,
+                              decoration: InputDecoration(
+                                hintText: 'password',
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                      new Positioned(
+                        top: 11,
+                        right: 14,
+
+                        child: IconButton(
+                            icon: Icon(
+                              password_show
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              semanticLabel: password_show
+                                  ? 'hide password'
+                                  : 'show password',
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                password_show ^= true;
+                                //print("Icon button pressed! state: $_passwordVisible"); //Confirmed that the _passwordVisible is toggled each time the button is pressed.
+                              });
+                            }),
+                      ),
+                    ]),
                 new Container(
                   child: new Align(
                     alignment: Alignment.bottomRight,
