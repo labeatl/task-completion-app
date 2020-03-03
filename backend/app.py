@@ -190,7 +190,6 @@ def verify_password(username, password):
     print(username)
     try:  #Check if username is a valid token
         loggedUser = b.loads(username)
-        print("loggeduser: " + loggedUser)
 
 
     except SignatureExpired:
@@ -208,10 +207,9 @@ def verify_password(username, password):
                 return False
         else:
             return False
-    user = Accounts.query.filter_by(email=loggedUser).first()
+    user = Accounts.query.filter_by(id_user=loggedUser).first()
     g.user = user.id_user
-    return loggedUser
-
+    return loggedUser, username
 
 
 
