@@ -172,7 +172,8 @@ class TasksAdded(Resource):
         Price = request.form['price']
         Location = request.form['location']
         Picture = request.form['picture']
-        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=Accounts.query.filter_by(id_user=3).first())
+        owner = Accounts.query.filter_by(id_user=4).first()
+        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=owner)
         print(createTask)
         db.session.add(createTask)
         db.session.commit()
