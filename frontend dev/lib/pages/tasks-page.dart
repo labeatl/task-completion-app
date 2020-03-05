@@ -46,6 +46,7 @@ class TaskPageState extends State<TasksPage> {
           et: data[counter]["et"],
           price: data[counter]["price"],
           location: data[counter]["location"],
+//          id: data[counter]["id"],
           date: DateTime.now(),
         ),
       );
@@ -101,6 +102,72 @@ class TaskPageState extends State<TasksPage> {
                   EdgeInsets.only(left: 20.0, right: 20.0);
                   return RaisedButton(
                     onPressed: () {
+//                      final priceController = TextEditingController();
+//                      priceController.text = task.price.toString();
+//                      final timeController = TextEditingController();
+//                      timeController.text = task.et.toString();
+//                      final jobDescriptionController = TextEditingController();
+//                      jobDescriptionController.text = task.description;
+//                      final locationController = TextEditingController();
+//                      locationController.text = task.location;
+//                      final jobTitleController = TextEditingController();
+//                      jobTitleController.text = task.title;
+////                      final Id = task.id;
+//                      showDialog(
+//                          context: context,
+//                        builder: (BuildContext context) {
+//                            return StatefulBuilder(
+//                              builder: (context, setState) {
+//                                return AlertDialog(
+//                                  content: Container(
+//                                    child: Column (
+//                                    children: <Widget> [
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Job title"),
+//                                      controller: jobTitleController,
+//                                    ),
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Job desc"),
+//                                      controller: jobDescriptionController,
+//                                    ),
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Time"),
+//                                      controller: timeController,
+//                                    ),
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Price"),
+//                                      controller: priceController,
+//                                    ),
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Location"),
+//                                      controller: locationController,
+//                                    ),
+//                                    RaisedButton(
+//                                      onPressed: (){
+//                                        _upload();
+////                                        String fileName = _storedImage.path.split("/").last;
+//                                        var url = 'http://167.172.59.89:5000/';
+//                                        http.put(url, body: {
+//                                          'title': jobTitleController.text,
+//                                          'description': jobDescriptionController.text,
+////                                          'category': dropdownValue,
+//                                          'et': timeController.text,
+//                                          'price': priceController.text,
+//                                          'location': locationController.text,
+////                                          'picture': fileName,
+////                                          'id': Id,
+//                                        });
+//                                      },
+//                                      child: Text ('Submit'),
+//                                    )
+//                                    ]
+//                                    )
+//                                  ),
+//                                );
+//                              },
+//                            );
+//                        }
+//                      );
                       print(task.description);
                       showDialog(
                           context: context,
