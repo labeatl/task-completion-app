@@ -60,7 +60,7 @@ class Tasks(db.Model):
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id"))
+    owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
 
 
 # TODO Move models to models file
@@ -172,7 +172,7 @@ class TasksAdded(Resource):
         Price = request.form['price']
         Location = request.form['location']
         Picture = request.form['picture']
-        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=Accounts.query.filter_by(user_id=1).first())
+        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=Accounts.query.filter_by(id_user=1).first())
         print(createTask)
         db.session.add(createTask)
         db.session.commit()
