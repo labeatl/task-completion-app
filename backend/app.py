@@ -415,13 +415,33 @@ class PasswordResetRequest(Resource):
         user = Accounts.query.filter_by(email=email).first()
         userID = user.id_user
         s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
-        encodedUser = s.dumps(user)
-        msg = Message('Password Reset Request',
-                      recipients=[email])
-        msg.html = "<b>Hello test</b>"
+        encodedUser = s.dumps(user.id_user)
+        msg = Message('Confirm Email',
+                  recipients=[user.email])
+        emailBody = "Plase click the link to confirm your email http://167.172.59.89:5000/reset" + encodedUser
+        msg.body = emailBody
         mail.send(msg)
 
 api.add_resource(PasswordResetRequest, "/resetpassword")
+
+
+@app.route("/reset/<string:reset_id>")
+def resetpassword(reset_id):
+
+    userId = s.loads(reset_id)
+    user = Accounts.query.filter_by(id_user=userId).first()
+    if request.method == 'POST':
+        password = request.form['password']
+        newPassword = request.form['password']
+        hashedPassword = generate_password_hash(newPassword)
+        user.password = hashedPassword
+        db.session.commit()
+        return 'Password Reset'
+
+    return render_template('resetpassword.html')
+
+
+
 
 class ConfirmEmail(Resource):
     def get(self, reset_id):
