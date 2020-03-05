@@ -175,6 +175,8 @@ class TasksAdded(Resource):
         owner = Accounts.query.filter_by(id_user=4).first()
         createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=owner)
         print(createTask)
+        print(owner)
+        print(owner.id_user)
         db.session.add(createTask)
         db.session.commit()
 
