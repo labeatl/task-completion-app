@@ -431,7 +431,7 @@ api.add_resource(PasswordResetRequest, "/resetpassword")
 def resetpassword(reset_id):
     headers = {'Content-Type': 'text/html'}
     decoded = s.loads(reset_id)
-    decoded = Accounts.query.filter_by(id_user=userId).first()
+    decoded = Accounts.query.filter_by(id_user=decoded).first()
     if request.method == 'POST':
         password = request.form['password']
         newPassword = request.form['password']
