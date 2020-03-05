@@ -430,13 +430,14 @@ api.add_resource(PasswordResetRequest, "/resetpassword")
 @app.route("/reset/<string:reset_id>", methods=['GET', 'POST'])
 def resetpassword(reset_id):
     headers = {'Content-Type': 'text/html'}
-    userId = s.loads(reset_id)
-    user = Accounts.query.filter_by(email=userId).first()
+    decoded = s.loads(reset_id)
+    decoded = Accounts.query.filter_by(id_user=userId).first()
     if request.method == 'POST':
         password = request.form['password']
         newPassword = request.form['password']
         hashedPassword = generate_password_hash(newPassword)
         user.password = hashedPassword
+        user.password = ha
         db.session.commit()
         return 'Password Reset'
 
