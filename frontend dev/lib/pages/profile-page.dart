@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:http/http.dart' as http;
 import "../widgets/image_picker.dart";
-import 'dart:io';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../main.dart';
+
+
 
 class ProfilePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _ProfilePageState();
@@ -25,6 +28,22 @@ class _ProfilePageState extends State<ProfilePage> {
   String summary = "";
   bool chosen = true;
   bool ranThis = false;
+
+  Future<void> getID() async {
+    String token =  await storage.read(key: "token");
+    appAuth
+        .login(token, "")
+        .then((result) {
+      print(token);
+      if (result) {
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
+      else {
+        print("Failed");
+      }
+    },);
+  }
+
 
   Widget build(BuildContext context) {
     Future<String> getSummary() async {
@@ -129,6 +148,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         child: RaisedButton(
                                           child: Text('Submit'),
                                           onPressed: () {
+                                            //String value = await storage.read(key: "token");
                                             var url =
                                                 'http://167.172.59.89:5000/summary'; //Change URL
                                             print({

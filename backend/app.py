@@ -49,6 +49,19 @@ mail = Mail(app)
 
 s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
 
+
+class Tasks(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(512), nullable=False)
+    category = db.Column(db.String(20), nullable=False)
+    et = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    location = db.Column(db.String(20), nullable=False)
+    picture = db.Column(db.String(80), nullable=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id"))
+
+
 # TODO Move models to models file
 class Accounts(db.Model):
     id_user = db.Column(db.Integer, primary_key=True)
@@ -58,6 +71,7 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
+    tasks = db.relationship('Tasks', backref='taskOwner')
     profile_pic = db.Column(db.String(200), nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
@@ -71,17 +85,6 @@ class Accounts(db.Model):
 # class Tasks(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     taskName = db.Column(db.String, nullable=False)
-
-
-class Tasks(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
-    description = db.Column(db.String(512), nullable=False)
-    category = db.Column(db.String(20), nullable=False)
-    et = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    location = db.Column(db.String(20), nullable=False)
-    picture = db.Column(db.String(80), nullable=True)
 
 
 # Adding skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
@@ -104,6 +107,7 @@ api.add_resource(hello, '/')
 class Summary(Resource):
      def post(self):
          summary = request.form['Summary']
+
          userAccount = Accounts.query.filter_by(id_user=g.user).first()
          userAccount.userBio = summary
          db.session.commit()
@@ -167,12 +171,10 @@ class TasksAdded(Resource):
         Price = request.form['price']
         Location = request.form['location']
         Picture = request.form['picture']
-
-        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture)
-        db.session.add(createTask)
+        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=Accounts.query.filter_by(user_id=1).first())
         print(createTask)
+        db.session.add(createTask)
         db.session.commit()
-
 
 api.add_resource(TasksAdded, '/addtask')
 
