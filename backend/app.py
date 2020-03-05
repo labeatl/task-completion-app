@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, make_response
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -429,7 +429,7 @@ api.add_resource(PasswordResetRequest, "/resetpassword")
 
 @app.route("/reset/<string:reset_id>")
 def resetpassword(reset_id):
-
+    headers = {'Content-Type': 'text/html'}
     userId = s.loads(reset_id)
     user = Accounts.query.filter_by(email=userId).first()
     if request.method == 'POST':
@@ -440,7 +440,7 @@ def resetpassword(reset_id):
         db.session.commit()
         return 'Password Reset'
 
-    return render_template('resetpassword.html')
+    return make_response(render_template('resetpassword.html'),200,headers)
 
 
 
