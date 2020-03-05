@@ -420,7 +420,7 @@ class PasswordResetRequest(Resource):
         encodedUser = s.dumps(user.id_user)
         msg = Message('Confirm Email',
                   recipients=[user.email])
-        emailBody = "Plase click the link to confirm your email http://167.172.59.89:5000/reset" + encodedUser
+        emailBody = "Plase click the link to confirm your email http://167.172.59.89:5000/reset/" + encodedUser
         msg.body = emailBody
         mail.send(msg)
 
