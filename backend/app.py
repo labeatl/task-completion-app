@@ -258,13 +258,27 @@ api.add_resource(TasksList, '/tasks')
 
 
 class TaskDelete(Resource):
-    def get(self):
+    def put(self):
         Id = request.form['id']
         Tasks.query.filter_by(id = Id).delete()
         db.session.commit()
         return 'success'
 
 api.add_resource(TaskDelete, 'tDelete')
+
+class TaskReplace(Resource):
+    def put(self):
+        Id = request.form['id']
+        x = Tasks.query.filter_by(id = Id).first()
+        x.title = request.form['title']
+        x.description = request.form['description']
+        x.et = request.form['et']
+        x.price = request.form['price']
+        x.location = request.form['location']
+        x.category = request.form['category']
+        db.session.commit()
+
+api.add_resource(TaskReplace, '/tReplace')
 
 # TODO: Implement frontend for deletion
 class AccountDeletion(Resource):

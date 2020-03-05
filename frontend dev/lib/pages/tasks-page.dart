@@ -112,7 +112,9 @@ class TaskPageState extends State<TasksPage> {
 //                      locationController.text = task.location;
 //                      final jobTitleController = TextEditingController();
 //                      jobTitleController.text = task.title;
-////                      final Id = task.id;
+//                      final dropdown = TextEditingController();
+//                      dropdown.text = task.category;
+//                      final Id = task.id;
 //                      showDialog(
 //                          context: context,
 //                        builder: (BuildContext context) {
@@ -122,6 +124,30 @@ class TaskPageState extends State<TasksPage> {
 //                                  content: Container(
 //                                    child: Column (
 //                                    children: <Widget> [
+//                                      new Text("Catogary of the task:"),
+//                                      new DropdownButton<String>(
+//                                        value: dropdown.text,
+//                                        elevation: 5,
+//                                        style: TextStyle(color: Colors.blueGrey),
+//                                        underline: Container(
+//                                          color: Colors.blueGrey,
+//                                        ),
+//                                        onChanged: (String newValue) {
+//                                          setState(() {
+//                                            dropdown.text = newValue;
+//                                          });
+//                                        },
+//                                        items: <String>[
+//                                          "Gardening",
+//                                          "Bike Repair",
+//                                          "Deliveries"
+//                                        ].map<DropdownMenuItem<String>>((String value) {
+//                                          return DropdownMenuItem<String>(
+//                                            value: value,
+//                                            child: Text(value, style: TextStyle(fontSize: 16)),
+//                                          );
+//                                        }).toList(),
+//                                      ),
 //                                    new TextFormField(
 //                                      decoration: InputDecoration(labelText: "Job title"),
 //                                      controller: jobTitleController,
@@ -142,21 +168,29 @@ class TaskPageState extends State<TasksPage> {
 //                                      decoration: InputDecoration(labelText: "Location"),
 //                                      controller: locationController,
 //                                    ),
+//                                      RaisedButton(
+//                                        onPressed: () {
+//                                          var url = 'http://167.172.59.89:5000/tDelete';
+//                                          http.put(url, body: {
+//                                            'id' : Id,
+//                                          });
+//                                        },
+//                                      );
 //                                    RaisedButton(
 //                                      onPressed: (){
-//                                        _upload();
-////                                        String fileName = _storedImage.path.split("/").last;
-//                                        var url = 'http://167.172.59.89:5000/';
-//                                        http.put(url, body: {
-//                                          'title': jobTitleController.text,
-//                                          'description': jobDescriptionController.text,
-////                                          'category': dropdownValue,
-//                                          'et': timeController.text,
-//                                          'price': priceController.text,
-//                                          'location': locationController.text,
-////                                          'picture': fileName,
-////                                          'id': Id,
-//                                        });
+////                                        _upload();
+//////                                        String fileName = _storedImage.path.split("/").last;
+////                                        var url = 'http://167.172.59.89:5000/tReplace';
+////                                        http.put(url, body: {
+////                                          'title': jobTitleController.text,
+////                                          'description': jobDescriptionController.text,
+////                                          'category': dropdown.text,
+////                                          'et': timeController.text,
+////                                          'price': priceController.text,
+////                                          'location': locationController.text,
+//////                                          'picture': fileName,
+//////                                          'id': Id,
+////                                        });
 //                                      },
 //                                      child: Text ('Submit'),
 //                                    )
