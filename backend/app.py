@@ -427,7 +427,7 @@ class PasswordResetRequest(Resource):
 api.add_resource(PasswordResetRequest, "/resetpassword")
 
 
-@app.route("/reset/<string:reset_id>")
+@app.route("/reset/<string:reset_id>", methods=['GET', 'POST'])
 def resetpassword(reset_id):
     headers = {'Content-Type': 'text/html'}
     userId = s.loads(reset_id)
