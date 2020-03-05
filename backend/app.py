@@ -48,6 +48,7 @@ app.config['MAIL_PASSWORD'] = "R^$Jwkmr^4wkr"
 mail = Mail(app)
 
 s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
+b = Serializer(app.config['SECRET_KEY'], expires_in=860000)
 
 # TODO Move models to models file
 class Accounts(db.Model):
@@ -104,7 +105,7 @@ api.add_resource(hello, '/')
 class Summary(Resource):
      def post(self):
          summary = request.form['Summary']
-         userAccount = Accounts.query.filter_by(id_user=1).first()
+         userAccount = Accounts.query.filter_by(id_user=g.user).first()
          userAccount.userBio = summary
          db.session.commit()
          print("Summary:")
@@ -178,21 +179,23 @@ api.add_resource(TasksAdded, '/addtask')
 
 
 def generate_token(id,expiration=86400):
-    s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-    token = str(s.dumps(id))
+    token = b.dumps(id)
+    token = token.decode('utf-8')
+    #token  = token.decode('utf8').replace("'", '"')
     return token
 
 
 @auth.verify_password
 def verify_password(username, password):
-    s = Serializer(app.config['SECRET_KEY'])
+    print(username)
     try:  #Check if username is a valid token
-        loggedUser = s.loads(username)
+        loggedUser = b.loads(username)
 
 
     except SignatureExpired:
         return False
-    except:  #     If invalid then check if username and password are a valid login
+    except Exception as error:  #     If invalid then check if username and password are a valid login
+        print(error)
         if Accounts.query.filter_by(email=username).first() is not None:
 
             user = Accounts.query.filter_by(email=username).first()
@@ -204,10 +207,9 @@ def verify_password(username, password):
                 return False
         else:
             return False
-    user = Accounts.query.filter_by(email=loggedUser).first()
+    user = Accounts.query.filter_by(id_user=loggedUser).first()
     g.user = user.id_user
-    return loggedUser
-
+    return loggedUser, username
 
 
 
@@ -437,4 +439,5 @@ class ConfirmEmail(Resource):
         confirmUser = Accounts.query.filter_by(email=decoded).first()
         confirmUser.confirmed = True
         db.session.commit()
+        return 'Email Confirmed'
 api.add_resource(ConfirmEmail, "/<string:reset_id>")
