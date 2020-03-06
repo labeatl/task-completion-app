@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     Future<String> getUserTasks() async {
       http.Response response = await http.get(
-        Uri.encodeFull("http://167.172.59.89:5000/PostUserTasks"),
+        Uri.encodeFull("http://167.172.59.89:5000/postUserTasks"),
         headers: {"Accept": "application/json"},
       );
       this.setState(() {

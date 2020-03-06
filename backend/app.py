@@ -471,4 +471,4 @@ class PostUserTasks(Resource):
         return userTaskList
 
 
-api.add_resource(PostSkills, '/postskills')
+api.add_resource(PostUserTasks, '/postUserTasks')
