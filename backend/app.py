@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, make_response
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -417,13 +417,33 @@ class PasswordResetRequest(Resource):
         user = Accounts.query.filter_by(email=email).first()
         userID = user.id_user
         s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
-        encodedUser = s.dumps(user)
-        msg = Message('Password Reset Request',
-                      recipients=[email])
-        msg.html = "<b>Hello test</b>"
+        encodedUser = s.dumps(user.id_user)
+        msg = Message('Confirm Email',
+                  recipients=[user.email])
+        emailBody = "Plase click the link to confirm your email http://167.172.59.89:5000/reset/" + encodedUser
+        msg.body = emailBody
         mail.send(msg)
 
 api.add_resource(PasswordResetRequest, "/resetpassword")
+
+
+@app.route("/reset/<string:reset_id>", methods=['GET', 'POST'])
+def resetpassword(reset_id):
+    headers = {'Content-Type': 'text/html'}
+    decoded = s.loads(reset_id)
+    user = Accounts.query.filter_by(id_user=decoded).first()
+    if request.method == 'POST':
+        password = request.form['password']
+        newPassword = request.form['password']
+        hashedPassword = generate_password_hash(newPassword)
+        user.password = hashedPassword
+        db.session.commit()
+        return 'Password Reset'
+
+    return make_response(render_template('resetpassword.html'),200,headers)
+
+
+
 
 class ConfirmEmail(Resource):
     def get(self, reset_id):
