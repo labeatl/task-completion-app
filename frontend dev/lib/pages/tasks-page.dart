@@ -124,7 +124,7 @@ class TaskPageState extends State<TasksPage> {
 //                                  content: Container(
 //                                    child: Column (
 //                                    children: <Widget> [
-//                                      new Text("Catogary of the task:"),
+//                                      new Text("Category of the task:"),
 //                                      new DropdownButton<String>(
 //                                        value: dropdown.text,
 //                                        elevation: 5,
@@ -193,6 +193,16 @@ class TaskPageState extends State<TasksPage> {
 ////                                        });
 //                                      },
 //                                      child: Text ('Submit'),
+//                                    )
+//                                     RaisedButton(
+//                                      onPressed: (){
+////                                        _upload();
+////                                        var url = 'http://167.172.59.89:5000/tDelete';
+////                                        http.put(url, body: {
+////                                          'id': Id,
+////                                        });
+//                                      },
+//                                      child: Text ('Delete'),
 //                                    )
 //                                    ]
 //                                    )
