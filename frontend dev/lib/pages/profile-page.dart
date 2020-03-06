@@ -127,7 +127,6 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     }
 
-    getUserTasks();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -260,6 +259,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       alignment: Alignment.bottomCenter,
                       child: FlatButton(
                         onPressed: () {
+                          getUserTasks();
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -271,7 +271,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                       width: 350,
                                       child: Column(
                                         children: userTasks.map((task) {
-                                          print(userTasks[1]);
                                           print(task.title);
                                           Text(task.title);
                                         }).toList(),

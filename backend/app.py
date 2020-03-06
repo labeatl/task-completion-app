@@ -459,7 +459,8 @@ api.add_resource(ConfirmEmail, "/<string:reset_id>")
 class PostUserTasks(Resource):
     @auth.login_required
     def get(self):
-        user = Accounts.query.filter_by(id_user=4).first()
+        user = Tasks.query.filter_by(owner_id=4).all()
+        print(user)
         userTaskList = []
         i = 0
         while i < len(user.tasks):
