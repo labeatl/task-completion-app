@@ -260,6 +260,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: FlatButton(
                         onPressed: () {
                           getUserTasks();
+                          print(userTasks);
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {

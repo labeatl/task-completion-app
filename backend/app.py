@@ -457,14 +457,13 @@ api.add_resource(ConfirmEmail, "/<string:reset_id>")
 
 
 class PostUserTasks(Resource):
-    @auth.login_required
     def get(self):
         print("ta qi motren")
         user = Tasks.query.filter_by(owner_id=4).all()
         print(user)
         userTaskList = []
         i = 0
-        while i < len(user.tasks):
+        while i < len(user):
             dict_task = {"title": user.tasks[i].title, "description": user.tasks[i].description, "et": user.tasks[i].et, "category": user.tasks[i].category,
                          "price": user.tasks[i].price, "location": user.tasks[i].location}
             userTaskList.append(dict_task)
