@@ -467,6 +467,7 @@ class PostUserTasks(Resource):
                          "price": user.tasks[i].price, "location": user.tasks[i].location}
             userTaskList.append(dict_task)
             i = i + 1
+        print("blla blla blla")
         print(userTaskList)
         return userTaskList
 
