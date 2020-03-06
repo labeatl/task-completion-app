@@ -73,7 +73,6 @@ class _ProfilePageState extends State<ProfilePage> {
       List data =
           json.decode(response.body); //only works when first changing type????
       var counter = 0;
-      print(response.body);
       while (counter < data.length) {
         int id = data[counter]["id"];
         String name = data[counter]["name"];
@@ -103,13 +102,12 @@ class _ProfilePageState extends State<ProfilePage> {
     getData();
 
     Future<String> getUserTasks() async {
+      userTasks = [];
       http.Response response = await http.get(
         Uri.encodeFull("http://167.172.59.89:5000/postUserTasks"),
         headers: {"Accept": "application/json"},
       );
-      this.setState(() {
-        data = json.decode(response.body);
-      });
+      data = json.decode(response.body);
       var counter = 0;
       while (counter < data.length) {
         userTasks.add(
@@ -126,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
         counter++;
       }
     }
-
+    getUserTasks();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -259,8 +257,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       alignment: Alignment.bottomCenter,
                       child: FlatButton(
                         onPressed: () {
-                          getUserTasks();
-                          print(userTasks);
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -271,10 +267,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       height: 300,
                                       width: 350,
                                       child: Column(
-                                        children: userTasks.map((task) {
-                                          print(task.title);
-                                          Text(task.title);
-                                        }).toList(),
+                                        children: userTasks.length != 0
+                                            ? userTasks.map((userTask) {
+                                          return Text(userTask.title);
+                                        }).toList()
+                                            : <Widget>[Text("No Task history currently"),],
                                       ),
                                     ),
                                   );
@@ -405,7 +402,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     List data =
         json.decode(response.body); //only works when first changing type????
-    print(response.body);
+
     var counter = 0;
     while (counter < data.length) {
       var skillId = data[counter]["skill_id"];
@@ -419,9 +416,6 @@ class _ProfilePageState extends State<ProfilePage> {
       //eCtrl.clear();     // Clear the Text area
       counter++;
     }
-
-    print("Skills : ");
-    print(skills);
 
     return tempSkills;
   }

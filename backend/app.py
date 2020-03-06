@@ -453,13 +453,14 @@ class ConfirmEmail(Resource):
         confirmUser.confirmed = True
         db.session.commit()
         return 'Email Confirmed'
+
 api.add_resource(ConfirmEmail, "/<string:reset_id>")
+
 
 
 class PostUserTasks(Resource):
     def get(self):
         user = Tasks.query.filter_by(owner_id=4).all()
-        print(user)
         userTaskList = []
         i = 0
         while i < len(user):
@@ -467,9 +468,6 @@ class PostUserTasks(Resource):
                          "price": user[i].price, "location": user[i].location}
             userTaskList.append(dict_task)
             i = i + 1
-        print("blla blla blla")
-        print(userTaskList)
         return userTaskList
-
 
 api.add_resource(PostUserTasks, '/postUserTasks')

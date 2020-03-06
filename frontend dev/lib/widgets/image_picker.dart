@@ -9,7 +9,6 @@ import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 
 class Image_pick extends StatefulWidget {
-
   _Image_pickState createState() => _Image_pickState();
 }
 
@@ -25,7 +24,10 @@ class _Image_pickState extends State<Image_pick> {
               child: ListBody(
                 children: <Widget>[
                   GestureDetector(
-                    child: FlatButton.icon(icon: Icon(Icons.image), label: Text(" Gallery"),),
+                    child: FlatButton.icon(
+                      icon: Icon(Icons.image),
+                      label: Text(" Gallery"),
+                    ),
                     onTap: () {
                       _openGallery(context);
                     },
@@ -34,13 +36,17 @@ class _Image_pickState extends State<Image_pick> {
                     padding: EdgeInsets.all(8),
                   ),
                   GestureDetector(
-                    child: FlatButton.icon(icon: Icon(Icons.camera), label: Text(" Camera")),
+                    child: FlatButton.icon(
+                        icon: Icon(Icons.camera), label: Text(" Camera")),
                     onTap: () {
                       _takePicture(context);
                     },
                   ),
                   GestureDetector(
-                    child: FlatButton.icon(icon: Icon(Icons.file_upload), label: Text(" upload"),),
+                    child: FlatButton.icon(
+                      icon: Icon(Icons.file_upload),
+                      label: Text(" upload"),
+                    ),
                     onTap: () {
                       _upload();
                     },
@@ -77,15 +83,14 @@ class _Image_pickState extends State<Image_pick> {
     //final savedImage = await imageFile.copy("${appDir.path}/${fileName}");
   }
 
-
   void _upload() {
     if (_storedImage == null) return;
     String base64Image = base64Encode(_storedImage.readAsBytesSync());
     String fileName = _storedImage.path.split("/").last;
     var url = 'http://167.172.59.89:5000/imageUpload';
     http.post(url, body: {
-    "image": base64Image,
-    "name": fileName,
+      "image": base64Image,
+      "name": fileName,
     }).then((res) {
       print(res.statusCode);
     }).catchError((err) {
@@ -93,22 +98,21 @@ class _Image_pickState extends State<Image_pick> {
     });
   }
 
-
-
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         Container(
-            margin: EdgeInsets.fromLTRB(20, 15, 35, 5),
-            child: _storedImage != null
-                ? CircleAvatar(
-                    maxRadius: 47, backgroundImage: FileImage(_storedImage))
-                : CircleAvatar(
-                    maxRadius: 47,
-                backgroundImage: NetworkImage(
-                  'http://167.172.59.89:5000/imageUpload',
+          margin: EdgeInsets.fromLTRB(20, 15, 35, 5),
+          child: _storedImage != null
+              ? CircleAvatar(
+                  maxRadius: 47, backgroundImage: FileImage(_storedImage))
+              : CircleAvatar(
+                  maxRadius: 47,
+                  backgroundImage: NetworkImage(
+                    'http://167.172.59.89:5000/imageUpload',
+                  ),
                 ),
-                  )),
+        ),
         SizedBox(
           width: 10,
         ),
