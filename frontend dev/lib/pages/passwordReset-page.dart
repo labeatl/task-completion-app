@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -80,6 +81,11 @@ class _passwordResetState extends State<PasswordReset> {
                     child: RaisedButton(
                         child: Text("Submit"),
                         onPressed: () {
+                          var storage = getStorage();
+                          var url = 'http://167.172.59.89:5000/resetpassword';
+                          http.post(url, body: {
+                            'email': email, //Change this
+                          });
                           print("Password reset email sent");
                           _warning = "A password reset link has been sent to " +
                               email.text;

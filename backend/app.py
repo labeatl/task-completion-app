@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, make_response
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -50,6 +50,19 @@ mail = Mail(app)
 s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
 b = Serializer(app.config['SECRET_KEY'], expires_in=860000)
 
+
+class Tasks(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(512), nullable=False)
+    category = db.Column(db.String(20), nullable=False)
+    et = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    location = db.Column(db.String(20), nullable=False)
+    picture = db.Column(db.String(80), nullable=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
+
+
 # TODO Move models to models file
 class Accounts(db.Model):
     id_user = db.Column(db.Integer, primary_key=True)
@@ -59,6 +72,7 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
+    tasks = db.relationship('Tasks', backref='taskOwner')
     profile_pic = db.Column(db.String(200), nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
@@ -72,17 +86,6 @@ class Accounts(db.Model):
 # class Tasks(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     taskName = db.Column(db.String, nullable=False)
-
-
-class Tasks(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
-    description = db.Column(db.String(512), nullable=False)
-    category = db.Column(db.String(20), nullable=False)
-    et = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    location = db.Column(db.String(20), nullable=False)
-    picture = db.Column(db.String(80), nullable=True)
 
 
 # Adding skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
@@ -105,6 +108,7 @@ api.add_resource(hello, '/')
 class Summary(Resource):
      def post(self):
          summary = request.form['Summary']
+
          userAccount = Accounts.query.filter_by(id_user=g.user).first()
          userAccount.userBio = summary
          db.session.commit()
@@ -168,12 +172,10 @@ class TasksAdded(Resource):
         Price = request.form['price']
         Location = request.form['location']
         Picture = request.form['picture']
-
-        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture)
+        owner = Accounts.query.filter_by(id_user=4).first()
+        createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=owner.id_user)
         db.session.add(createTask)
-        print(createTask)
         db.session.commit()
-
 
 api.add_resource(TasksAdded, '/addtask')
 
@@ -438,13 +440,33 @@ class PasswordResetRequest(Resource):
         user = Accounts.query.filter_by(email=email).first()
         userID = user.id_user
         s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
-        encodedUser = s.dumps(user)
-        msg = Message('Password Reset Request',
-                      recipients=[email])
-        msg.html = "<b>Hello test</b>"
+        encodedUser = s.dumps(user.id_user)
+        msg = Message('Confirm Email',
+                  recipients=[user.email])
+        emailBody = "Plase click the link to confirm your email http://167.172.59.89:5000/reset/" + encodedUser
+        msg.body = emailBody
         mail.send(msg)
 
 api.add_resource(PasswordResetRequest, "/resetpassword")
+
+
+@app.route("/reset/<string:reset_id>", methods=['GET', 'POST'])
+def resetpassword(reset_id):
+    headers = {'Content-Type': 'text/html'}
+    decoded = s.loads(reset_id)
+    user = Accounts.query.filter_by(id_user=decoded).first()
+    if request.method == 'POST':
+        password = request.form['password']
+        newPassword = request.form['password']
+        hashedPassword = generate_password_hash(newPassword)
+        user.password = hashedPassword
+        db.session.commit()
+        return 'Password Reset'
+
+    return make_response(render_template('resetpassword.html'),200,headers)
+
+
+
 
 class ConfirmEmail(Resource):
     def get(self, reset_id):
@@ -454,4 +476,21 @@ class ConfirmEmail(Resource):
         confirmUser.confirmed = True
         db.session.commit()
         return 'Email Confirmed'
+
 api.add_resource(ConfirmEmail, "/<string:reset_id>")
+
+
+
+class PostUserTasks(Resource):
+    def get(self):
+        user = Tasks.query.filter_by(owner_id=4).all()
+        userTaskList = []
+        i = 0
+        while i < len(user):
+            dict_task = {"title": user[i].title, "description": user[i].description, "et": user[i].et, "category": user[i].category,
+                         "price": user[i].price, "location": user[i].location}
+            userTaskList.append(dict_task)
+            i = i + 1
+        return userTaskList
+
+api.add_resource(PostUserTasks, '/postUserTasks')

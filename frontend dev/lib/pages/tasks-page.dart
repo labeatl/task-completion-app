@@ -14,6 +14,7 @@ class TasksPage extends StatefulWidget {
 List data;
 List<Task> tasks = [];
 
+
 void updateTasks(String category) {
   var index = 0;
   while (index < tasks.length) {

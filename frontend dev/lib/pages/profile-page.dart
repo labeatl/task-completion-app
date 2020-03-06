@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:http/http.dart' as http;
 import "../widgets/image_picker.dart";
-import 'dart:io';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../main.dart';
+import '../task.dart';
+import 'dart:convert';
 
 class ProfilePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _ProfilePageState();
@@ -15,6 +18,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
   final sum = TextEditingController();
   List<Widget> skills = [];
+  List<Task> userTasks = [];
+  List data;
 
   _ProfilePageState() {
     getSkills().then((val) => setState(() {
@@ -25,6 +30,20 @@ class _ProfilePageState extends State<ProfilePage> {
   String summary = "";
   bool chosen = true;
   bool ranThis = false;
+
+  Future<void> getID() async {
+    String token = await storage.read(key: "token");
+    appAuth.login(token, "").then(
+      (result) {
+        print(token);
+        if (result) {
+          Navigator.of(context).pushReplacementNamed('/home');
+        } else {
+          print("Failed");
+        }
+      },
+    );
+  }
 
   Widget build(BuildContext context) {
     Future<String> getSummary() async {
@@ -54,7 +73,6 @@ class _ProfilePageState extends State<ProfilePage> {
       List data =
           json.decode(response.body); //only works when first changing type????
       var counter = 0;
-      print(response.body);
       while (counter < data.length) {
         int id = data[counter]["id"];
         String name = data[counter]["name"];
@@ -82,6 +100,31 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     getData();
+
+    Future<String> getUserTasks() async {
+      userTasks = [];
+      http.Response response = await http.get(
+        Uri.encodeFull("http://167.172.59.89:5000/postUserTasks"),
+        headers: {"Accept": "application/json"},
+      );
+      data = json.decode(response.body);
+      var counter = 0;
+      while (counter < data.length) {
+        userTasks.add(
+          new Task(
+            title: data[counter]["title"],
+            description: data[counter]["description"],
+            category: data[counter]["category"],
+            et: data[counter]["et"],
+            price: data[counter]["price"],
+            location: data[counter]["location"],
+            date: DateTime.now(),
+          ),
+        );
+        counter++;
+      }
+    }
+    getUserTasks();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -129,6 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         child: RaisedButton(
                                           child: Text('Submit'),
                                           onPressed: () {
+                                            //String value = await storage.read(key: "token");
                                             var url =
                                                 'http://167.172.59.89:5000/summary'; //Change URL
                                             print({
@@ -166,7 +210,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Row(
-
               children: <Widget>[
                 Container(
                   width: 206,
@@ -213,7 +256,30 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(
+                                builder: (context, setState) {
+                                  return AlertDialog(
+                                    content: Container(
+                                      height: 300,
+                                      width: 350,
+                                      child: Column(
+                                        children: userTasks.length != 0
+                                            ? userTasks.map((userTask) {
+                                          return Text(userTask.title);
+                                        }).toList()
+                                            : <Widget>[Text("No Task history currently"),],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
                         child: new Text(
                           'Show task history',
                           style: TextStyle(color: Colors.white),
@@ -336,7 +402,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     List data =
         json.decode(response.body); //only works when first changing type????
-    print(response.body);
+
     var counter = 0;
     while (counter < data.length) {
       var skillId = data[counter]["skill_id"];
@@ -350,9 +416,6 @@ class _ProfilePageState extends State<ProfilePage> {
       //eCtrl.clear();     // Clear the Text area
       counter++;
     }
-
-    print("Skills : ");
-    print(skills);
 
     return tempSkills;
   }
