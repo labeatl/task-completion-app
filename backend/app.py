@@ -460,6 +460,7 @@ class PostUserTasks(Resource):
     @auth.login_required
     def get(self):
         user = Tasks.query.filter_by(owner_id=4).all()
+        print("ta qi motren")
         print(user)
         userTaskList = []
         i = 0
