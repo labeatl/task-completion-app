@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import "../widgets/image_picker.dart";
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../main.dart';
-
-
+import '../task.dart';
+import 'dart:convert';
 
 class ProfilePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _ProfilePageState();
@@ -18,6 +18,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
   final sum = TextEditingController();
   List<Widget> skills = [];
+  List<Task> userTasks = [];
+  List data;
 
   _ProfilePageState() {
     getSkills().then((val) => setState(() {
@@ -30,20 +32,18 @@ class _ProfilePageState extends State<ProfilePage> {
   bool ranThis = false;
 
   Future<void> getID() async {
-    String token =  await storage.read(key: "token");
-    appAuth
-        .login(token, "")
-        .then((result) {
-      print(token);
-      if (result) {
-        Navigator.of(context).pushReplacementNamed('/home');
-      }
-      else {
-        print("Failed");
-      }
-    },);
+    String token = await storage.read(key: "token");
+    appAuth.login(token, "").then(
+      (result) {
+        print(token);
+        if (result) {
+          Navigator.of(context).pushReplacementNamed('/home');
+        } else {
+          print("Failed");
+        }
+      },
+    );
   }
-
 
   Widget build(BuildContext context) {
     Future<String> getSummary() async {
@@ -101,6 +101,33 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     getData();
+
+    Future<String> getUserTasks() async {
+      http.Response response = await http.get(
+        Uri.encodeFull("http://167.172.59.89:5000/PostUserTasks"),
+        headers: {"Accept": "application/json"},
+      );
+      this.setState(() {
+        data = json.decode(response.body);
+      });
+      var counter = 0;
+      while (counter < data.length) {
+        userTasks.add(
+          new Task(
+            title: data[counter]["title"],
+            description: data[counter]["description"],
+            category: data[counter]["category"],
+            et: data[counter]["et"],
+            price: data[counter]["price"],
+            location: data[counter]["location"],
+            date: DateTime.now(),
+          ),
+        );
+        counter++;
+      }
+    }
+
+    getUserTasks();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -186,7 +213,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Row(
-
               children: <Widget>[
                 Container(
                   width: 206,
@@ -233,7 +259,30 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(
+                                builder: (context, setState) {
+                                  return AlertDialog(
+                                    content: Container(
+                                      height: 300,
+                                      width: 350,
+                                      child: Column(
+                                        children: userTasks.map((task) {
+                                          print(userTasks[1]);
+                                          print(task.title);
+                                          Text(task.title);
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
                         child: new Text(
                           'Show task history',
                           style: TextStyle(color: Colors.white),
