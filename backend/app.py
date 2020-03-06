@@ -458,14 +458,13 @@ api.add_resource(ConfirmEmail, "/<string:reset_id>")
 
 class PostUserTasks(Resource):
     def get(self):
-        print("ta qi motren")
         user = Tasks.query.filter_by(owner_id=4).all()
         print(user)
         userTaskList = []
         i = 0
         while i < len(user):
-            dict_task = {"title": user.tasks[i].title, "description": user.tasks[i].description, "et": user.tasks[i].et, "category": user.tasks[i].category,
-                         "price": user.tasks[i].price, "location": user.tasks[i].location}
+            dict_task = {"title": user[i].title, "description": user[i].description, "et": user[i].et, "category": user[i].category,
+                         "price": user[i].price, "location": user[i].location}
             userTaskList.append(dict_task)
             i = i + 1
         print("blla blla blla")
