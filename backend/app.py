@@ -260,7 +260,7 @@ api.add_resource(TasksList, '/tasks')
 
 
 class TaskDelete(Resource):
-    def post(self):
+    def put(self):
         Id = request.form['id']
         Tasks.query.filter_by(id = Id).delete()
         db.session.commit()
@@ -269,7 +269,7 @@ class TaskDelete(Resource):
 api.add_resource(TaskDelete, '/tDelete')
 
 class TaskReplace(Resource):
-    def post(self):
+    def put(self):
         Id = request.form['id']
         x = Tasks.query.filter_by(id = Id).first()
         x.title = request.form['title']

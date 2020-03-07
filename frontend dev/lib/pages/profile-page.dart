@@ -123,11 +123,9 @@ class _ProfilePageState extends State<ProfilePage> {
         );
         counter++;
       }
-
     }
 
     getTasks();
-
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -268,226 +266,203 @@ class _ProfilePageState extends State<ProfilePage> {
                                   return AlertDialog(
                                     content: Container(
                                       height: 300,
-                                      width: 500,
+                                      width: 250,
                                       child: Column(
                                         children: tasks.length != 0
                                             ? tasks.map((task) {
-                                                return RaisedButton(
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: <Widget>[
-                                                      Container(
-                                                        margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                                        child: Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            Row(
-                                                              children: <Widget>[
-                                                                IconButton(
-                                                                  onPressed: () {},
-                                                                  icon: Icon(Icons.title),
-                                                                ),
-                                                                Text(
-                                                                  "${task.title}",
-                                                                  style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                      fontSize: 14,
-                                                                      color: Colors.blueGrey),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              children: <Widget>[
-                                                                IconButton(
-                                                                  onPressed: () {},
-                                                                  icon: Icon(Icons.attach_money),
-                                                                ),
-                                                                Text(
-                                                                  "£${task.price}",
-                                                                  style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                      fontSize: 14,
-                                                                      color: Colors.blueGrey),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
+                                                return Container(
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 7),
+                                                  width: 200,
+                                                  height: 58,
+                                                  child: RaisedButton(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: <Widget>[
+                                                        Container(
+                                                          margin: EdgeInsets
+                                                              .fromLTRB(
+                                                                  0, 5, 0, 5),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: <Widget>[
+                                                              Row(
+                                                                children: <
+                                                                    Widget>[
+                                                                  IconButton(
+                                                                    onPressed:
+                                                                        () {},
+                                                                    icon: Icon(Icons
+                                                                        .title),
+                                                                  ),
+                                                                  Text(
+                                                                    "${task.title}",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            14,
+                                                                        color: Colors
+                                                                            .blueGrey),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Container(
-                                                        margin: EdgeInsets.fromLTRB(0, 20, 5, 20),
-                                                        child: Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            Row(
-                                                              children: <Widget>[
-                                                                IconButton(
-                                                                  icon: Icon(Icons.location_on),
-                                                                  onPressed: () {},
-                                                                ),
-                                                                Text(
-                                                                  "${task.location}",
-                                                                  style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                      fontSize: 15,
-                                                                      color: Colors.blueGrey),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              children: <Widget>[
-                                                                IconButton(
-                                                                  icon: Icon(Icons.access_time),
-                                                                  onPressed: () {},
-                                                                ),
-                                                                Text(
-                                                                  "${task.et} min",
-                                                                  style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                      fontSize: 14,
-                                                                      color: Colors.blueGrey),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
+                                                        Container(
+                                                          margin: EdgeInsets
+                                                              .fromLTRB(
+                                                                  0, 5, 3, 5),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: <Widget>[
+                                                              Row(
+                                                                children: <
+                                                                    Widget>[
+                                                                  IconButton(
+                                                                    icon: Icon(Icons
+                                                                        .location_on),
+                                                                    onPressed:
+                                                                        () {},
+                                                                  ),
+                                                                  Text(
+                                                                    "${task.location}",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            14,
+                                                                        color: Colors
+                                                                            .blueGrey),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  onPressed: () {
-                                                    final priceController =
-                                                        TextEditingController();
-                                                    priceController.text =
-                                                        task.price.toString();
-                                                    final timeController =
-                                                        TextEditingController();
-                                                    timeController.text =
-                                                        task.et.toString();
-                                                    final jobDescriptionController =
-                                                        TextEditingController();
-                                                    jobDescriptionController
-                                                            .text =
-                                                        task.description;
-                                                    final locationController =
-                                                        TextEditingController();
-                                                    locationController.text =
-                                                        task.location;
-                                                    final jobTitleController =
-                                                        TextEditingController();
-                                                    jobTitleController.text =
-                                                        task.title;
-                                                    final dropdown =
-                                                        TextEditingController();
-                                                    dropdown.text =
-                                                        task.category;
-                                                    final Id = task.id;
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return StatefulBuilder(
-                                                            builder: (context,
-                                                                setState) {
-                                                              return AlertDialog(
-                                                                content:
-                                                                    Container(
-                                                                        child: Column(
-                                                                            children: <Widget>[
-                                                                      new Text(
-                                                                          "Category of the task:"),
-                                                                      new DropdownButton<
-                                                                          String>(
-                                                                        value: dropdown
-                                                                            .text,
-                                                                        elevation:
-                                                                            5,
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.blueGrey),
-                                                                        underline:
-                                                                            Container(
-                                                                          color:
-                                                                              Colors.blueGrey,
-                                                                        ),
-                                                                        onChanged:
-                                                                            (String
-                                                                                newValue) {
-                                                                          setState(
-                                                                              () {
-                                                                            dropdown.text =
-                                                                                newValue;
-                                                                          });
-                                                                        },
-                                                                        items: <
-                                                                            String>[
-                                                                          "Gardening",
-                                                                          "Bike Repair",
-                                                                          "Deliveries"
-                                                                        ].map<
-                                                                            DropdownMenuItem<
-                                                                                String>>((String
-                                                                            value) {
-                                                                          return DropdownMenuItem<
+                                                      ],
+                                                    ),
+                                                    onPressed: () {
+                                                      final priceController =
+                                                          TextEditingController();
+                                                      priceController.text =
+                                                          task.price.toString();
+                                                      final timeController =
+                                                          TextEditingController();
+                                                      timeController.text =
+                                                          task.et.toString();
+                                                      final jobDescriptionController =
+                                                          TextEditingController();
+                                                      jobDescriptionController
+                                                              .text =
+                                                          task.description;
+                                                      final locationController =
+                                                          TextEditingController();
+                                                      locationController.text =
+                                                          task.location;
+                                                      final jobTitleController =
+                                                          TextEditingController();
+                                                      jobTitleController.text =
+                                                          task.title;
+                                                      final dropdown =
+                                                          TextEditingController();
+                                                      dropdown.text =
+                                                          task.category;
+                                                      final Id = task.id;
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return StatefulBuilder(
+                                                              builder: (context,
+                                                                  setState) {
+                                                                return AlertDialog(
+                                                                  content:
+                                                                      SingleChildScrollView(
+                                                                    child:
+                                                                        Container(
+                                                                      child:
+                                                                          Column(
+                                                                        children: <
+                                                                            Widget>[
+                                                                          new Text(
+                                                                              "Category of the task:"),
+                                                                          new DropdownButton<
                                                                               String>(
                                                                             value:
-                                                                                value,
-                                                                            child:
-                                                                                Text(value, style: TextStyle(fontSize: 16)),
-                                                                          );
-                                                                        }).toList(),
-                                                                      ),
-                                                                      new TextFormField(
-                                                                        decoration:
-                                                                            InputDecoration(labelText: "Job title"),
-                                                                        controller:
-                                                                            jobTitleController,
-                                                                      ),
-                                                                      new TextFormField(
-                                                                        decoration:
-                                                                            InputDecoration(labelText: "Job desc"),
-                                                                        controller:
-                                                                            jobDescriptionController,
-                                                                      ),
-                                                                      new TextFormField(
-                                                                        decoration:
-                                                                            InputDecoration(labelText: "Time"),
-                                                                        controller:
-                                                                            timeController,
-                                                                      ),
-                                                                      new TextFormField(
-                                                                        decoration:
-                                                                            InputDecoration(labelText: "Price"),
-                                                                        controller:
-                                                                            priceController,
-                                                                      ),
-                                                                      new TextFormField(
-                                                                        decoration:
-                                                                            InputDecoration(labelText: "Location"),
-                                                                        controller:
-                                                                            locationController,
-                                                                      ),
-                                                                      RaisedButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          var url =
-                                                                              'http://167.172.59.89:5000/tDelete';
-                                                                          http.put(
-                                                                              url,
-                                                                              body: {
-                                                                                'id': Id,
+                                                                                dropdown.text,
+                                                                            elevation:
+                                                                                5,
+                                                                            style:
+                                                                                TextStyle(color: Colors.blueGrey),
+                                                                            underline:
+                                                                                Container(
+                                                                              color: Colors.blueGrey,
+                                                                            ),
+                                                                            onChanged:
+                                                                                (String newValue) {
+                                                                              setState(() {
+                                                                                dropdown.text = newValue;
                                                                               });
-                                                                        },
-                                                                      ),
-                                                                      RaisedButton(
-                                                                        onPressed:
-                                                                            () {
+                                                                            },
+                                                                            items:
+                                                                                <String>[
+                                                                              "Gardening",
+                                                                              "Bike Repair",
+                                                                              "Deliveries"
+                                                                            ].map<DropdownMenuItem<String>>((String value) {
+                                                                              return DropdownMenuItem<String>(
+                                                                                value: value,
+                                                                                child: Text(value, style: TextStyle(fontSize: 16)),
+                                                                              );
+                                                                            }).toList(),
+                                                                          ),
+                                                                          new TextFormField(
+                                                                            decoration:
+                                                                                InputDecoration(labelText: "Job title"),
+                                                                            controller:
+                                                                                jobTitleController,
+                                                                          ),
+                                                                          new TextFormField(
+                                                                            decoration:
+                                                                                InputDecoration(labelText: "Job desc"),
+                                                                            controller:
+                                                                                jobDescriptionController,
+                                                                          ),
+                                                                          new TextFormField(
+                                                                            decoration:
+                                                                                InputDecoration(labelText: "Time"),
+                                                                            controller:
+                                                                                timeController,
+                                                                          ),
+                                                                          new TextFormField(
+                                                                            decoration:
+                                                                                InputDecoration(labelText: "Price"),
+                                                                            controller:
+                                                                                priceController,
+                                                                          ),
+                                                                          new TextFormField(
+                                                                            decoration:
+                                                                                InputDecoration(labelText: "Location"),
+                                                                            controller:
+                                                                                locationController,
+                                                                          ),
+                                                                          RaisedButton(
+                                                                            onPressed:
+                                                                                () {
 //                                        _upload();
 //                                        String fileName = _storedImage.path.split("/").last;
-                                                                          var url =
-                                                                              'http://167.172.59.89:5000/tReplace';
-                                                                          http.put(
-                                                                              url,
-                                                                              body: {
+                                                                              var url = 'http://167.172.59.89:5000/tReplace';
+                                                                              http.put(url, body: {
                                                                                 'title': jobTitleController.text,
                                                                                 'description': jobDescriptionController.text,
                                                                                 'category': dropdown.text,
@@ -497,30 +472,31 @@ class _ProfilePageState extends State<ProfilePage> {
 //                                          'picture': fileName,
                                                                                 'id': Id,
                                                                               });
-                                                                        },
-                                                                        child: Text(
-                                                                            'Submit'),
-                                                                      ),
-                                                                      RaisedButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          var url =
-                                                                              'http://167.172.59.89:5000/tDelete';
-                                                                          http.put(
-                                                                              url,
-                                                                              body: {
+                                                                            },
+                                                                            child:
+                                                                                Text('Submit'),
+                                                                          ),
+                                                                          RaisedButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              var url = 'http://167.172.59.89:5000/tDelete';
+                                                                              http.put(url, body: {
                                                                                 'id': Id,
                                                                               });
-                                                                        },
-                                                                        child: Text(
-                                                                            'Delete'),
-                                                                      )
-                                                                    ])),
-                                                              );
-                                                            },
-                                                          );
-                                                        });
-                                                  },
+                                                                            },
+                                                                            child:
+                                                                                Text('Delete'),
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            );
+                                                          });
+                                                    },
+                                                  ),
                                                 );
                                               }).toList()
                                             : <Widget>[
