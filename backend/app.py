@@ -251,13 +251,36 @@ class TasksList(Resource):
         list = []
         for task in tasks:
             dict_task = {"title": task.title, "description": task.description, "et": task.et, "category": task.category,
-                         "price": task.price, "location": task.location}
+                         "price": task.price, "location": task.location, "id": task.id,}
             list.append(dict_task)
         return list
 
 
 api.add_resource(TasksList, '/tasks')
 
+
+class TaskDelete(Resource):
+    def put(self):
+        Id = request.form['id']
+        Tasks.query.filter_by(id = Id).delete()
+        db.session.commit()
+        return 'success'
+
+api.add_resource(TaskDelete, 'tDelete')
+
+class TaskReplace(Resource):
+    def put(self):
+        Id = request.form['id']
+        x = Tasks.query.filter_by(id = Id).first()
+        x.title = request.form['title']
+        x.description = request.form['description']
+        x.et = request.form['et']
+        x.price = request.form['price']
+        x.location = request.form['location']
+        x.category = request.form['category']
+        db.session.commit()
+
+api.add_resource(TaskReplace, '/tReplace')
 
 # TODO: Implement frontend for deletion
 class AccountDeletion(Resource):
@@ -465,7 +488,7 @@ class PostUserTasks(Resource):
         i = 0
         while i < len(user):
             dict_task = {"title": user[i].title, "description": user[i].description, "et": user[i].et, "category": user[i].category,
-                         "price": user[i].price, "location": user[i].location}
+                         "price": user[i].price, "location": user[i].location, "id": user[i].id,}
             userTaskList.append(dict_task)
             i = i + 1
         return userTaskList

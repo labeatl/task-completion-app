@@ -102,6 +102,116 @@ class TaskPageState extends State<TasksPage> {
                   EdgeInsets.only(left: 20.0, right: 20.0);
                   return RaisedButton(
                     onPressed: () {
+//                      final priceController = TextEditingController();
+//                      priceController.text = task.price.toString();
+//                      final timeController = TextEditingController();
+//                      timeController.text = task.et.toString();
+//                      final jobDescriptionController = TextEditingController();
+//                      jobDescriptionController.text = task.description;
+//                      final locationController = TextEditingController();
+//                      locationController.text = task.location;
+//                      final jobTitleController = TextEditingController();
+//                      jobTitleController.text = task.title;
+//                      final dropdown = TextEditingController();
+//                      dropdown.text = task.category;
+//                      final Id = task.id;
+//                      showDialog(
+//                          context: context,
+//                        builder: (BuildContext context) {
+//                            return StatefulBuilder(
+//                              builder: (context, setState) {
+//                                return AlertDialog(
+//                                  content: Container(
+//                                    child: Column (
+//                                    children: <Widget> [
+//                                      new Text("Category of the task:"),
+//                                      new DropdownButton<String>(
+//                                        value: dropdown.text,
+//                                        elevation: 5,
+//                                        style: TextStyle(color: Colors.blueGrey),
+//                                        underline: Container(
+//                                          color: Colors.blueGrey,
+//                                        ),
+//                                        onChanged: (String newValue) {
+//                                          setState(() {
+//                                            dropdown.text = newValue;
+//                                          });
+//                                        },
+//                                        items: <String>[
+//                                          "Gardening",
+//                                          "Bike Repair",
+//                                          "Deliveries"
+//                                        ].map<DropdownMenuItem<String>>((String value) {
+//                                          return DropdownMenuItem<String>(
+//                                            value: value,
+//                                            child: Text(value, style: TextStyle(fontSize: 16)),
+//                                          );
+//                                        }).toList(),
+//                                      ),
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Job title"),
+//                                      controller: jobTitleController,
+//                                    ),
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Job desc"),
+//                                      controller: jobDescriptionController,
+//                                    ),
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Time"),
+//                                      controller: timeController,
+//                                    ),
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Price"),
+//                                      controller: priceController,
+//                                    ),
+//                                    new TextFormField(
+//                                      decoration: InputDecoration(labelText: "Location"),
+//                                      controller: locationController,
+//                                    ),
+//                                      RaisedButton(
+//                                        onPressed: () {
+//                                          var url = 'http://167.172.59.89:5000/tDelete';
+//                                          http.put(url, body: {
+//                                            'id' : Id,
+//                                          });
+//                                        },
+//                                      );
+//                                    RaisedButton(
+//                                      onPressed: (){
+////                                        _upload();
+//////                                        String fileName = _storedImage.path.split("/").last;
+////                                        var url = 'http://167.172.59.89:5000/tReplace';
+////                                        http.put(url, body: {
+////                                          'title': jobTitleController.text,
+////                                          'description': jobDescriptionController.text,
+////                                          'category': dropdown.text,
+////                                          'et': timeController.text,
+////                                          'price': priceController.text,
+////                                          'location': locationController.text,
+//////                                          'picture': fileName,
+//////                                          'id': Id,
+////                                        });
+//                                      },
+//                                      child: Text ('Submit'),
+//                                    )
+//                                     RaisedButton(
+//                                      onPressed: (){
+////                                        _upload();
+////                                        var url = 'http://167.172.59.89:5000/tDelete';
+////                                        http.put(url, body: {
+////                                          'id': Id,
+////                                        });
+//                                      },
+//                                      child: Text ('Delete'),
+//                                    )
+//                                    ]
+//                                    )
+//                                  ),
+//                                );
+//                              },
+//                            );
+//                        }
+//                      );
                       print(task.description);
                       showDialog(
                           context: context,
