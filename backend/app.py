@@ -266,7 +266,7 @@ class TaskDelete(Resource):
         db.session.commit()
         return 'success'
 
-api.add_resource(TaskDelete, 'tDelete')
+api.add_resource(TaskDelete, '/tDelete')
 
 class TaskReplace(Resource):
     def put(self):
