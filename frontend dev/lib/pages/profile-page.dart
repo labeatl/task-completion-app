@@ -268,11 +268,92 @@ class _ProfilePageState extends State<ProfilePage> {
                                   return AlertDialog(
                                     content: Container(
                                       height: 300,
-                                      width: 350,
+                                      width: 500,
                                       child: Column(
                                         children: tasks.length != 0
                                             ? tasks.map((task) {
                                                 return RaisedButton(
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: <Widget>[
+                                                      Container(
+                                                        margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            Row(
+                                                              children: <Widget>[
+                                                                IconButton(
+                                                                  onPressed: () {},
+                                                                  icon: Icon(Icons.title),
+                                                                ),
+                                                                Text(
+                                                                  "${task.title}",
+                                                                  style: TextStyle(
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 14,
+                                                                      color: Colors.blueGrey),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                IconButton(
+                                                                  onPressed: () {},
+                                                                  icon: Icon(Icons.attach_money),
+                                                                ),
+                                                                Text(
+                                                                  "£${task.price}",
+                                                                  style: TextStyle(
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 14,
+                                                                      color: Colors.blueGrey),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets.fromLTRB(0, 20, 5, 20),
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            Row(
+                                                              children: <Widget>[
+                                                                IconButton(
+                                                                  icon: Icon(Icons.location_on),
+                                                                  onPressed: () {},
+                                                                ),
+                                                                Text(
+                                                                  "${task.location}",
+                                                                  style: TextStyle(
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 15,
+                                                                      color: Colors.blueGrey),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                IconButton(
+                                                                  icon: Icon(Icons.access_time),
+                                                                  onPressed: () {},
+                                                                ),
+                                                                Text(
+                                                                  "${task.et} min",
+                                                                  style: TextStyle(
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 14,
+                                                                      color: Colors.blueGrey),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                   onPressed: () {
                                                     final priceController =
                                                         TextEditingController();
