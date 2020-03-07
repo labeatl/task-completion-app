@@ -123,8 +123,10 @@ class _ProfilePageState extends State<ProfilePage> {
         );
         counter++;
       }
+
     }
     getUserTasks();
+
 
     return Scaffold(
       body: SingleChildScrollView(
