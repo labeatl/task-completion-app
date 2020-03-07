@@ -120,7 +120,7 @@ class _Image_pickState extends State<Image_pick> {
           child: FlatButton.icon(
             icon: Icon(Icons.camera),
             label: Text("Take Picture"),
-            textColor: Theme.of(context).primaryColor,
+            textColor: Colors.blueGrey,
             onPressed: () {
               _showChoiceDialog(context);
             },
