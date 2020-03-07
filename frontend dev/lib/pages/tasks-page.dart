@@ -47,7 +47,6 @@ class TaskPageState extends State<TasksPage> {
           et: data[counter]["et"],
           price: data[counter]["price"],
           location: data[counter]["location"],
-//          id: data[counter]["id"],
           date: DateTime.now(),
         ),
       );

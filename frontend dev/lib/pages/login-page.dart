@@ -139,18 +139,19 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontSize: 20.0),
                     ),
                     onPressed: () {
-                      setState(() => this._status = "loading");
-                      //Replace the two stringsi nlogin() with email and password
-                      appAuth
-                          .login(username.text, password.text)
-                          .then((result) {
-                        print(username.text);
-                        if (result) {
-                          Navigator.of(context).pushReplacementNamed('/home');
-                        } else {
-                          setState(() => this._status = 'rejected');
-                        }
-                      });
+                      Navigator.of(context).pushReplacementNamed('/home');
+//                      setState(() => this._status = "loading");
+//                      //Replace the two stringsi nlogin() with email and password
+//                      appAuth
+//                          .login(username.text, password.text)
+//                          .then((result) {
+//                        print(username.text);
+//                        if (result) {
+//                          Navigator.of(context).pushReplacementNamed('/home');
+//                        } else {
+//                          setState(() => this._status = 'rejected');
+//                        }
+//                      });
                     },
                   ),
                 ),

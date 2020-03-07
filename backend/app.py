@@ -488,7 +488,7 @@ class PostUserTasks(Resource):
         i = 0
         while i < len(user):
             dict_task = {"title": user[i].title, "description": user[i].description, "et": user[i].et, "category": user[i].category,
-                         "price": user[i].price, "location": user[i].location}
+                         "price": user[i].price, "location": user[i].location, "id": user[i].id,}
             userTaskList.append(dict_task)
             i = i + 1
         return userTaskList
