@@ -112,8 +112,6 @@ class Summary(Resource):
          userAccount = Accounts.query.filter_by(id_user=g.user).first()
          userAccount.userBio = summary
          db.session.commit()
-         print("Summary:")
-         print(summary)
          return 'success'
 
 
