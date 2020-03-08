@@ -261,11 +261,10 @@ api.add_resource(TasksList, '/tasks')
 
 class TaskDelete(Resource):
     def put(self):
-        print('success')
         Id = request.form['id']
         Tasks.query.filter_by(id = Id).delete()
         db.session.commit()
-
+        return 'success'
 
 api.add_resource(TaskDelete, '/tDelete')
 
