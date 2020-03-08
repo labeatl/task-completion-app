@@ -213,6 +213,15 @@ def verify_password(username, password):
 
 
 
+def getId(token):
+    try:
+        userId = b.loads(token)
+    except Exception as error:
+        print('Exception occured')
+        return 'error'
+    return userId
+
+
 
 class UserLogin(Resource):
     def post(self):
