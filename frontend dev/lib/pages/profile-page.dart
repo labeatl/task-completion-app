@@ -329,9 +329,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                     Widget>[
                                                                   IconButton(
                                                                     icon: Icon(Icons
-                                                                        .location_on),
+                                                                        .location_on,
+                                                                    color: Colors.blue),
                                                                     onPressed:
-                                                                        () {},
+                                                                        null,
                                                                   ),
                                                                   Text(
                                                                     "${task.location}",
@@ -471,6 +472,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                                 'location': locationController.text,
 //                                          'picture': fileName,
                                                                                 'id': Id,
+
                                                                               });
                                                                             },
                                                                             child:
