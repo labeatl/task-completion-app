@@ -269,7 +269,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     width: 280,
                                     child: SingleChildScrollView(
                                       child: Column(
-<<<<<<< HEAD
                                       children: tasks.length != 0
                                           ? tasks.map((task) {
                                               return Container(
@@ -351,90 +350,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               ],
                                                             ),
                                                           ],
-=======
-                                        children: tasks.length != 0
-                                            ? tasks.map((task) {
-                                                return Container(
-                                                  margin: EdgeInsets.fromLTRB(
-                                                      0, 0, 0, 7),
-                                                  width: 200,
-                                                  height: 58,
-                                                  child: RaisedButton(
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: <Widget>[
-                                                        Container(
-                                                          margin: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0, 5, 0, 5),
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: <
-                                                                    Widget>[
-                                                                  IconButton(
-                                                                    onPressed:
-                                                                        null,
-                                                                    icon: Icon(Icons
-                                                                        .title,
-                                                                    color: Colors.black),
-                                                                  ),
-                                                                  Text(
-                                                                    "${task.title}",
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Colors
-                                                                            .blueGrey),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          margin: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0, 5, 3, 5),
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: <
-                                                                    Widget>[
-                                                                  IconButton(
-                                                                    icon: Icon(Icons
-                                                                        .location_on,
-                                                                    color: Colors.black),
-                                                                    onPressed:
-                                                                        null,
-                                                                  ),
-                                                                  Text(
-                                                                    "${task.location}",
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Colors
-                                                                            .blueGrey),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
->>>>>>> ff202b8d3517d98122b34be0cb4eddfe3bdc8b0f
                                                         ),
                                                       ),
                                                     ],
@@ -561,7 +476,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                               'price': priceController.text,
                                                                               'location': locationController.text,
 //                                          'picture': fileName,
-<<<<<<< HEAD
                                                                               'id': Id.toString(),
                                                                             });
                                                                           },
@@ -581,32 +495,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                               Text('Delete'),
                                                                         )
                                                                       ],
-=======
-
-
-
-
-                                                                                'id': Id.toString(),
-
-                                                                              });
-                                                                            },
-                                                                            child:
-                                                                                Text('Submit'),
-                                                                          ),
-                                                                          RaisedButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              var url = 'http://167.172.59.89:5000/tDelete';
-                                                                              http.put(url, body: {
-                                                                                'id': Id.toString(),
-                                                                              });
-                                                                            },
-                                                                            child:
-                                                                                Text('Delete'),
-                                                                          )
-                                                                        ],
-                                                                      ),
->>>>>>> ff202b8d3517d98122b34be0cb4eddfe3bdc8b0f
                                                                     ),
                                                                   ),
                                                                 ),
