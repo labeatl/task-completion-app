@@ -295,9 +295,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                     Widget>[
                                                                   IconButton(
                                                                     onPressed:
-                                                                        () {},
+                                                                        null,
                                                                     icon: Icon(Icons
-                                                                        .title),
+                                                                        .title,
+                                                                    color: Colors.black),
                                                                   ),
                                                                   Text(
                                                                     "${task.title}",
@@ -330,7 +331,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                   IconButton(
                                                                     icon: Icon(Icons
                                                                         .location_on,
-                                                                    color: Colors.blue),
+                                                                    color: Colors.black),
                                                                     onPressed:
                                                                         null,
                                                                   ),
