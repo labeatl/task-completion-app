@@ -470,7 +470,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                                 'price': priceController.text,
                                                                                 'location': locationController.text,
 //                                          'picture': fileName,
-                                                                                'id': Id,
+                                                                                'id': Id.toString(),
                                                                               });
                                                                             },
                                                                             child:
@@ -481,7 +481,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                                 () {
                                                                               var url = 'http://167.172.59.89:5000/tDelete';
                                                                               http.put(url, body: {
-                                                                                'id': Id,
+                                                                                'id': Id.toString(),
                                                                               });
                                                                             },
                                                                             child:
