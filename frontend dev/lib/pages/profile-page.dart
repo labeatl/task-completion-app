@@ -11,7 +11,7 @@ import '../task.dart';
 class ProfilePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _ProfilePageState();
 }
-
+//Send token with request if need a specific user Id. Then decode it in backend.
 class _ProfilePageState extends State<ProfilePage> {
   String _status = 'none';
   final _formKey = GlobalKey<FormState>();
@@ -31,19 +31,6 @@ class _ProfilePageState extends State<ProfilePage> {
   bool chosen = true;
   bool ranThis = false;
 
-  Future<void> getID() async {
-    String token = await storage.read(key: "token");
-    appAuth.login(token, "").then(
-      (result) {
-        print(token);
-        if (result) {
-          Navigator.of(context).pushReplacementNamed('/home');
-        } else {
-          print("Failed");
-        }
-      },
-    );
-  }
 
   Widget build(BuildContext context) {
     Future<String> getSummary() async {
@@ -466,6 +453,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                               () {
 //                                        _upload();
 //                                        String fileName = _storedImage.path.split("/").last;
+
                                                                             var url =
                                                                                 'http://167.172.59.89:5000/tReplace';
                                                                             http.put(url, body: {
@@ -537,6 +525,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       alignment: Alignment.bottomCenter,
                       child: FlatButton(
                         onPressed: () {
+                          appAuth.logout();
                           Navigator.of(context).pushReplacementNamed('/login');
                         },
                         child: new Text(

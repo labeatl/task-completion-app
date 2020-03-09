@@ -39,10 +39,13 @@ class AuthService {
   // Logout
   Future<void> logout() async {
     // Simulate a future for response after 1 second.
+    await storage.write(key: "token", value: "");
+
     return await new Future<void>.delayed(
         new Duration(
             seconds: 1
         )
     );
   }
+
 }
