@@ -84,7 +84,7 @@ class _passwordResetState extends State<PasswordReset> {
                           var storage = getStorage();
                           var url = 'http://167.172.59.89:5000/resetpassword';
                           http.post(url, body: {
-                            'email': email, //Change this
+                            'email': email.text, //Change this
                           });
                           print("Password reset email sent");
                           _warning = "A password reset link has been sent to " +
