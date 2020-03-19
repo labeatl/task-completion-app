@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/home-content.dart';
 import "./tasks-page.dart";
 import "./profile-page.dart";
 import "./add-task-page.dart";
@@ -11,16 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedPage = 0;
   final _pageOptions = [
-    new Align(
-      alignment: Alignment.center,
-      child: Text(
-        "This is the Home Page",
-        style: TextStyle(
-          color: Colors.blueGrey,
-          fontSize: 25,
-        ),
-      ),
-    ),
+    HomeContent(),
     TasksPage(),
     CreateTask(),
     new Align(
@@ -39,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) => new Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueGrey,
-          title: Text("Greatness"),
+          title: Text("LEN Task Completion"),
         ),
         body: _pageOptions[_selectedPage],
         bottomNavigationBar: BottomNavigationBar(
