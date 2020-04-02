@@ -120,8 +120,8 @@ class TaskPageState extends State<TasksPage> {
                                 builder: (context, setState) {
                               return AlertDialog(
                                 content: Container(
-                                  height: 300,
-                                  width: 350,
+                                  height: MediaQuery.of(context).size.height,
+                                  width: 400,
                                   child: SingleChildScrollView(
                                     child: Column(
                                       children: <Widget>[
