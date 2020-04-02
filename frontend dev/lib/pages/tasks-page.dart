@@ -5,7 +5,7 @@ import '../task.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 class TasksPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new TaskPageState();
@@ -24,6 +24,14 @@ void updateTasks(String category) {
       index++;
     }
   }
+}
+
+GoogleMapController mapController;
+
+final LatLng _center = const LatLng(51.7520, -1.2577);
+
+void _onMapCreated(GoogleMapController controller) {
+  mapController = controller;
 }
 
 class TaskPageState extends State<TasksPage> {
@@ -68,6 +76,8 @@ class TaskPageState extends State<TasksPage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -133,6 +143,17 @@ class TaskPageState extends State<TasksPage> {
                                           'http://167.172.59.89:5000/imageUploadTask',
                                         ),
                                         Text(''),
+                                        Container(
+                                          height: 300,
+                                          width: 350,
+                                          child: GoogleMap(
+                                            onMapCreated: _onMapCreated,
+                                            initialCameraPosition: CameraPosition(
+                                              target: _center,
+                                              zoom: 13.0,
+                                            ),
+                                          ),
+                                        ),
                                         RaisedButton(
                                           onPressed: () {
                                             setState(() {
