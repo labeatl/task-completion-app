@@ -1,6 +1,4 @@
-import 'package:flutter_app/pages/tasks-page.dart';
 import '../main.dart';
-//import '../terms.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

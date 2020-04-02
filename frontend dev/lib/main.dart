@@ -5,7 +5,7 @@ import "./pages/login-page.dart";
 import "./pages/home-page.dart";
 import "./services/auth.service.dart";
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import "./pages/filters.dart";
 
 
 AuthService appAuth = new AuthService();
@@ -31,6 +31,7 @@ void main() async {
       '/login': (BuildContext context) => new LoginPage(),
       '/tasks': (BuildContext context) => new TasksPage(),
       '/passwordReset': (BuildContext context) => new PasswordReset(),
+      '/filters': (BuildContext context) => new FilterPage(),
     },
   ));
 }

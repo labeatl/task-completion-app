@@ -1,10 +1,8 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import '../main.dart';
 import '../task.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
+import './filters.dart';
 
 class TasksPage extends StatefulWidget {
   @override
@@ -13,7 +11,9 @@ class TasksPage extends StatefulWidget {
 
 List data;
 List<Task> tasks = [];
-
+bool _isChecked = false;
+String location;
+String et;
 
 void updateTasks(String category) {
   var index = 0;
@@ -27,7 +27,6 @@ void updateTasks(String category) {
 }
 
 class TaskPageState extends State<TasksPage> {
-
   Future<String> getData() async {
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/tasks"),
@@ -76,7 +75,10 @@ class TaskPageState extends State<TasksPage> {
                       alignment: Alignment.topLeft,
                       child: IconButton(
                         icon: Icon(Icons.graphic_eq),
-                        /*...*/
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed('/filters');
+                        },
                       ),
                     ),
                   ),
@@ -141,8 +143,8 @@ class TaskPageState extends State<TasksPage> {
                                           },
                                           child: new Text(
                                             _x,
-                                            style:
-                                                TextStyle(color: Colors.blueAccent),
+                                            style: TextStyle(
+                                                color: Colors.blueAccent),
                                           ),
                                         )
                                       ],
@@ -165,8 +167,8 @@ class TaskPageState extends State<TasksPage> {
                                 children: <Widget>[
                                   IconButton(
                                     onPressed: null,
-                                    icon: Icon(Icons.title,
-                                        color: Colors.black),
+                                    icon:
+                                        Icon(Icons.title, color: Colors.black),
                                   ),
                                   Text(
                                     "${task.title}",
@@ -220,8 +222,10 @@ class TaskPageState extends State<TasksPage> {
                               Row(
                                 children: <Widget>[
                                   IconButton(
-                                    icon: Icon(Icons.access_time,
-                                    color: Colors.black,),
+                                    icon: Icon(
+                                      Icons.access_time,
+                                      color: Colors.black,
+                                    ),
                                     onPressed: null,
                                   ),
                                   Text(

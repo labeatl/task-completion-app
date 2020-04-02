@@ -108,9 +108,7 @@ class _Image_pickState extends State<Image_pick> {
                   maxRadius: 47, backgroundImage: FileImage(_storedImage))
               : CircleAvatar(
                   maxRadius: 47,
-                  backgroundImage: NetworkImage(
-                    'http://167.172.59.89:5000/imageUpload',
-                  ),
+                  backgroundImage: AssetImage('assets/images/defaultpic.png'),
                 ),
         ),
         SizedBox(
