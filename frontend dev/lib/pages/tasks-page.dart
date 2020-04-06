@@ -1,8 +1,11 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import '../main.dart';
 import '../task.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import './filters.dart';
+import 'dart:io';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TasksPage extends StatefulWidget {
   @override
@@ -11,9 +14,7 @@ class TasksPage extends StatefulWidget {
 
 List data;
 List<Task> tasks = [];
-bool _isChecked = false;
-String location;
-String et;
+
 
 
 void updateTasks(String category) {
@@ -27,8 +28,17 @@ void updateTasks(String category) {
   }
 }
 
+GoogleMapController mapController;
+
+final LatLng _center = const LatLng(51.7520, -1.2577);
+
+void _onMapCreated(GoogleMapController controller) {
+  mapController = controller;
+}
+
 
 class TaskPageState extends State<TasksPage> {
+
   Future<String> getData() async {
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/tasks"),
@@ -69,6 +79,8 @@ class TaskPageState extends State<TasksPage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -77,10 +89,7 @@ class TaskPageState extends State<TasksPage> {
                       alignment: Alignment.topLeft,
                       child: IconButton(
                         icon: Icon(Icons.graphic_eq),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed('/filters');
-                        },
+                        /*...*/
                       ),
                     ),
                   ),
@@ -114,8 +123,8 @@ class TaskPageState extends State<TasksPage> {
                                 builder: (context, setState) {
                               return AlertDialog(
                                 content: Container(
-                                  height: 300,
-                                  width: 350,
+                                  height: MediaQuery.of(context).size.height,
+                                  width: 400,
                                   child: SingleChildScrollView(
                                     child: Column(
                                       children: <Widget>[
@@ -137,6 +146,17 @@ class TaskPageState extends State<TasksPage> {
                                           'http://167.172.59.89:5000/imageUploadTask',
                                         ),
                                         Text(''),
+                                        Container(
+                                          height: 300,
+                                          width: 350,
+                                          child: GoogleMap(
+                                            onMapCreated: _onMapCreated,
+                                            initialCameraPosition: CameraPosition(
+                                              target: _center,
+                                              zoom: 13.0,
+                                            ),
+                                          ),
+                                        ),
                                         RaisedButton(
                                           onPressed: () {
                                             setState(() {
@@ -145,8 +165,8 @@ class TaskPageState extends State<TasksPage> {
                                           },
                                           child: new Text(
                                             _x,
-                                            style: TextStyle(
-                                                color: Colors.blueAccent),
+                                            style:
+                                                TextStyle(color: Colors.blueAccent),
                                           ),
                                         )
                                       ],
@@ -169,8 +189,8 @@ class TaskPageState extends State<TasksPage> {
                                 children: <Widget>[
                                   IconButton(
                                     onPressed: null,
-                                    icon:
-                                        Icon(Icons.title, color: Colors.black),
+                                    icon: Icon(Icons.title,
+                                        color: Colors.black),
                                   ),
                                   Text(
                                     "${task.title}",
@@ -224,10 +244,8 @@ class TaskPageState extends State<TasksPage> {
                               Row(
                                 children: <Widget>[
                                   IconButton(
-                                    icon: Icon(
-                                      Icons.access_time,
-                                      color: Colors.black,
-                                    ),
+                                    icon: Icon(Icons.access_time,
+                                    color: Colors.black,),
                                     onPressed: null,
                                   ),
                                   Text(
