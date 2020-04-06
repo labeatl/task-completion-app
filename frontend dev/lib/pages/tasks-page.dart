@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class TasksPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new TaskPageState();
@@ -13,6 +14,7 @@ class TasksPage extends StatefulWidget {
 
 List data;
 List<Task> tasks = [];
+
 
 
 void updateTasks(String category) {
@@ -33,6 +35,7 @@ final LatLng _center = const LatLng(51.7520, -1.2577);
 void _onMapCreated(GoogleMapController controller) {
   mapController = controller;
 }
+
 
 class TaskPageState extends State<TasksPage> {
 
