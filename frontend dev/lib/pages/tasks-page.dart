@@ -15,6 +15,7 @@ bool _isChecked = false;
 String location;
 String et;
 
+
 void updateTasks(String category) {
   var index = 0;
   while (index < tasks.length) {
@@ -25,6 +26,7 @@ void updateTasks(String category) {
     }
   }
 }
+
 
 class TaskPageState extends State<TasksPage> {
   Future<String> getData() async {
