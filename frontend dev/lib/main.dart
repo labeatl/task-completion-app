@@ -3,6 +3,7 @@ import 'package:flutter_app/pages/passwordReset-page.dart';
 import 'package:flutter_app/pages/tasks-page.dart';
 import "./pages/login-page.dart";
 import "./pages/home-page.dart";
+import "./pages/filters.dart";
 import "./services/auth.service.dart";
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -31,6 +32,7 @@ void main() async {
       '/login': (BuildContext context) => new LoginPage(),
       '/tasks': (BuildContext context) => new TasksPage(),
       '/passwordReset': (BuildContext context) => new PasswordReset(),
+      '/filters': (BuildContext context) => new FilterPage(),
     },
   ));
 }

@@ -514,18 +514,8 @@ class filteringTasks(Resource):
         max_price = request.form["max_price"]
         location = request.form["Location"]
 
-        tasks = Tasks.query.filter(location=location, category=category, et>=min_et, et<=max_et, price>=min_price, price<=max_price).all()
-
+        tasks = Tasks.query.filter(location=location, category=category).all()
+        print(tasks)
         return tasks
 
 api.add_resource(filteringTasks, '/filtering')
-
-id = db.Column(db.Integer, primary_key=True)
-title = db.Column(db.String(50), nullable=False)
-description = db.Column(db.String(512), nullable=False)
-category = db.Column(db.String(20), nullable=False)
-et = db.Column(db.Integer, nullable=False)
-price = db.Column(db.Integer, nullable=False)
-location = db.Column(db.String(20), nullable=False)
-picture = db.Column(db.String(80), nullable=True)
-owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))

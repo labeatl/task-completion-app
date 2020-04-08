@@ -1,11 +1,10 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import '../main.dart';
+import 'package:flutter_app/pages/filters.dart' as prefix0;
 import '../task.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import './filters.dart';
 
 class TasksPage extends StatefulWidget {
   @override
@@ -88,6 +87,7 @@ class TaskPageState extends State<TasksPage> {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: IconButton(
+                        onPressed: () {Navigator.of(context).pushReplacementNamed('/filters');},
                         icon: Icon(Icons.graphic_eq),
                         /*...*/
                       ),
