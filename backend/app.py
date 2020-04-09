@@ -510,9 +510,9 @@ class FilteringTasks(Resource):
         print("labi1")
         category = request.form["Category"]
         print("labi2")
-        min_et = request.form["min_et"]
+        min_et = request.form["et_min"]
         print("labi3")
-        max_et = request.form["max_et"]
+        max_et = request.form["et_max"]
         print("labi4")
         min_price = request.form["min_price"]
         print("labi5")
