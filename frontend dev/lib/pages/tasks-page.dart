@@ -14,8 +14,6 @@ class TasksPage extends StatefulWidget {
 List data;
 List<Task> tasks = [];
 
-
-
 void updateTasks(String category) {
   var index = 0;
   while (index < tasks.length) {
@@ -35,9 +33,7 @@ void _onMapCreated(GoogleMapController controller) {
   mapController = controller;
 }
 
-
 class TaskPageState extends State<TasksPage> {
-
   Future<String> getData() async {
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/tasks"),
@@ -71,6 +67,32 @@ class TaskPageState extends State<TasksPage> {
     this.getData();
   }
 
+  Future<String> getFilteringTasks() async {
+    http.Response response = await http.get(
+      Uri.encodeFull("http://167.172.59.89:5000/filtering"),
+      headers: {"Accept": "application/json"},
+    );
+    tasks = [];
+    this.setState(() {
+      data = json.decode(response.body);
+    });
+    var counter = 0;
+    while (counter < data.length) {
+      tasks.add(
+        new Task(
+          title: data[counter]["title"],
+          description: data[counter]["description"],
+          category: data[counter]["category"],
+          et: data[counter]["et"],
+          price: data[counter]["price"],
+          location: data[counter]["location"],
+          date: DateTime.now(),
+        ),
+      );
+      counter++;
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(220, 220, 220, 100),
@@ -78,8 +100,6 @@ class TaskPageState extends State<TasksPage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -87,7 +107,11 @@ class TaskPageState extends State<TasksPage> {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: IconButton(
-                        onPressed: () {Navigator.of(context).pushReplacementNamed('/filters');},
+                        onPressed: () {
+                          getFilteringTasks();
+                          Navigator.of(context)
+                              .pushReplacementNamed('/filters');
+                        },
                         icon: Icon(Icons.graphic_eq),
                         /*...*/
                       ),
@@ -151,7 +175,8 @@ class TaskPageState extends State<TasksPage> {
                                           width: 350,
                                           child: GoogleMap(
                                             onMapCreated: _onMapCreated,
-                                            initialCameraPosition: CameraPosition(
+                                            initialCameraPosition:
+                                                CameraPosition(
                                               target: _center,
                                               zoom: 13.0,
                                             ),
@@ -165,8 +190,8 @@ class TaskPageState extends State<TasksPage> {
                                           },
                                           child: new Text(
                                             _x,
-                                            style:
-                                                TextStyle(color: Colors.blueAccent),
+                                            style: TextStyle(
+                                                color: Colors.blueAccent),
                                           ),
                                         )
                                       ],
@@ -189,8 +214,8 @@ class TaskPageState extends State<TasksPage> {
                                 children: <Widget>[
                                   IconButton(
                                     onPressed: null,
-                                    icon: Icon(Icons.title,
-                                        color: Colors.black),
+                                    icon:
+                                        Icon(Icons.title, color: Colors.black),
                                   ),
                                   Text(
                                     "${task.title}",
@@ -244,8 +269,10 @@ class TaskPageState extends State<TasksPage> {
                               Row(
                                 children: <Widget>[
                                   IconButton(
-                                    icon: Icon(Icons.access_time,
-                                    color: Colors.black,),
+                                    icon: Icon(
+                                      Icons.access_time,
+                                      color: Colors.black,
+                                    ),
                                     onPressed: null,
                                   ),
                                   Text(

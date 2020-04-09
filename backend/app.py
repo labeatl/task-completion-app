@@ -513,8 +513,15 @@ class FilteringTasks(Resource):
         min_price = request.form["min_price"]
         max_price = request.form["max_price"]
         location = request.form["Location"]
+
         tasks = Tasks.query.filter_by(location=location, category=category).all()
-        print(tasks[0].title)
-        return tasks.jsonify
+
+        list = []
+        for task in tasks:
+            dict_task = {"title": task.title, "description": task.description, "et": task.et, "category": task.category,
+                         "price": task.price, "location": task.location, "id": task.id,}
+            list.append(dict_task)
+
+        return list
 
 api.add_resource(FilteringTasks, '/filtering')
