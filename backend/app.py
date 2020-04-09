@@ -515,7 +515,7 @@ class FilteringTasks(Resource):
         max_price = request.form["max_price"]
         location = request.form["Location"]
         tasks = Tasks.query.filter(location=location, category=category).all()
-
+        print(tasks)
         return tasks
 
 api.add_resource(FilteringTasks, '/filtering')
