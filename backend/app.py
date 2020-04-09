@@ -513,7 +513,7 @@ class FilteringTasks(Resource):
         min_price = request.form["min_price"]
         max_price = request.form["max_price"]
         location = request.form["Location"]
-        tasks = Tasks.query.filter(location=location).all()
+        tasks = Tasks.query.filter_by(location=location, category=category).all()
         print(tasks)
         return tasks
 
