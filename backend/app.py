@@ -515,6 +515,6 @@ class FilteringTasks(Resource):
         location = request.form["Location"]
         tasks = Tasks.query.filter_by(location=location, category=category).all()
         print(tasks[0].title)
-        return tasks
+        return tasks.jsonify
 
 api.add_resource(FilteringTasks, '/filtering')
