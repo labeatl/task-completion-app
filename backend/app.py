@@ -506,7 +506,7 @@ api.add_resource(PostUserTasks, '/postUserTasks')
 
 
 class FilteringTasks(Resource):
-    def put(self):
+    def post(self):
         print("labi")
         category = request.form["Category"]
         min_et = request.form["min_et"]
