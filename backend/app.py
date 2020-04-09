@@ -506,18 +506,16 @@ api.add_resource(PostUserTasks, '/postUserTasks')
 
 
 class FilteringTasks(Resource):
-
-    def post(self):
+    def put(self):
+        print("labi")
         category = request.form["Category"]
         min_et = request.form["min_et"]
         max_et = request.form["max_et"]
         min_price = request.form["min_price"]
         max_price = request.form["max_price"]
         location = request.form["Location"]
-        print("suck a dick")
         tasks = Tasks.query.filter(location=location, category=category).all()
-        print("suck a dick")
-        print(tasks)
+
         return tasks
 
 api.add_resource(FilteringTasks, '/filtering')
