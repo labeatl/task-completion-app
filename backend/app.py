@@ -76,7 +76,7 @@ class Accounts(db.Model):
     tasks = db.relationship('Tasks', backref='taskOwner')
     profile_pic = db.Column(db.String(200), nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
-    balance = db.Column(db.Integer)
+    balance = db.Column(db.Integer, default=0)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
 class Transactions(db.Model):
