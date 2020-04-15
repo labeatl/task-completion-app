@@ -550,6 +550,7 @@ api.add_resource(Balance, "/balance")
 
 class ReportTask(Resource):
     def post(self):
+        user = Accounts.query.filter_by(id=4).first()
         taskId = request.form["balance"]
         user_balance = user.balance
         return  {"balance": user_balance}
