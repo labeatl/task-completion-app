@@ -193,7 +193,13 @@ class TaskPageState extends State<TasksPage> {
                                             style: TextStyle(
                                                 color: Colors.blueAccent),
                                           ),
-                                        )
+                                        ),
+                                        FlatButton(
+                                            onPressed: () {
+                                              //TODO REPORT HERE
+
+                                            },
+                                            child: new Text("Report"))
                                       ],
                                     ),
                                   ),

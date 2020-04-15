@@ -61,7 +61,7 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
-    task_completer = db.relationship("Accounts")
+    task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"), nullable=True)
 
 
 # TODO Move models to models file
@@ -76,18 +76,18 @@ class Accounts(db.Model):
     tasks = db.relationship('Tasks', backref='taskOwner')
     profile_pic = db.Column(db.String(200), nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
-    balance = db.Column(db.Integer, default=0)
+    balance = db.Column(db.Integer)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
 class Transactions(db.Model):
     transaction_id = db.Column(db.Integer, primary_key=True)
-    task = db.Column(db.Integer, db.ForeignKey("tasks.id"))
-    issuer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
-    completer = db.relationship("Accounts")
+    task = db.relationship('Tasks', backref='id')
+    issuer = db.relationship('Tasks', backref='taskOwner')
+    completer = db.relationship('Tasks', backref='task_completer')
 
 class Task_Reports(db.Model):
     report_id = db.Column(db.Integer, primary_key=True)
-    task = db.Column(db.Integer, db.ForeignKey("tasks.id"))
+    task = db.relationship('Tasks', backref='id')
     reason = db.Column(db.String(200), nullable=True)
 # class ProfilePic(db.Model):
 #     filename = db.Column(db.String, primary_key=True)
@@ -181,7 +181,7 @@ class TasksAdded(Resource):
         Price = request.form['price']
         Location = request.form['location']
         Picture = request.form['picture']
-        owner = Accounts.query.filter_by(id_user=1).first()
+        owner = Accounts.query.filter_by(id_user=4).first()
         createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=owner.id_user)
         db.session.add(createTask)
         db.session.commit()
@@ -502,7 +502,7 @@ api.add_resource(ConfirmEmail, "/<string:reset_id>")
 
 class PostUserTasks(Resource):
     def get(self):
-        user = Tasks.query.filter_by(owner_id=1).all()
+        user = Tasks.query.filter_by(owner_id=4).all()
         userTaskList = []
         i = 0
         while i < len(user):
@@ -539,10 +539,38 @@ api.add_resource(FilteringTasks, '/filtering')
 
 class Balance(Resource):
     def get(self):
-        user = Accounts.query.filter_by(id=1).first()
+        user = Accounts.query.filter_by(id=4).first()
         user_balance = user.balance
         return  {"balance": user_balance}
     def put(self):
         balance = request.form["balance"]
-        user = Accounts.query.filter_by(id=1).first()
+        user = Accounts.query.filter_by(id=4).first()
         user.balance = balance
+api.add_resource(Balance, "/balance")
+
+class ReportTask(Resource):
+    def post(self):
+        taskId = request.form["balance"]
+        user_balance = user.balance
+        return  {"balance": user_balance}
+    def put(self):
+        balance = request.form["balance"]
+        user = Accounts.query.filter_by(id=4).first()
+        user.balance = balance
+api.add_resource(Balance, "/reporttask")
+
+
+@app.route("/administration", methods=['GET', 'POST'])
+def resetpassword(reset_id):
+    headers = {'Content-Type': 'text/html'}
+    decoded = s.loads(reset_id)
+    user = Accounts.query.filter_by(id_user=decoded).first()
+    if request.method == 'POST':
+        password = request.form['password']
+        newPassword = request.form['password']
+        hashedPassword = generate_password_hash(newPassword)
+        user.password = hashedPassword
+        db.session.commit()
+        return 'Password Reset'
+
+    return make_response(render_template('resetpassword.html'),200,headers)
