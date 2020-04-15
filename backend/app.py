@@ -61,7 +61,7 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
-    task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
+    task_completer = db.relationship("Accounts")
 
 
 # TODO Move models to models file
@@ -82,8 +82,8 @@ class Accounts(db.Model):
 class Transactions(db.Model):
     transaction_id = db.Column(db.Integer, primary_key=True)
     task = db.relationship(db.Integer, db.ForeignKey("Tasks.id_"))
-    issuer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
-    completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
+    issuer = db.relationship("Accounts")
+    completer = db.relationship("Accounts")
 
 class Task_Reports(db.Model):
     report_id = db.Column(db.Integer, primary_key=True)
