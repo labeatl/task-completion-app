@@ -84,7 +84,11 @@ class Transactions(db.Model):
     task = db.relationship('Tasks', backref='id')
     issuer = db.relationship('Tasks', backref='taskOwner')
     completer = db.relationship('Tasks', backref='task_completer')
-
+    
+class Task_Reports(db.Model):
+    report_id = db.Column(db.Integer, primary_key=True)
+    task = db.relationship('Tasks', backref='id')
+    reason = db.Column(db.String(200), nullable=True)
 # class ProfilePic(db.Model):
 #     filename = db.Column(db.String, primary_key=True)
 #     person_id = db.Column(db.Integer, db.ForeignKey("acc.id"), nullable=False)
