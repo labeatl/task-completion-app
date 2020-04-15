@@ -81,7 +81,7 @@ class Accounts(db.Model):
 
 class Transactions(db.Model):
     transaction_id = db.Column(db.Integer, primary_key=True)
-    task = db.relationship(db.Integer, db.ForeignKey("Tasks.id_"))
+    task = db.relationship(db.Integer, db.ForeignKey("Tasks.id"))
     issuer = db.relationship("Accounts")
     completer = db.relationship("Accounts")
 
