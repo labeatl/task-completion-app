@@ -75,8 +75,14 @@ class Accounts(db.Model):
     tasks = db.relationship('Tasks', backref='taskOwner')
     profile_pic = db.Column(db.String(200), nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
+    balance = db.Column(db.Integer)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
+class Transactions(db.Model):
+    transaction_id = db.Column(db.Integer, primary_key=True)
+    task = db.relationship('Tasks', backref='id')
+    issuer = db.relationship('Tasks', backref='taskOwner')
+    completer = db.relationship('Tasks', backref='task_completer')
 
 # class ProfilePic(db.Model):
 #     filename = db.Column(db.String, primary_key=True)
