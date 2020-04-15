@@ -167,4 +167,4 @@ output.json
 obj/
 .externalNativeBuild
 
-flutter-plugins-dependencies
+.flutter-plugins-dependencies
