@@ -532,3 +532,13 @@ class FilteringTasks(Resource):
         return list
 
 api.add_resource(FilteringTasks, '/filtering')
+
+class Balance(Resource):
+    def get(self):
+        user = Accounts.query.filter_by(id=4).first()
+        user_balance = user.balance
+        return  {"balance": user_balance}
+    def put(self):
+        balance = request.form["balance"]
+        user = Accounts.query.filter_by(id=4).first()
+        user.balance = balance
