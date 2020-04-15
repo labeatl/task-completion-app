@@ -61,7 +61,7 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
-    task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"), nullable=True)
+    task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
 
 
 # TODO Move models to models file
