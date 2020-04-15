@@ -61,6 +61,7 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
+    task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"), nullable=True)
 
 
 # TODO Move models to models file
@@ -75,9 +76,19 @@ class Accounts(db.Model):
     tasks = db.relationship('Tasks', backref='taskOwner')
     profile_pic = db.Column(db.String(200), nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
+    balance = db.Column(db.Integer)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
-
+class Transactions(db.Model):
+    transaction_id = db.Column(db.Integer, primary_key=True)
+    task = db.relationship('Tasks', backref='id')
+    issuer = db.relationship('Tasks', backref='taskOwner')
+    completer = db.relationship('Tasks', backref='task_completer')
+    
+class Task_Reports(db.Model):
+    report_id = db.Column(db.Integer, primary_key=True)
+    task = db.relationship('Tasks', backref='id')
+    reason = db.Column(db.String(200), nullable=True)
 # class ProfilePic(db.Model):
 #     filename = db.Column(db.String, primary_key=True)
 #     person_id = db.Column(db.Integer, db.ForeignKey("acc.id"), nullable=False)
@@ -525,3 +536,13 @@ class FilteringTasks(Resource):
         return list
 
 api.add_resource(FilteringTasks, '/filtering')
+
+class Balance(Resource):
+    def get(self):
+        user = Accounts.query.filter_by(id=4).first()
+        user_balance = user.balance
+        return  {"balance": user_balance}
+    def put(self):
+        balance = request.form["balance"]
+        user = Accounts.query.filter_by(id=4).first()
+        user.balance = balance
