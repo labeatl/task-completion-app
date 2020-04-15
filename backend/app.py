@@ -82,12 +82,12 @@ class Accounts(db.Model):
 class Transactions(db.Model):
     transaction_id = db.Column(db.Integer, primary_key=True)
     task = db.relationship('Tasks', backref='id')
-    issuer = db.relationship('Tasks', db.ForeignKey("accounts.id_user"))
-    completer = db.relationship('Tasks', db.ForeignKey("accounts.id_user"))
-
+    issuer = db.relationship('Tasks', backref='taskOwner')
+    completer = db.relationship('Tasks', backref='task_completer')
+    
 class Task_Reports(db.Model):
     report_id = db.Column(db.Integer, primary_key=True)
-    task = db.relationship('Tasks', db.ForeignKey("accounts.id_user"))
+    task = db.relationship('Tasks', backref='id')
     reason = db.Column(db.String(200), nullable=True)
 # class ProfilePic(db.Model):
 #     filename = db.Column(db.String, primary_key=True)
@@ -546,31 +546,3 @@ class Balance(Resource):
         balance = request.form["balance"]
         user = Accounts.query.filter_by(id=4).first()
         user.balance = balance
-api.add_resource(Balance, "/balance")
-
-class ReportTask(Resource):
-    def post(self):
-        taskId = request.form["balance"]
-        user_balance = user.balance
-        return  {"balance": user_balance}
-    def put(self):
-        balance = request.form["balance"]
-        user = Accounts.query.filter_by(id=4).first()
-        user.balance = balance
-api.add_resource(Balance, "/reporttask")
-
-
-@app.route("/administration", methods=['GET', 'POST'])
-def resetpassword(reset_id):
-    headers = {'Content-Type': 'text/html'}
-    decoded = s.loads(reset_id)
-    user = Accounts.query.filter_by(id_user=decoded).first()
-    if request.method == 'POST':
-        password = request.form['password']
-        newPassword = request.form['password']
-        hashedPassword = generate_password_hash(newPassword)
-        user.password = hashedPassword
-        db.session.commit()
-        return 'Password Reset'
-
-    return make_response(render_template('resetpassword.html'),200,headers)
