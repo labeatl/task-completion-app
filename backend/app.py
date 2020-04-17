@@ -552,7 +552,7 @@ api.add_resource(Balance, "/balance")
 class ReportTask(Resource):
     def post(self):
 
-        taskId = request.form["task_id"]
+        taskId = int(request.form["task_id"])
         reportReason = request.form["reason"]
         flaggedTask = Tasks.query.filter_by(id=taskId).first()
         reportTask = Task_Reports(task=flaggedTask, reason=reportReason)
