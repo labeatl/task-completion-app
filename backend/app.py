@@ -555,7 +555,7 @@ class ReportTask(Resource):
         taskId = int(request.form["task_id"])
         reportReason = request.form["reason"]
         flaggedTask = Tasks.query.filter_by(id=taskId).first()
-        reportTask = Task_Reports(task=flaggedTask, reason=reportReason)
+        reportTask = Task_Reports(task=taskId, reason=reportReason)
         db.session.add(reportTask)
 
         db.session.commit()
