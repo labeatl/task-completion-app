@@ -87,7 +87,7 @@ class Transactions(db.Model):
 
 class Task_Reports(db.Model):
     report_id = db.Column(db.Integer, primary_key=True)
-    task = db.relationship(db.Integer, db.ForeignKey('task.id'))
+    task = db.relationship(db.Integer, db.ForeignKey('tasks.id'))
     reason = db.Column(db.String(200), nullable=True)
 
 # class ProfilePic(db.Model):
