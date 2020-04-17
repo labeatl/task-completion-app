@@ -561,11 +561,10 @@ class ReportTask(Resource):
         db.session.commit()
         return "Task Reported"
 
-api.add_resource(Balance, "/reporttask")
+api.add_resource(ReportTask, "/reporttask")
 
 
 @app.route("/administration", methods=['GET', 'POST'])
-def resetpassword(reset_id):
     headers = {'Content-Type': 'text/html'}
     decoded = s.loads(reset_id)
     user = Accounts.query.filter_by(id_user=decoded).first()
