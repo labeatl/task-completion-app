@@ -81,7 +81,7 @@ class Accounts(db.Model):
 
 class Transactions(db.Model):
     transaction_id = db.Column(db.Integer, primary_key=True)
-    task = db.relationship('Tasks', backref='id')
+    task = db.relationship('Tasks', backref='transactions')
     issuer = db.relationship('Tasks', backref='taskOwner')
     completer = db.relationship('Tasks', backref='task_completer')
 
