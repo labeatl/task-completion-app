@@ -81,9 +81,9 @@ class Accounts(db.Model):
 
 class Transactions(db.Model):
     transaction_id = db.Column(db.Integer, primary_key=True)
-    task = db.relationship('Tasks', backref='transactions')
-    issuer = db.relationship('Tasks', backref='taskOwner')
-    completer = db.relationship('Tasks', backref='task_completer')
+    task = db.relationship(db.Integer, db.ForeignKey('tasks.id'))
+    issuer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
+    completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
 
 class Task_Reports(db.Model):
     report_id = db.Column(db.Integer, primary_key=True)
