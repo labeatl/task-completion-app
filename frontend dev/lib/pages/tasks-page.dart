@@ -11,6 +11,25 @@ class TasksPage extends StatefulWidget {
   State<StatefulWidget> createState() => new TaskPageState();
 }
 
+
+//TODO REPORT HERE
+var url =
+    'http://167.172.59.89:5000/reporttask';
+String reason = "Default Reason";
+
+Future<void> reportTask() async {
+
+  http.post(
+    Uri.encodeFull("http://167.172.59.89:5000/reporttask"),
+      body: {
+        'task_id': '1',
+        'reason': reason,
+      }
+  );
+
+}
+
+
 List data;
 List<Task> tasks = [];
 
@@ -34,6 +53,11 @@ void _onMapCreated(GoogleMapController controller) {
 }
 
 class TaskPageState extends State<TasksPage> {
+  String _x;
+   TaskPageState() {
+     _x = "Apply";
+
+}
   Future<String> getData() async {
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/tasks"),
@@ -60,7 +84,6 @@ class TaskPageState extends State<TasksPage> {
     }
   }
 
-  String _x = "Apply";
 
   @override
   void initState() {
@@ -166,6 +189,7 @@ class TaskPageState extends State<TasksPage> {
                                         Text(''),
                                         Text('Estimated Time (in minutes):'),
                                         Text(task.et.toString()),
+
                                         Image.network(
                                           'http://167.172.59.89:5000/imageUploadTask',
                                         ),
@@ -182,10 +206,16 @@ class TaskPageState extends State<TasksPage> {
                                             ),
                                           ),
                                         ),
+                                        FlatButton(
+                                            onPressed: () {
+                                                reportTask();
+                                            },
+                                            child: new Text("Report")),
                                         RaisedButton(
                                           onPressed: () {
+                                            reportTask();
                                             setState(() {
-                                              _x = "Applied";
+                                               _x = "Applied";
                                             });
                                           },
                                           child: new Text(
@@ -194,18 +224,7 @@ class TaskPageState extends State<TasksPage> {
                                                 color: Colors.blueAccent),
                                           ),
                                         ),
-                                        FlatButton(
-                                            onPressed: () {
-                                              //TODO REPORT HERE
-                                              var url =
-                                                  'http://167.172.59.89:5000/reporttask';
-                                              http.post(url, body: {
-                                                'task_id': 1,
-                                                'reason': "Default Reason",
-                                              });
 
-                                            },
-                                            child: new Text("Report"))
                                       ],
                                     ),
                                   ),
