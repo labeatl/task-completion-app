@@ -60,7 +60,7 @@ class Tasks(db.Model):
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
+    owner_id = db.Column(db.Integer, db.ForeignKey("taskOwner.id_user"))
     task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"), nullable=True)
 
 
