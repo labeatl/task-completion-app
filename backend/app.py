@@ -89,6 +89,7 @@ class Task_Reports(db.Model):
     report_id = db.Column(db.Integer, primary_key=True)
     task = db.relationship('Tasks', backref='id')
     reason = db.Column(db.String(200), nullable=True)
+
 # class ProfilePic(db.Model):
 #     filename = db.Column(db.String, primary_key=True)
 #     person_id = db.Column(db.Integer, db.ForeignKey("acc.id"), nullable=False)
@@ -539,25 +540,27 @@ api.add_resource(FilteringTasks, '/filtering')
 
 class Balance(Resource):
     def get(self):
-        user = Accounts.query.filter_by(id=4).first()
+        user = Accounts.query.filter_by(id_user=4).first()
         user_balance = user.balance
         return  {"balance": user_balance}
     def put(self):
         balance = request.form["balance"]
-        user = Accounts.query.filter_by(id=4).first()
+        user = Accounts.query.filter_by(id_user=4).first()
         user.balance = balance
 api.add_resource(Balance, "/balance")
 
 class ReportTask(Resource):
     def post(self):
-        user = Accounts.query.filter_by(id=4).first()
-        taskId = request.form["balance"]
-        user_balance = user.balance
-        return  {"balance": user_balance}
-    def put(self):
-        balance = request.form["balance"]
-        user = Accounts.query.filter_by(id=4).first()
-        user.balance = balance
+
+        taskId = request.form["task_id"]
+        reportReason = request.form["reason"]
+        flaggedTask = Tasks.query.filter_by(id=taskId).first()
+        reportTask = Task_Reports(task=flaggedTask, reason=reportReason)
+        db.session.add(reportTask)
+
+        db.session.commit()
+        return "Task Reported"
+
 api.add_resource(Balance, "/reporttask")
 
 
