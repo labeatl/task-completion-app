@@ -197,6 +197,12 @@ class TaskPageState extends State<TasksPage> {
                                         FlatButton(
                                             onPressed: () {
                                               //TODO REPORT HERE
+                                              var url =
+                                                  'http://167.172.59.89:5000/reporttask';
+                                              http.post(url, body: {
+                                                'task_id': 1,
+                                                'reason': "Default Reason",
+                                              });
 
                                             },
                                             child: new Text("Report"))
