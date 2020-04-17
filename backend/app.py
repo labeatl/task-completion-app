@@ -61,7 +61,7 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
-    task_completer = db.relationship("Accounts")
+    #task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"), nullable=True)
 
 
 # TODO Move models to models file
@@ -73,22 +73,23 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
-    tasks = db.relationship('Tasks', backref='taskOwner')
+    tasks = db.relationship('Tasks', backref='accounts')
     profile_pic = db.Column(db.String(200), nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
-    balance = db.Column(db.Integer, default=0)
+    balance = db.Column(db.Integer)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
 class Transactions(db.Model):
     transaction_id = db.Column(db.Integer, primary_key=True)
-    task = db.Column(db.Integer, db.ForeignKey("tasks.id"))
+    task = db.Column(db.Integer, db.ForeignKey('tasks.id'))
     issuer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
-    completer = db.relationship("Accounts")
+    completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
 
 class Task_Reports(db.Model):
     report_id = db.Column(db.Integer, primary_key=True)
-    task = db.Column(db.Integer, db.ForeignKey("tasks.id"))
+    task = db.Column(db.Integer, db.ForeignKey('tasks.id'))
     reason = db.Column(db.String(200), nullable=True)
+
 # class ProfilePic(db.Model):
 #     filename = db.Column(db.String, primary_key=True)
 #     person_id = db.Column(db.Integer, db.ForeignKey("acc.id"), nullable=False)
@@ -539,10 +540,42 @@ api.add_resource(FilteringTasks, '/filtering')
 
 class Balance(Resource):
     def get(self):
-        user = Accounts.query.filter_by(id=1).first()
+        user = Accounts.query.filter_by(id_user=1).first()
         user_balance = user.balance
         return  {"balance": user_balance}
     def put(self):
         balance = request.form["balance"]
-        user = Accounts.query.filter_by(id=1).first()
+        user = Accounts.query.filter_by(id_user=1).first()
         user.balance = balance
+api.add_resource(Balance, "/balance")
+
+class ReportTask(Resource):
+    def post(self):
+
+        taskId = int(request.form["task_id"])
+        reportReason = request.form["reason"]
+        flaggedTask = Tasks.query.filter_by(id=taskId).first()
+        reportTask = Task_Reports(task=taskId, reason=reportReason)
+        db.session.add(reportTask)
+
+        db.session.commit()
+        return "Task Reported"
+
+api.add_resource(ReportTask, "/reporttask")
+
+
+@app.route("/administration", methods=['GET', 'POST'])
+def administration(reset_id):
+
+    headers = {'Content-Type': 'text/html'}
+    decoded = s.loads(reset_id)
+    user = Accounts.query.filter_by(id_user=decoded).first()
+    if request.method == 'POST':
+        password = request.form['password']
+        newPassword = request.form['password']
+        hashedPassword = generate_password_hash(newPassword)
+        user.password = hashedPassword
+        db.session.commit()
+        return 'Password Reset'
+
+    return make_response(render_template('resetpassword.html'),200,headers)
