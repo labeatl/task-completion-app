@@ -182,7 +182,7 @@ class TasksAdded(Resource):
         Price = request.form['price']
         Location = request.form['location']
         Picture = request.form['picture']
-        owner = Accounts.query.filter_by(id_user=4).first()
+        owner = Accounts.query.filter_by(id_user=1).first()
         createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=owner.id_user)
         db.session.add(createTask)
         db.session.commit()
@@ -503,7 +503,7 @@ api.add_resource(ConfirmEmail, "/<string:reset_id>")
 
 class PostUserTasks(Resource):
     def get(self):
-        user = Tasks.query.filter_by(owner_id=4).all()
+        user = Tasks.query.filter_by(owner_id=1).all()
         userTaskList = []
         i = 0
         while i < len(user):
@@ -540,12 +540,12 @@ api.add_resource(FilteringTasks, '/filtering')
 
 class Balance(Resource):
     def get(self):
-        user = Accounts.query.filter_by(id_user=4).first()
+        user = Accounts.query.filter_by(id_user=1).first()
         user_balance = user.balance
         return  {"balance": user_balance}
     def put(self):
         balance = request.form["balance"]
-        user = Accounts.query.filter_by(id_user=4).first()
+        user = Accounts.query.filter_by(id_user=1).first()
         user.balance = balance
 api.add_resource(Balance, "/balance")
 
