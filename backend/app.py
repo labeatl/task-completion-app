@@ -60,7 +60,7 @@ class Tasks(db.Model):
     price = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey("taskOwner.id_user"))
+    owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
     #task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"), nullable=True)
 
 
@@ -73,7 +73,7 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
-    tasks = db.relationship('Tasks', backref='taskOwner')
+    tasks = db.relationship('Tasks', backref='accounts')
     profile_pic = db.Column(db.String(200), nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
     balance = db.Column(db.Integer)
