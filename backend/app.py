@@ -81,13 +81,13 @@ class Accounts(db.Model):
 
 class Transactions(db.Model):
     transaction_id = db.Column(db.Integer, primary_key=True)
-    task = db.relationship(db.Integer, db.ForeignKey('tasks.id'))
+    task = db.Column(db.Integer, db.ForeignKey('tasks.id'))
     issuer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
     completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
 
 class Task_Reports(db.Model):
     report_id = db.Column(db.Integer, primary_key=True)
-    task = db.relationship(db.Integer, db.ForeignKey('tasks.id'))
+    task = db.Column(db.Integer, db.ForeignKey('tasks.id'))
     reason = db.Column(db.String(200), nullable=True)
 
 # class ProfilePic(db.Model):
