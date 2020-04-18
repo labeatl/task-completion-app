@@ -570,7 +570,7 @@ def administration():
     reportedTaskId = [task for task in reportedTasks]
     reportedTaskList = []
     for id in reportedTaskId:
-        task  = Tasks.query.filter_by(id=id).first()
+        task  = Tasks.query.filter_by(id=int(id)).first()
         title = task.title
         description = task.description
         location = task.location
