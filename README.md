@@ -22,3 +22,6 @@ Click the magnifying glas in the 'Tasks' tab.
 Type in your desired category. Then selected an an option matchign your inputted
 text. Tasks are then filtered by the selected category.
 You can then click a task in more more detail
+
+#Admin Actions
+adding an available skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
