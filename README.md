@@ -31,5 +31,5 @@ You can then click a task in more more detail.
 # Admin Actions
 adding an available skill: Use the following SQL command and replace the information with your desired
 Skill and description
- 'INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');'
+ `INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');`
 Viewing reported tasks: Go to the /administration route and use the available admin tools.
