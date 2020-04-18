@@ -303,7 +303,7 @@ api.add_resource(TaskReplace, '/tReplace')
 
 # TODO: Implement frontend for deletion
 class AccountDeletion(Resource):
-    @auth.login_required
+
     def put(self):
         accEmailToDelete = request.form['email']
         if Accounts.query.filter_by(email=accEmailToDelete).first() is not None:
@@ -319,7 +319,7 @@ api.add_resource(AccountDeletion, '/deleteaccount')
 
 # Display skills to user, adding will be done with relational db in another class/func
 class PostSkills(Resource):
-    @auth.login_required
+
     def get(self):
         allSkills = Skills.query.all()
         skillList = []
@@ -336,7 +336,7 @@ api.add_resource(PostSkills, '/postskills')
 
 
 class AddUserSkill(Resource):
-    @auth.login_required
+
     def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
