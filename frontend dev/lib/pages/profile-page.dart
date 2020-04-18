@@ -38,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Uri.encodeFull("http://167.172.59.89:5000/getSummary"),
         headers: {"Accept": "application/json"},
       );
-      String _summary = json.decode(response.body);
+      var _summary = json.decode(response.body);
       summary = _summary.toString();
 //        setState(() {
 //
@@ -87,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     }
 
-    //getData();
+
 
     Future<String> getTasks() async {
         tasks = [];
@@ -115,7 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     getTasks();
-
+    getData();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
