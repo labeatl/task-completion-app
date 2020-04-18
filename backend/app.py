@@ -567,7 +567,7 @@ api.add_resource(ReportTask, "/reporttask")
 def administration():
 
     reportedTasks = Task_Reports.query.all()
-    reportedTaskId = [id for id in reportedTasks]
+    reportedTaskId = [id for id in reportedTasks.task]
     reportedTaskList = []
     for id in reportedTaskId:
         task  = Tasks.query.filter_by(id=id).first()
