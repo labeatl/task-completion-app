@@ -1,6 +1,21 @@
 <h1>Admin Panel</h1>
 
 <table style="width:100%">
+    {% for taskdict in reportedList %}
+    <tr>
+        <th>Post</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Price</th>
+    </tr>
+    <tr>
+        {% for key, value in taskdict %}
+                <td>{{value}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
     <tr>
         <th>Post</th>
         <th>Reason</th>
