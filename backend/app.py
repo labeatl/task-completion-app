@@ -417,6 +417,35 @@ class ImageUpload(Resource):
 api.add_resource(ImageUpload, "/imageUpload")
 
 
+
+class uploadID(Resource):
+
+    def post(self):
+        print("biaaaatch")
+        userID = db.session.query(Accounts.id_user).first()
+        print("bitch")
+        target = os.path.join(APP_ROOT, "%d/images/uploadID/" % userID[0])
+        print(target)
+
+        if not os.path.isdir(target):
+            os.makedirs(target)
+
+        fileName = request.form['name']
+        image = request.form['image']
+
+        path = target + fileName
+
+        def convert_and_save(b64_string):
+            with open(path, "wb") as fh:
+                fh.write(base64.decodebytes(b64_string.encode()))
+
+        convert_and_save(image)
+
+api.add_resource(uploadID, "/uploadID")
+
+
+
+
 class ImageUploadTask(Resource):
     #@auth.login_required
 
