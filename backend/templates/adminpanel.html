@@ -10,11 +10,9 @@
         <th>Price</th>
     </tr>
     <tr>
-        {% for id, title, description, location, price in taskdict %}
+        {% for key, value in taskdict.items() %}
                 <td>{{value}}</td>
-                <td>{{description}}</td>
-                <td>{{location}}</td>
-                <td>{{price}}</td>
+
         {% endfor %}
     </tr>
     {% endfor %}
