@@ -566,15 +566,33 @@ api.add_resource(ReportTask, "/reporttask")
 @app.route("/administration", methods=['GET', 'POST'])
 def administration(reset_id):
 
-    headers = {'Content-Type': 'text/html'}
-    decoded = s.loads(reset_id)
-    user = Accounts.query.filter_by(id_user=decoded).first()
-    if request.method == 'POST':
-        password = request.form['password']
-        newPassword = request.form['password']
-        hashedPassword = generate_password_hash(newPassword)
-        user.password = hashedPassword
-        db.session.commit()
-        return 'Password Reset'
+    reportedTasks = Task_Reports.query.all()
+    reportedTaskId = [id for id in reportedTasks]
+    reportedTaskList = []
+    for id in reportedTaskId:
+        task  = Tasks.query.filter_by(id=id).first()
+        title = task.title
+        description = task.description
+        location = task.location
+        price = task.price
+        reportedTaskList.append({'id':id, 'title':title, 'description':description, 'location': location,'price':price,})
 
-    return make_response(render_template('resetpassword.html'),200,headers)
+
+    if request.method == 'POST':
+        taskId = request.form['taskId']
+        requestType = request.form['request']
+
+        if requestType == 1:
+            deleteRequestedTask = Tasks.query.filter_by(id=taskId).delete()
+            deleteReport = Task_Reports.query.filter_by(task=taskId).delete()
+            db.session.commit()
+            return 'task deleted'
+        elif requestType ==0:
+            deleteReport = Task_Reports.query.filter_by(task=taskId).delete()
+            db.session.commit()
+            return 'task ignored'
+
+
+
+
+    return make_response(render_template('adminpanel.html', reportedList=reportedTaskList),200)
