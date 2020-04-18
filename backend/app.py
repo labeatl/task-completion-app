@@ -383,7 +383,6 @@ api.add_resource(TasksAdded, '/listusertasks')
 '''
 
 class ImageUpload(Resource):
-    @auth.login_required
 
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
