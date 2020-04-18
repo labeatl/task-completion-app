@@ -1,5 +1,5 @@
 # task-completion-app
-#Welcome to the LEN Task Completion App!
+Welcome to the LEN Task Completion App!
 Below is some information on how the app works to help you get started.
 # Sign Up
 Click the 'Create Account' button and enter your information.
@@ -28,6 +28,8 @@ Type in your desired category. Then selected an an option matching your inputted
 text. Tasks are then filtered by the selected category.
 You can then click a task in more more detail.
 
-#Admin Actions
-adding an available skill: INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');
+# Admin Actions
+adding an available skill: Use the following SQL command and replace the information with your desired
+Skill and description
+ 'INSERT INTO skills *press enter* VALUE (0,'Programming','Building stuff with electrical impulses');'
 Viewing reported tasks: Go to the /administration route and use the available admin tools.
