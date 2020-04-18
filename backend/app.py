@@ -564,7 +564,7 @@ api.add_resource(ReportTask, "/reporttask")
 
 
 @app.route("/administration", methods=['GET', 'POST'])
-def administration(reset_id):
+def administration():
 
     reportedTasks = Task_Reports.query.all()
     reportedTaskId = [id for id in reportedTasks]
