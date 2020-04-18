@@ -15,7 +15,7 @@ class HomeContent extends StatefulWidget {
 class HomeContentState extends State<HomeContent> {
   List data;
   List<Task> tasks = [];
-  String _x = "Apply";
+
 
   @override
   void initState() {
@@ -109,18 +109,7 @@ class HomeContentState extends State<HomeContent> {
                                           'http://167.172.59.89:5000/imageUploadTask',
                                         ),
                                         Text(''),
-                                        RaisedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _x = "Applied";
-                                            });
-                                          },
-                                          child: new Text(
-                                            _x,
-                                            style: TextStyle(
-                                                color: Colors.blueAccent),
-                                          ),
-                                        )
+
                                       ],
                                     ),
                                   ),
