@@ -570,12 +570,12 @@ def administration():
     reportedTaskId = [task for task in reportedTasks]
     reportedTaskList = []
     for id in reportedTaskId:
-        task  = Tasks.query.filter_by(id=int(id.id)).first()
+        task  = Tasks.query.filter_by(id=int(id.task)).first()
         title = task.title
         description = task.description
         location = task.location
         price = task.price
-        reportedTaskList.append({'id':int(id.id), 'title':title, 'description':description, 'location': location,'price':price,})
+        reportedTaskList.append({'id':int(id.task), 'title':title, 'description':description, 'location': location,'price':price,})
 
 
     if request.method == 'POST':
