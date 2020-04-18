@@ -566,8 +566,8 @@ api.add_resource(ReportTask, "/reporttask")
 @app.route("/administration", methods=['GET', 'POST'])
 def administration():
 
-    reportedTasks = Task_Reports.query.all()
-    reportedTaskId = [id for id in reportedTasks.task]
+    reportedTasks = Task_Reports.querywith_entities(Task_Reports.task, Task_Reports.reason).all()
+    reportedTaskId = [task for task in reportedTasks]
     reportedTaskList = []
     for id in reportedTaskId:
         task  = Tasks.query.filter_by(id=id).first()
