@@ -14,12 +14,12 @@
         {% for key, value in taskdict.items() %}
                 <td>{{value}}</td>
 
-
+        {% endfor %}
         <form method=post enctype=multipart/form-data>
             <td><button> name="Ignore" value="{{ taskdict['id'] }}"</button></td>
             <td><button> name="Delete" value="{{ taskdict['id'] }}"</button></td>
         </form>
-        {% endfor %}
+
     </tr>
     {% endfor %}
 
