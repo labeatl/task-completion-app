@@ -189,6 +189,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 20,
               ),
             ]),
+            Text("My Skills",
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             Container(
               height: 210,
               child: GridView.count(
