@@ -605,7 +605,6 @@ def administration():
         location = task.location
         price = task.price
         reportedTaskList.append({'id':int(id.task), 'title':title, 'description':description, 'location': location,'price':price,})
-        print(reportedTaskList)
 
     if request.method == 'POST':
 
