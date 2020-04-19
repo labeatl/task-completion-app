@@ -33,7 +33,7 @@ void main() async {
       '/login': (BuildContext context) => new LoginPage(),
       '/tasks': (BuildContext context) => new TasksPage(),
       '/passwordReset': (BuildContext context) => new PasswordReset(),
-      '/history': (BuildContext context) => new HistoryPage(),
+
     },
   ));
 }
