@@ -1,7 +1,6 @@
 <h1>Admin Panel</h1>
 
 <table style="width:100%">
-    {% for taskdict in reportedList %}
     <tr>
         <th>Post</th>
         <th>Title</th>
@@ -9,6 +8,8 @@
         <th>Location</th>
         <th>Price</th>
     </tr>
+    {% for taskdict in reportedList %}
+    
     <tr>
         {% for key, value in taskdict.items() %}
                 <td>{{value}}</td>
