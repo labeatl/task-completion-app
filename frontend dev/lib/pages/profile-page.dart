@@ -247,6 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       alignment: Alignment.bottomCenter,
                       child: FlatButton(
                         onPressed: () {
+                          Navigator.of(context).pushReplacementNamed('/history');
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
