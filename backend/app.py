@@ -608,13 +608,13 @@ def administration():
 
 
     if request.method == 'POST':
-    
-        if request.form.get['Ignore']:
+
+        if request.form.get('Ignore'):
             deleteRequestedTask = Tasks.query.filter_by(id=taskId).delete()
             deleteReport = Task_Reports.query.filter_by(task=taskId).delete()
             db.session.commit()
             return 'task deleted'
-        elif request.form.get['Delete']:
+        elif request.form.get('Delete'):
             deleteReport = Task_Reports.query.filter_by(task=taskId).delete()
             db.session.commit()
             return 'task ignored'
