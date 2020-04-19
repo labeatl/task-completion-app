@@ -609,13 +609,13 @@ def administration():
 
     if request.method == 'POST':
 
-        if request.form.get('Ignore'):
-            deleteRequestedTask = Tasks.query.filter_by(id=taskId).delete()
-            deleteReport = Task_Reports.query.filter_by(task=taskId).delete()
+        if request.form.get('Delete'):
+            deleteRequestedTask = Tasks.query.filter_by(id=request.form.get('Delete')).delete()
+            deleteReport = Task_Reports.query.filter_by(task=request.form.get('Delete')).delete()
             db.session.commit()
             return 'task deleted'
-        elif request.form.get('Delete'):
-            deleteReport = Task_Reports.query.filter_by(task=taskId).delete()
+        elif request.form.get('Ignore'):
+            deleteReport = Task_Reports.query.filter_by(task=request.form.get('Ignore')).delete()
             db.session.commit()
             return 'task ignored'
 
