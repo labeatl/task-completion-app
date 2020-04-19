@@ -6,7 +6,7 @@ import "./pages/home-page.dart";
 import "./pages/filters.dart";
 import "./services/auth.service.dart";
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import './pages/verify_ID.dart';
 
 
 AuthService appAuth = new AuthService();
@@ -33,6 +33,7 @@ void main() async {
       '/tasks': (BuildContext context) => new TasksPage(),
       '/passwordReset': (BuildContext context) => new PasswordReset(),
       '/filters': (BuildContext context) => new FilterPage(),
+      '/verifyID': (BuildContext context) => new VerifyID(),
     },
   ));
 }
