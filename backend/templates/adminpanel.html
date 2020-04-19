@@ -9,26 +9,18 @@
         <th>Price</th>
     </tr>
     {% for taskdict in reportedList %}
-    
+
     <tr>
         {% for key, value in taskdict.items() %}
                 <td>{{value}}</td>
 
-        {% endfor %}
+
         <form method=post enctype=multipart/form-data>
             <td><button> name="Ignore" value="{{ taskdict['id'] }}"</button></td>
             <td><button> name="Delete" value="{{ taskdict['id'] }}"</button></td>
         </form>
+        {% endfor %}
     </tr>
     {% endfor %}
-
-    <tr>
-        <th>Post</th>
-        <th>Reason</th>
-    </tr>
-    <tr>
-        <td>Sample</td>
-        <td>Spam</td>
-    </tr>
 
 </table>
