@@ -43,9 +43,10 @@ class _HistoryPageState extends State<HistoryPage> {
       }
       tasks1 = tasks;
     }
+    getTasks();
 
-getTasks();
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         title: Text("Task History"),
@@ -54,21 +55,17 @@ getTasks();
 
       body: Container(
         height: 300,
-        width: 280,
+        width: (MediaQuery.of(context).size.width),
         child: SingleChildScrollView(
           child: Column(
             children: tasks1.length != 0
                 ? tasks1.map((task) {
-                    return Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 7),
-                      width: double.infinity,
-                      height: 58,
-                      child: RaisedButton(
+
+                    return RaisedButton(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              width: 120,
                               margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,8 +89,7 @@ getTasks();
                               ),
                             ),
                             Container(
-                              width: 120,
-                              margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                              margin: EdgeInsets.fromLTRB(0, 5, 20, 5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -246,12 +242,7 @@ getTasks();
                                                                     },
                                                                     child: Text('Yes'),
                                                                     ),
-                                                                    new RaisedButton(onPressed: (){
-                                                                      var url =
-                                                                          'http://167.172.59.89:5000/tDelete';
-                                                                      http.put(url, body: {
-                                                                        'id': Id.toString(),
-                                                                      });
+                                                                    new RaisedButton(onPressed: (){Navigator.pop(context);
                                                                     },
                                                                       child: Text('No'),
                                                                     ),
@@ -274,8 +265,7 @@ getTasks();
                                 );
                               });
                         },
-                      ),
-                    );
+                      );
                   }).toList()
                 : <Widget>[
                     Text("No Task history currently"),
