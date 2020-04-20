@@ -13,37 +13,44 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   List<Task> tasks = [];
-  List<Task> tasks1 = [];
   List data;
-
-  Widget build(BuildContext context) {
-    Future<String> getTasks() async {
-      tasks = [];
-      http.Response response = await http.get(
-        Uri.encodeFull("http://167.172.59.89:5000/postUserTasks"),
-        headers: {"Accept": "application/json"},
+  Future<List> getTasks() async {
+    tasks = [];
+    http.Response response = await http.get(
+      Uri.encodeFull("http://167.172.59.89:5000/postUserTasks"),
+      headers: {"Accept": "application/json"},
+    );
+    data = json.decode(response.body);
+    var counter = 0;
+    while (counter < data.length) {
+      tasks.add(
+        new Task(
+          title: data[counter]["title"],
+          description: data[counter]["description"],
+          category: data[counter]["category"],
+          et: data[counter]["et"],
+          price: data[counter]["price"],
+          location: data[counter]["location"],
+          id: data[counter]["id"],
+          date: DateTime.now(),
+        ),
       );
-      data = json.decode(response.body);
-      var counter = 0;
-      while (counter < data.length) {
-        tasks.add(
-          new Task(
-            title: data[counter]["title"],
-            description: data[counter]["description"],
-            category: data[counter]["category"],
-            et: data[counter]["et"],
-            price: data[counter]["price"],
-            location: data[counter]["location"],
-            id: data[counter]["id"],
-            date: DateTime.now(),
-          ),
-        );
-        counter++;
-        print(tasks.length);
-      }
-      tasks1 = tasks;
+      counter++;
+      print(tasks.length);
     }
-    getTasks();
+    return tasks;
+  }
+   _HistoryPageState() {
+
+     getTasks().then((val) => setState(() {
+       tasks = val;
+     }));
+
+
+
+   }
+  Widget build(BuildContext context) {
+
 
     return Scaffold(
 
@@ -58,8 +65,8 @@ class _HistoryPageState extends State<HistoryPage> {
         width: (MediaQuery.of(context).size.width),
         child: SingleChildScrollView(
           child: Column(
-            children: tasks1.length != 0
-                ? tasks1.map((task) {
+            children: tasks.length != 0
+                ? tasks.map((task) {
 
                     return RaisedButton(
                         child: Row(
