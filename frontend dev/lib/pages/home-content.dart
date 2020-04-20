@@ -4,12 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/tasks-page.dart';
 import 'package:http/http.dart' as http;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../task.dart';
 
 class HomeContent extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new HomeContentState();
+}
+
+GoogleMapController mapController;
+
+final LatLng _center = const LatLng(51.7520, -1.2577);
+
+void _onMapCreated(GoogleMapController controller) {
+  mapController = controller;
 }
 
 class HomeContentState extends State<HomeContent> {
@@ -58,21 +67,29 @@ class HomeContentState extends State<HomeContent> {
             children: <Widget>[
               Row(
                 children: <Widget>[
+                  SizedBox(height: 50),
                   Container(
                     child: Align(
                       alignment: Alignment.topCenter,
-                      child: Text("Welcome back"),
+                      child: Text("Welcome back!",
+                        style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+                      ),
                     ),
                   ),
                 ],
               ),
+              SizedBox(height: 50),
               Row(children: <Widget>[
                 Container(
                   child: Align(
-                    child: Text("My tasks in progress:"),
+                    child: Text("My tasks in progress",
+                      style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+                    ),
+
                   ),
                 ),
               ]),
+              SizedBox(height: 15),
               Column(
                 children: tasks.map((task) {
                   EdgeInsets.only(left: 20.0, right: 20.0);
@@ -225,6 +242,33 @@ class HomeContentState extends State<HomeContent> {
                     ),
                   );
                 }).toList(),
+              ),
+              Row(
+                children: <Widget>[
+                  SizedBox(height: 70),
+                  Container(
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Text("In My Area",
+                        style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+              Container(
+                height: 300,
+                width: 350,
+                child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition:
+                  CameraPosition(
+                    target: _center,
+                    zoom: 13.0,
+                  ),
+                ),
+
               ),
             ],
           ),

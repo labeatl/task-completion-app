@@ -606,18 +606,15 @@ def administration():
         price = task.price
         reportedTaskList.append({'id':int(id.task), 'title':title, 'description':description, 'location': location,'price':price,})
 
-
     if request.method == 'POST':
-        taskId = request.form['taskId']
-        requestType = request.form['request']
 
-        if requestType == 1:
-            deleteRequestedTask = Tasks.query.filter_by(id=taskId).delete()
-            deleteReport = Task_Reports.query.filter_by(task=taskId).delete()
+        if request.form.get('Delete'):
+            deleteRequestedTask = Tasks.query.filter_by(id=request.form.get('Delete')).delete()
+            deleteReport = Task_Reports.query.filter_by(task=request.form.get('Delete')).delete()
             db.session.commit()
             return 'task deleted'
-        elif requestType ==0:
-            deleteReport = Task_Reports.query.filter_by(task=taskId).delete()
+        elif request.form.get('Ignore'):
+            deleteReport = Task_Reports.query.filter_by(task=request.form.get('Ignore')).delete()
             db.session.commit()
             return 'task ignored'
 
