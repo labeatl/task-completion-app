@@ -13,6 +13,7 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   List<Task> tasks = [];
+  List<Task> tasks1 = [];
   List data;
 
   Widget build(BuildContext context) {
@@ -38,10 +39,12 @@ class _HistoryPageState extends State<HistoryPage> {
           ),
         );
         counter++;
+        print(tasks.length);
       }
+      tasks1 = tasks;
     }
-    getTasks();
 
+getTasks();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
@@ -54,8 +57,8 @@ class _HistoryPageState extends State<HistoryPage> {
         width: 280,
         child: SingleChildScrollView(
           child: Column(
-            children: tasks.length != 0
-                ? tasks.map((task) {
+            children: tasks1.length != 0
+                ? tasks1.map((task) {
                     return Container(
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 7),
                       width: double.infinity,
