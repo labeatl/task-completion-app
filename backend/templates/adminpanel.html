@@ -1,0 +1,26 @@
+<h1>Admin Panel</h1>
+
+<table style="width:100%">
+    <tr>
+        <th>Post</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Price</th>
+    </tr>
+    {% for taskdict in reportedList %}
+
+    <tr>
+        {% for key, value in taskdict.items() %}
+                <td>{{value}}</td>
+
+        {% endfor %}
+        <form method=post enctype=multipart/form-data>
+            <td><input type=Submit name="Ignore" value="{{ taskdict['id'] }}"></td>
+            <td><input type=Submit name="Delete" value="{{ taskdict['id'] }}"></td>
+        </form>
+
+    </tr>
+    {% endfor %}
+
+</table>

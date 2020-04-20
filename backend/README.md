@@ -1,5 +1,9 @@
 Create a Python virtual envirnment.
 
-Run setup.py to install depencencies
-
-run flask app
+use requirements.txt to install depencencies
+Then run the followign commands:
+flask db init
+flask db migrate 
+flask db upgrade
+Finally,
+run the flask app

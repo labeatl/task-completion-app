@@ -166,3 +166,5 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
+
+.flutter-plugins-dependencies

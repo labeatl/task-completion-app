@@ -61,6 +61,7 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
+    #task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"), nullable=True)
 
 
 # TODO Move models to models file
@@ -72,11 +73,22 @@ class Accounts(db.Model):
     password = db.Column(db.Text)
     userBio = db.Column(db.String(256), nullable=True)
     skills = db.relationship('Skills', secondary=user_skills, lazy='subquery', backref=db.backref('accounts.id_user', lazy=True))
-    tasks = db.relationship('Tasks', backref='taskOwner')
+    tasks = db.relationship('Tasks', backref='accounts')
     profile_pic = db.Column(db.String(200), nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
+    balance = db.Column(db.Integer)
     # profile_pic = db.relationship("ProfilePic", backref="acc", lazy=True)
 
+class Transactions(db.Model):
+    transaction_id = db.Column(db.Integer, primary_key=True)
+    task = db.Column(db.Integer, db.ForeignKey('tasks.id'))
+    issuer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
+    completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
+
+class Task_Reports(db.Model):
+    report_id = db.Column(db.Integer, primary_key=True)
+    task = db.Column(db.Integer, db.ForeignKey('tasks.id'))
+    reason = db.Column(db.String(200), nullable=True)
 
 # class ProfilePic(db.Model):
 #     filename = db.Column(db.String, primary_key=True)
@@ -109,7 +121,7 @@ class Summary(Resource):
      def post(self):
          summary = request.form['Summary']
 
-         userAccount = Accounts.query.filter_by(id_user=g.user).first()
+         userAccount = Accounts.query.filter_by(id_user=1).first()
          userAccount.userBio = summary
          db.session.commit()
          return 'success'
@@ -170,7 +182,7 @@ class TasksAdded(Resource):
         Price = request.form['price']
         Location = request.form['location']
         Picture = request.form['picture']
-        owner = Accounts.query.filter_by(id_user=4).first()
+        owner = Accounts.query.filter_by(id_user=1).first()
         createTask = Tasks(title=Title, description=Description, category=Category, et=Et, price=Price, location=Location, picture=Picture, owner_id=owner.id_user)
         db.session.add(createTask)
         db.session.commit()
@@ -292,7 +304,7 @@ api.add_resource(TaskReplace, '/tReplace')
 
 # TODO: Implement frontend for deletion
 class AccountDeletion(Resource):
-    @auth.login_required
+
     def put(self):
         accEmailToDelete = request.form['email']
         if Accounts.query.filter_by(email=accEmailToDelete).first() is not None:
@@ -308,7 +320,7 @@ api.add_resource(AccountDeletion, '/deleteaccount')
 
 # Display skills to user, adding will be done with relational db in another class/func
 class PostSkills(Resource):
-    @auth.login_required
+
     def get(self):
         allSkills = Skills.query.all()
         skillList = []
@@ -325,7 +337,7 @@ api.add_resource(PostSkills, '/postskills')
 
 
 class AddUserSkill(Resource):
-    @auth.login_required
+
     def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
@@ -372,7 +384,6 @@ api.add_resource(TasksAdded, '/listusertasks')
 '''
 
 class ImageUpload(Resource):
-    @auth.login_required
 
     def post(self):
         userID = db.session.query(Accounts.id_user).first()
@@ -404,6 +415,35 @@ class ImageUpload(Resource):
         return send_file(filename, mimetype="image/jpg")
 
 api.add_resource(ImageUpload, "/imageUpload")
+
+
+
+class uploadID(Resource):
+
+    def post(self):
+        print("biaaaatch")
+        userID = db.session.query(Accounts.id_user).first()
+        print("bitch")
+        target = os.path.join(APP_ROOT, "%d/images/uploadID/" % userID[0])
+        print(target)
+
+        if not os.path.isdir(target):
+            os.makedirs(target)
+
+        fileName = request.form['name']
+        image = request.form['image']
+
+        path = target + fileName
+
+        def convert_and_save(b64_string):
+            with open(path, "wb") as fh:
+                fh.write(base64.decodebytes(b64_string.encode()))
+
+        convert_and_save(image)
+
+api.add_resource(uploadID, "/uploadID")
+
+
 
 
 class ImageUploadTask(Resource):
@@ -491,7 +531,7 @@ api.add_resource(ConfirmEmail, "/<string:reset_id>")
 
 class PostUserTasks(Resource):
     def get(self):
-        user = Tasks.query.filter_by(owner_id=4).all()
+        user = Tasks.query.filter_by(owner_id=1).all()
         userTaskList = []
         i = 0
         while i < len(user):
@@ -502,3 +542,83 @@ class PostUserTasks(Resource):
         return userTaskList
 
 api.add_resource(PostUserTasks, '/postUserTasks')
+
+
+
+class FilteringTasks(Resource):
+    def post(self):
+        category = request.form["Category"]
+        min_et = request.form["et_min"]
+        max_et = request.form["et_max"]
+        min_price = request.form["min_price"]
+        max_price = request.form["max_price"]
+        location = request.form["Location"]
+
+        tasks = Tasks.query.filter_by(location=location, category=category).all()
+
+        list = []
+        for task in tasks:
+            dict_task = {"title": task.title, "description": task.description, "et": task.et, "category": task.category,
+                         "price": task.price, "location": task.location, "id": task.id,}
+            list.append(dict_task)
+
+        return list
+
+api.add_resource(FilteringTasks, '/filtering')
+
+class Balance(Resource):
+    def get(self):
+        user = Accounts.query.filter_by(id_user=1).first()
+        user_balance = user.balance
+        return  {"balance": user_balance}
+    def put(self):
+        balance = request.form["balance"]
+        user = Accounts.query.filter_by(id_user=1).first()
+        user.balance = balance
+api.add_resource(Balance, "/balance")
+
+class ReportTask(Resource):
+    def post(self):
+
+        taskId = int(request.form["task_id"])
+        reportReason = request.form["reason"]
+        flaggedTask = Tasks.query.filter_by(id=taskId).first()
+        reportTask = Task_Reports(task=taskId, reason=reportReason)
+        db.session.add(reportTask)
+
+        db.session.commit()
+        return "Task Reported"
+
+api.add_resource(ReportTask, "/reporttask")
+
+
+@app.route("/administration", methods=['GET', 'POST'])
+def administration():
+
+    reportedTasks = Task_Reports.query.with_entities(Task_Reports.task, Task_Reports.reason).all()
+    reportedTaskId = [task for task in reportedTasks]
+    reportedTaskList = []
+    for id in reportedTaskId:
+        task  = Tasks.query.filter_by(id=int(id.task)).first()
+        title = task.title
+        description = task.description
+        location = task.location
+        price = task.price
+        reportedTaskList.append({'id':int(id.task), 'title':title, 'description':description, 'location': location,'price':price,})
+
+    if request.method == 'POST':
+
+        if request.form.get('Delete'):
+            deleteRequestedTask = Tasks.query.filter_by(id=request.form.get('Delete')).delete()
+            deleteReport = Task_Reports.query.filter_by(task=request.form.get('Delete')).delete()
+            db.session.commit()
+            return 'task deleted'
+        elif request.form.get('Ignore'):
+            deleteReport = Task_Reports.query.filter_by(task=request.form.get('Ignore')).delete()
+            db.session.commit()
+            return 'task ignored'
+
+
+
+
+    return make_response(render_template('adminpanel.html', reportedList=reportedTaskList),200)
