@@ -139,6 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontSize: 20.0),
                     ),
                     onPressed: () {
+                      Navigator.of(context).pushReplacementNamed('/home');
                       setState(() => this._status = "loading");
                       //Replace the two stringsi nlogin() with email and password
                       appAuth
