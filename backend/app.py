@@ -227,7 +227,7 @@ def verify_password(username, password):
         else:
             return False
 
-    return loggedUser, username, 0
+    return loggedUser, username, " "
 
 
 
