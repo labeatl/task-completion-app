@@ -311,11 +311,11 @@ api.add_resource(TaskReplace, '/tReplace')
 
 # TODO: Implement frontend for deletion
 class AccountDeletion(Resource):
-
+    @jwt_required
     def put(self):
         accEmailToDelete = request.form['email']
-        if Accounts.query.filter_by(email=accEmailToDelete).first() is not None:
-            Accounts.query.filter_by(email=accEmailToDelete).delete()
+        if Accounts.query.filter_by(is_user=get_jwt_identity()).first() is not None:
+            Accounts.query.filter_by(id_user=get_jwt_identity()).delete()
             db.session.commit()
             return 'success'
         else:
@@ -327,7 +327,7 @@ api.add_resource(AccountDeletion, '/deleteaccount')
 
 # Display skills to user, adding will be done with relational db in another class/func
 class PostSkills(Resource):
-
+    @jwt_required
     def get(self):
         allSkills = Skills.query.all()
         skillList = []
@@ -344,7 +344,7 @@ api.add_resource(PostSkills, '/postskills')
 
 
 class AddUserSkill(Resource):
-
+    @jwt_required
     def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
@@ -352,7 +352,7 @@ class AddUserSkill(Resource):
         #if User_Skills.query.filter_by(id=usrid).first() is None:
         #addskill = Accounts.skills.append(id_user=usrid, id=skillid)
         #Accounts.append(id_user=usrid, id=skillid)
-        theUser = Accounts.query.filter_by(id_user=usrid).first()
+        theUser = Accounts.query.filter_by(id_user=get_jwt_identity()).first()
         theSkill = Skills.query.filter_by(id=skillid).first()
         theUser.skills.append(theSkill)
         # Add account to the database
@@ -368,8 +368,9 @@ class AddUserSkill(Resource):
 api.add_resource(AddUserSkill, '/adduserskill')
 
 class GetUserSkills(Resource):
+    @jwt_required
     def get(self):
-        userSkills = Accounts.query.filter_by(id_user=1).all()
+        userSkills = Accounts.query.filter_by(id_user=get_jwt_identity()).all()
         skillList = []
         counter = 0
         for i in userSkills:
@@ -537,8 +538,9 @@ api.add_resource(ConfirmEmail, "/<string:reset_id>")
 
 
 class PostUserTasks(Resource):
+    @jwt_required
     def get(self):
-        user = Tasks.query.filter_by(owner_id=1).all()
+        user = Tasks.query.filter_by(owner_id=get_jwt_identity()).all()
         userTaskList = []
         i = 0
         while i < len(user):
