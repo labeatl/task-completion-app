@@ -26,6 +26,7 @@ class AuthService {
       print('Successful login');
       responseBool = true;
       await storage.write(key: "token", value: data["userToken"]);
+      await storage.write(key: "requestToken", value: data["authToken"]);
       print(data["userToken"]);
     }
     else {
