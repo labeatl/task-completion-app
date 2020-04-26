@@ -10,7 +10,9 @@ from itsdangerous.url_safe import URLSafeSerializer
 import os
 import base64
 from flask_mail import Mail, Message
-
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
 
 
 
@@ -30,6 +32,10 @@ migrate = Migrate(app, db)
 
 # Flask secret key
 app.config['SECRET_KEY'] = 'thEejrdaR5$wE3yY4wsehn4wASHR' #Change this for production
+
+#Token stuff
+app.config['JWT_SECRET_KEY'] = 's6e5BY5YtyzThru^yjGT6tfrgdj%^#'  # Change this!
+jwt = JWTManager(app)
 
 
 user_skills = db.Table('user_skills',
@@ -213,14 +219,12 @@ def verify_password(username, password):
             user = Accounts.query.filter_by(email=username).first()
             if check_password_hash(user.password, password):
                 loggedUser = user.id_user
-                g.user = loggedUser
-                return [loggedUser, generate_token(user.id_user)]
+                return [loggedUser, generate_token(user.id_user), create_access_token(identity=user.id_user)]
             else:
                 return False
         else:
             return False
-    user = Accounts.query.filter_by(id_user=loggedUser).first()
-    g.user = user.id_user
+
     return loggedUser, username
 
 
@@ -256,7 +260,8 @@ class UserLogin(Resource):
             print("Success")
             status = 0
             userToken = credentialCheck[1]
-            returnList = {"status": status, "userToken": userToken}
+            authToken = credentialCheck[2]
+            returnList = {"status": status, "userToken": userToken, "authToken" : authToken}
         return returnList
 
 
