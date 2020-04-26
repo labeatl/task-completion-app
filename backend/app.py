@@ -124,10 +124,11 @@ class hello(Resource):
 api.add_resource(hello, '/')
 
 class Summary(Resource):
+     @jwt_required
      def post(self):
          summary = request.form['Summary']
-
-         userAccount = Accounts.query.filter_by(id_user=1).first()
+         print("Identitiy is: " + get_jwt_identity())
+         userAccount = Accounts.query.filter_by(id_user=get_jwt_identity()).first()
          userAccount.userBio = summary
          db.session.commit()
          return 'success'
