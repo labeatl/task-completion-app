@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
@@ -20,13 +21,25 @@ class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
   final sum = TextEditingController();
   List<Widget> skills = [];
+  String authToken;
   List<Task> tasks = [];
   List data;
+
+
+  Future<String> getToken() async {
+    authToken = await storage.read(key: "token");
+    authToken = "Bearer " + authToken;
+    print("GOTTOKEN");
+    return authToken;
+
+  }
 
   _ProfilePageState() {
     getSkills().then((val) => setState(() {
           skills = val;
         }));
+    getToken();
+
   }
 
   String summary = "";
@@ -35,9 +48,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget build(BuildContext context) {
     Future<String> getSummary() async {
+
       http.Response response = await http.get(
         Uri.encodeFull("http://167.172.59.89:5000/getSummary"),
-        headers: {"Accept": "application/json"},
+        headers: {HttpHeaders.authorizationHeader: authToken, HttpHeaders.contentTypeHeader: "application/json"},
       );
       var _summary = json.decode(response.body);
       summary = _summary.toString();
@@ -56,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
     Future<String> getData() async {
       http.Response response = await http.get(
         Uri.encodeFull("http://167.172.59.89:5000/postskills"),
-        headers: {"Accept": "application/json"},
+        headers: {HttpHeaders.authorizationHeader: authToken, HttpHeaders.contentTypeHeader: "application/json"},
       );
 
       List data =
@@ -71,7 +85,9 @@ class _ProfilePageState extends State<ProfilePage> {
             onPressed: () {
               var url = 'http://167.172.59.89:5000/adduserskill';
 
-              http.put(url, body: {
+              http.put(url,
+                  headers: {HttpHeaders.authorizationHeader: authToken, HttpHeaders.contentTypeHeader: "application/json"},
+                  body: {
                 'userid': 1.toString(), //Change this
                 'skill_id': id.toString(),
                 'skillLevel': 10.toString(),
@@ -92,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
       tasks = [];
       http.Response response = await http.get(
         Uri.encodeFull("http://167.172.59.89:5000/postUserTasks"),
-        headers: {"Accept": "application/json"},
+        headers: {HttpHeaders.authorizationHeader: authToken, HttpHeaders.contentTypeHeader: "application/json"},
       );
       data = json.decode(response.body);
       var counter = 0;
@@ -166,7 +182,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                               print({
                                                 'New Summary': sum.text,
                                               });
-                                              http.post(url, body: {
+                                              http.post(url,
+                                                  headers: {HttpHeaders.authorizationHeader: authToken, HttpHeaders.contentTypeHeader: "application/json"},
+                                                  body: {
+
                                                 'Summary': sum.text,
                                               });
                                             },
@@ -341,7 +360,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   var url =
                                                       'http://167.172.59.89:5000/deleteaccount';
 
-                                                  http.put(url, body: {
+                                                  http.put(url, headers: {HttpHeaders.authorizationHeader: authToken, HttpHeaders.contentTypeHeader: "application/json"},
+                                                      body: {
                                                     'email': email,
                                                   });
                                                   Navigator.of(context)
@@ -378,7 +398,7 @@ class _ProfilePageState extends State<ProfilePage> {
     List<Widget> tempSkills = [];
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/getuserskill"),
-      headers: {"Accept": "application/json"},
+      headers: {HttpHeaders.authorizationHeader: authToken, HttpHeaders.contentTypeHeader: "application/json"},
     );
 
     List data =
