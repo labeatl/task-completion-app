@@ -138,6 +138,7 @@ class Summary(Resource):
 api.add_resource(Summary, '/summary')
 
 class getSummary(Resource):
+    @jwt_required
     def get(self):
         sum = db.session.query(Accounts.userBio).filter_by(id_user=1).first()
         if sum == None:
@@ -226,7 +227,7 @@ def verify_password(username, password):
         else:
             return False
 
-    return loggedUser, username
+    return loggedUser, username, 0
 
 
 
