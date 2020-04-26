@@ -210,6 +210,7 @@ def verify_password(username, password):
     print(username)
     try:  #Check if username is a valid token
         loggedUser = b.loads(username)
+        authTokenConfirmed = create_access_token(identity=loggedUser)
 
 
     except SignatureExpired:
@@ -227,7 +228,7 @@ def verify_password(username, password):
         else:
             return False
 
-    return loggedUser, username, " "
+    return loggedUser, username, authTokenConfirmed
 
 
 
