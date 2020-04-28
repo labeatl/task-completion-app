@@ -273,6 +273,7 @@ api.add_resource(UserLogin, '/login')
 
 class TasksList(Resource):
     #@auth.login_required
+    @jwt_required
     def get(self):
         tasks = Tasks.query
         list = []
@@ -484,7 +485,7 @@ class ImageUploadTask(Resource):
     def get(self):
 
         userID = db.session.query(Accounts.id_user).first()
-        task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
+        task_PIC = db.session.query(Tasks.picture).filter_by(id=4).first()
         filename = "%d/tasks/%s" % (userID[0], task_PIC[0])
         return send_file(filename, mimetype="image/jpg")
 
