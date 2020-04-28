@@ -1,11 +1,13 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/main.dart';
 import 'package:flutter_app/pages/tasks-page.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../task.dart';
 
 class HomeContent extends StatefulWidget {
@@ -24,17 +26,30 @@ void _onMapCreated(GoogleMapController controller) {
 class HomeContentState extends State<HomeContent> {
   List data;
   List<Task> tasks = [];
+  String authToken;
+
+    HomeContentState() {
+      getToken().then((val) => setState(() {
+        authToken = val;
+      }));
+    }
 
 
-  @override
-  void initState() {
-    this.getData();
+  Future<String> getToken() async {
+    log("get token Worked");
+    String test = await storage.read(key: 'authToken');
+    String bearer = 'Bearer ';
+    test = '$bearer$test';
+    print(test);
+    print("GOTTOKEN");
+    return test;
+
   }
 
   Future<String> getData() async {
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/tasks"),
-      headers: {"Accept": "application/json"},
+      headers: {"Authorization": authToken, HttpHeaders.contentTypeHeader: "application/json"},
     );
     tasks = [];
     this.setState(() {
@@ -59,6 +74,10 @@ class HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
+
+    setState(() {
+      getData();
+    });
     return Scaffold(
       backgroundColor: Color.fromRGBO(220, 220, 220, 100),
       body: Container(
