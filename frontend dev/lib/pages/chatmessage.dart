@@ -34,7 +34,9 @@ class ChatMessage extends StatelessWidget {
             new Container(
               margin: const EdgeInsets.only(right: 16.0),
               child: new CircleAvatar(
-                child: new Image.network('http://167.172.59.89:5000/imageUpload'),
+                backgroundImage: NetworkImage(
+                  'http://167.172.59.89:5000/imageUpload',
+                ),
               ),
             ),
             new Column(
