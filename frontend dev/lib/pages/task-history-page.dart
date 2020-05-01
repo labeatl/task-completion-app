@@ -262,6 +262,44 @@ class _HistoryPageState extends State<HistoryPage> {
                                                       });
                                                 },
                                                 child: Text('Delete'),
+                                              ),
+                                              RaisedButton(
+                                                onPressed: () {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                      context) {
+
+                                                        return AlertDialog(
+                                                            content: SingleChildScrollView(
+                                                                child: Container(
+                                                                    child: Column(
+                                                                      children: <Widget>[
+                                                                        new Text('Are you sure you wish to mark this task as complete (doing so will delete the task)'),
+                                                                        new Row(
+                                                                          children: <Widget>[
+                                                                            new RaisedButton(onPressed: (){
+                                                                              var url =
+                                                                                  'http://167.172.59.89:5000/tDelete';
+                                                                              http.put(url, body: {
+                                                                                'id': Id.toString(),
+                                                                              });
+                                                                            },
+                                                                              child: Text('Yes'),
+                                                                            ),
+                                                                            new RaisedButton(onPressed: (){Navigator.pop(context);
+                                                                            },
+                                                                              child: Text('No'),
+                                                                            ),
+                                                                          ],
+                                                                        )
+                                                                      ],
+
+                                                                    )))
+                                                        );
+                                                      });
+                                                },
+                                                child: Text('Task complete'),
                                               )
                                             ],
                                           ),
