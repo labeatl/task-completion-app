@@ -652,8 +652,10 @@ def administration():
 class GetName(Resource):
     print("bllablla")
     def get(self):
-        user = Accounts.query.filter_by(id_user=1).first()
+        user = Accounts.query.filter_by(name="labi").first()
         print(user)
+        userN= user.name
+        print(userN)
         user_name= user.name
         print(user)
         return user_name
