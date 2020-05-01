@@ -11,6 +11,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import './pages/verify_ID.dart';
 import './pages/task-history-page.dart';
 import './pages/profile-page.dart';
+import './pages/chatscreen.dart';
+import './pages/chat.dart';
 
 
 
@@ -43,6 +45,7 @@ void main() async {
       '/profile': (BuildContext context) =>  ProfilePage(),
       '/filters': (BuildContext context) => new FilterPage(),
       '/verifyID': (BuildContext context) => new VerifyID(),
+      '/chat': (BuildContext context) => new ChatPage(),
 
     },
   ));
