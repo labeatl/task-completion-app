@@ -647,3 +647,12 @@ def administration():
 
 
     return make_response(render_template('adminpanel.html', reportedList=reportedTaskList),200)
+
+
+class GetName(Resource):
+    def get(self):
+        user = Accounts.query.filter_by(id_user=1).first()
+        user_name= user.name
+        return user_name
+
+api.add_resource(GetName, '/getName')
