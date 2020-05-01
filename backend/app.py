@@ -650,12 +650,12 @@ def administration():
 
 
 class GetName(Resource):
+    print("bllablla")
     def get(self):
         user = Accounts.query.filter_by(id_user=1).first()
         print(user)
         user_name= user.name
         print(user)
-        
         return user_name
 
 api.add_resource(GetName, '/getName')
