@@ -23,10 +23,15 @@ class AuthService {
     //print(response.body.runtimeType);
     print(data["status"]);
     if (data["status"] == 0) {
+      print("Sorage data");
+      print(data["authToken"]);
       print('Successful login');
       responseBool = true;
-      await storage.write(key: "token", value: data["userToken"]);
       print(data["userToken"]);
+
+      await storage.write(key: "token", value: data["userToken"]);
+      await storage.write(key: "authToken", value: data["authToken"]);
+
     }
     else {
       responseBool = false;

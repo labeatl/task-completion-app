@@ -6,3 +6,4 @@ Flask-HTTPAuth
 PyMySQL
 Flask-Migrate
 itsdangerous
+flask_jwt_extended

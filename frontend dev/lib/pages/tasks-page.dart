@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_app/main.dart';
 import 'package:flutter_app/pages/filters.dart' as prefix0;
 import '../task.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +13,6 @@ class TasksPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new TaskPageState();
 }
-
 
 //TODO REPORT HERE
 var url =
@@ -54,11 +56,31 @@ void _onMapCreated(GoogleMapController controller) {
 
 class TaskPageState extends State<TasksPage> {
   String _x;
+  String authToken;
    TaskPageState() {
      _x = "Apply";
 
+     getToken().then((val) => setState(() {
+       authToken = val;
+     }));
+     print(authToken);
 }
+
+  Future<String> getToken() async {
+     log("get token Worked");
+    String test = await storage.read(key: "authToken");
+    String bearer = 'Bearer ';
+    test = '$bearer$test';
+    print(test);
+    print("GOTTOKEN");
+    return test;
+
+  }
   Future<String> getData() async {
+    log('your message here');
+
+    log('your message here' + authToken);
+
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/tasks"),
       headers: {"Accept": "application/json"},

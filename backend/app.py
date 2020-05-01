@@ -10,7 +10,9 @@ from itsdangerous.url_safe import URLSafeSerializer
 import os
 import base64
 from flask_mail import Mail, Message
-
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity)
 
 
 
@@ -30,6 +32,10 @@ migrate = Migrate(app, db)
 
 # Flask secret key
 app.config['SECRET_KEY'] = 'thEejrdaR5$wE3yY4wsehn4wASHR' #Change this for production
+
+#Token stuff
+app.config['JWT_SECRET_KEY'] = 's6e5BY5YtyzThru^yjGT6tfrgdj%^#'  # Change this!
+jwt = JWTManager(app)
 
 
 user_skills = db.Table('user_skills',
@@ -118,10 +124,11 @@ class hello(Resource):
 api.add_resource(hello, '/')
 
 class Summary(Resource):
+     @jwt_required
      def post(self):
          summary = request.form['Summary']
-
-         userAccount = Accounts.query.filter_by(id_user=1).first()
+         print("Identitiy is: " + get_jwt_identity())
+         userAccount = Accounts.query.filter_by(id_user=get_jwt_identity()).first()
          userAccount.userBio = summary
          db.session.commit()
          return 'success'
@@ -131,6 +138,7 @@ class Summary(Resource):
 api.add_resource(Summary, '/summary')
 
 class getSummary(Resource):
+    @jwt_required
     def get(self):
         sum = db.session.query(Accounts.userBio).filter_by(id_user=1).first()
         if sum == None:
@@ -216,6 +224,7 @@ def verify_password(username, password):
     print(username)
     try:  #Check if username is a valid token
         loggedUser = b.loads(username)
+        authTokenConfirmed = create_access_token(identity=loggedUser)
 
 
     except SignatureExpired:
@@ -227,15 +236,13 @@ def verify_password(username, password):
             user = Accounts.query.filter_by(email=username).first()
             if check_password_hash(user.password, password):
                 loggedUser = user.id_user
-                g.user = loggedUser
-                return [loggedUser, generate_token(user.id_user)]
+                return [loggedUser, generate_token(user.id_user), create_access_token(identity=user.id_user)]
             else:
                 return False
         else:
             return False
-    user = Accounts.query.filter_by(id_user=loggedUser).first()
-    g.user = user.id_user
-    return loggedUser, username
+
+    return loggedUser, username, authTokenConfirmed
 
 
 
@@ -270,7 +277,8 @@ class UserLogin(Resource):
             print("Success")
             status = 0
             userToken = credentialCheck[1]
-            returnList = {"status": status, "userToken": userToken}
+            authToken = credentialCheck[2]
+            returnList = {"status": status, "userToken": userToken, "authToken" : authToken}
         return returnList
 
 
@@ -279,6 +287,7 @@ api.add_resource(UserLogin, '/login')
 
 class TasksList(Resource):
     #@auth.login_required
+    @jwt_required
     def get(self):
         tasks = Tasks.query
         list = []
@@ -318,11 +327,11 @@ api.add_resource(TaskReplace, '/tReplace')
 
 # TODO: Implement frontend for deletion
 class AccountDeletion(Resource):
-
+    @jwt_required
     def put(self):
         accEmailToDelete = request.form['email']
-        if Accounts.query.filter_by(email=accEmailToDelete).first() is not None:
-            Accounts.query.filter_by(email=accEmailToDelete).delete()
+        if Accounts.query.filter_by(is_user=get_jwt_identity()).first() is not None:
+            Accounts.query.filter_by(id_user=get_jwt_identity()).delete()
             db.session.commit()
             return 'success'
         else:
@@ -334,7 +343,7 @@ api.add_resource(AccountDeletion, '/deleteaccount')
 
 # Display skills to user, adding will be done with relational db in another class/func
 class PostSkills(Resource):
-
+    @jwt_required
     def get(self):
         allSkills = Skills.query.all()
         skillList = []
@@ -351,7 +360,7 @@ api.add_resource(PostSkills, '/postskills')
 
 
 class AddUserSkill(Resource):
-
+    @jwt_required
     def put(self):
         usrid = request.form['userid']
         skillid = request.form['skill_id']
@@ -359,7 +368,7 @@ class AddUserSkill(Resource):
         #if User_Skills.query.filter_by(id=usrid).first() is None:
         #addskill = Accounts.skills.append(id_user=usrid, id=skillid)
         #Accounts.append(id_user=usrid, id=skillid)
-        theUser = Accounts.query.filter_by(id_user=usrid).first()
+        theUser = Accounts.query.filter_by(id_user=get_jwt_identity()).first()
         theSkill = Skills.query.filter_by(id=skillid).first()
         theUser.skills.append(theSkill)
         # Add account to the database
@@ -375,8 +384,9 @@ class AddUserSkill(Resource):
 api.add_resource(AddUserSkill, '/adduserskill')
 
 class GetUserSkills(Resource):
+    @jwt_required
     def get(self):
-        userSkills = Accounts.query.filter_by(id_user=1).all()
+        userSkills = Accounts.query.filter_by(id_user=get_jwt_identity()).all()
         skillList = []
         counter = 0
         for i in userSkills:
@@ -489,7 +499,7 @@ class ImageUploadTask(Resource):
     def get(self):
 
         userID = db.session.query(Accounts.id_user).first()
-        task_PIC = db.session.query(Tasks.picture).filter_by(id=1).first()
+        task_PIC = db.session.query(Tasks.picture).filter_by(id=4).first()
         filename = "%d/tasks/%s" % (userID[0], task_PIC[0])
         return send_file(filename, mimetype="image/jpg")
 
@@ -544,8 +554,9 @@ api.add_resource(ConfirmEmail, "/<string:reset_id>")
 
 
 class PostUserTasks(Resource):
+    @jwt_required
     def get(self):
-        user = Tasks.query.filter_by(owner_id=1).all()
+        user = Tasks.query.filter_by(owner_id=get_jwt_identity()).all()
         userTaskList = []
         i = 0
         while i < len(user):

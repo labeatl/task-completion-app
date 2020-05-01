@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
@@ -22,11 +24,30 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Widget> skills = [];
   List<Task> tasks = [];
   List data;
+  String authToken;
+
 
   _ProfilePageState() {
+    print("WHATTTT");
+    getToken().then((val) => setState(() {
+      authToken = val;
+    }));
     getSkills().then((val) => setState(() {
           skills = val;
         }));
+
+
+
+  }
+  Future<String> getToken() async {
+    log("get token Worked");
+    String test = await storage.read(key: "authToken");
+    String bearer = 'Bearer ';
+    test = '$bearer$test';
+    print(test);
+    print("GOTTOKEN");
+    return test;
+
   }
 
   String summary = "";
@@ -34,15 +55,17 @@ class _ProfilePageState extends State<ProfilePage> {
   bool ranThis = false;
 
   Widget build(BuildContext context) {
+
     Future<String> getSummary() async {
+
       http.Response response = await http.get(
         Uri.encodeFull("http://167.172.59.89:5000/getSummary"),
-        headers: {"Accept": "application/json"},
+        headers: {"Authorization": authToken, HttpHeaders.contentTypeHeader: "application/json"},
       );
       var _summary = json.decode(response.body);
       summary = _summary.toString();
 //        setState(() {
-//
+    return "success";
 //        });
     }
 
@@ -54,9 +77,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
     List<Widget> skillsList = [];
     Future<String> getData() async {
+      print("POSTSKILLSTOKEN: "+authToken);
       http.Response response = await http.get(
         Uri.encodeFull("http://167.172.59.89:5000/postskills"),
-        headers: {"Accept": "application/json"},
+        headers: {"Authorization": authToken, HttpHeaders.contentTypeHeader: "application/json"},
       );
 
       List data =
@@ -71,7 +95,9 @@ class _ProfilePageState extends State<ProfilePage> {
             onPressed: () {
               var url = 'http://167.172.59.89:5000/adduserskill';
 
-              http.put(url, body: {
+              http.put(url,
+                  headers: {"Authorization": authToken, HttpHeaders.contentTypeHeader: "application/json"},
+                  body: {
                 'userid': 1.toString(), //Change this
                 'skill_id': id.toString(),
                 'skillLevel': 10.toString(),
@@ -90,9 +116,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
     Future<String> getTasks() async {
       tasks = [];
+    print('Post TOKEN: ' + authToken);
       http.Response response = await http.get(
         Uri.encodeFull("http://167.172.59.89:5000/postUserTasks"),
-        headers: {"Accept": "application/json"},
+        headers: {"Authorization": authToken, HttpHeaders.contentTypeHeader: "application/json"},
       );
       data = json.decode(response.body);
       var counter = 0;
@@ -112,7 +139,6 @@ class _ProfilePageState extends State<ProfilePage> {
         counter++;
       }
     }
-
     getTasks();
     getData();
     return Scaffold(
@@ -166,7 +192,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                               print({
                                                 'New Summary': sum.text,
                                               });
-                                              http.post(url, body: {
+                                              http.post(url,
+                                                  headers: {"Authorization": authToken, HttpHeaders.contentTypeHeader: "application/json"},
+                                                  body: {
+
                                                 'Summary': sum.text,
                                               });
                                             },
@@ -338,10 +367,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     .validate()) {
                                                   _formKey.currentState.save();
 
-                                                  var url =
-                                                      'http://167.172.59.89:5000/deleteaccount';
 
-                                                  http.put(url, body: {
+
+                                                  http.put(Uri.encodeFull("http://167.172.59.89:5000/deleteaccount") , headers: {"Authorization": authToken, HttpHeaders.contentTypeHeader: "application/json"},
+                                                      body: {
                                                     'email': email,
                                                   });
                                                   Navigator.of(context)
@@ -376,9 +405,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<List> getSkills() async {
     List<Widget> tempSkills = [];
+    print("TOKENNOW: "+authToken);
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/getuserskill"),
-      headers: {"Accept": "application/json"},
+      headers: {"Authorization": authToken, HttpHeaders.contentTypeHeader: "application/json"},
     );
 
     List data =
