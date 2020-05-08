@@ -4,6 +4,7 @@ import "./tasks-page.dart";
 import "./profile-page.dart";
 import "./add-task-page.dart";
 
+
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _HomePageState();
@@ -42,6 +43,7 @@ class _HomePageState extends State<HomePage> {
               _selectedPage = index;
             });
           },
+
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(

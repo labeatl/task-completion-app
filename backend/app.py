@@ -67,7 +67,7 @@ class Tasks(db.Model):
     location = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(80), nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey("accounts.id_user"))
-    #task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"), nullable=True)
+    task_completer = db.Column(db.Integer, db.ForeignKey("accounts.id_user"), nullable=True)
 
 
 # TODO Move models to models file
@@ -147,6 +147,20 @@ class getSummary(Resource):
 
 
 api.add_resource(getSummary, '/getSummary')
+
+
+class apply(Resource):
+    def put(self):
+        Id = request.form['id']
+        x = Tasks.query.filter_by(id = Id).first()
+        applier = Accounts.filter_by(id_user=1).first()
+        x.task_completer = applier.id_user
+        db.session.commit()
+        return 'success'
+
+
+api.add_resource(apply, '/apply')
+
 
 class UserSignUp(Resource):
     def put(self):
@@ -633,3 +647,17 @@ def administration():
 
 
     return make_response(render_template('adminpanel.html', reportedList=reportedTaskList),200)
+
+
+class GetName(Resource):
+    print("bllablla")
+    def get(self):
+        user = Accounts.query.filter_by(name="labi").first()
+        print(user)
+        userN= user.name
+        print(userN)
+        user_name= user.name
+        print(user)
+        return user_name
+
+api.add_resource(GetName, '/getName')
