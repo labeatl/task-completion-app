@@ -107,10 +107,7 @@ class TaskPageState extends State<TasksPage> {
   }
 
 
-  @override
-  void initState() {
-    this.getData();
-  }
+
 
   Future<String> getFilteringTasks() async {
     http.Response response = await http.get(
@@ -139,6 +136,11 @@ class TaskPageState extends State<TasksPage> {
   }
 
   Widget build(BuildContext context) {
+
+    setState(() {
+      getData();
+    });
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(220, 220, 220, 100),
       body: Container(

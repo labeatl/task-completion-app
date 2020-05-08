@@ -112,7 +112,6 @@ class _ProfilePageState extends State<ProfilePage> {
     //getSummary();
 
     //getSkills();
-    getSummary();
     sum.text = summary;
 
     List<Widget> skillsList = [];
@@ -189,8 +188,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
     getTasks();
     getData();
+    getSummary();
 
     return new Scaffold(
+
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -299,10 +300,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 20,
               ),
             ]),
+
             Text(
               "My Skills",
               style:
                   DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+
             ),
             SizedBox(
               height: 20,
