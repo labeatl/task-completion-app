@@ -50,7 +50,7 @@ app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_DEFAULT_SENDER'] = "lendevelopmentmail@gmail.com"
 app.config['MAIL_USERNAME'] = "lendevelopmentmail@gmail.com"
-app.config['MAIL_PASSWORD'] = "R^$Jwkmr^4wkr"
+app.config['MAIL_PASSWORD'] = "PASSWORDHERE"
 mail = Mail(app)
 
 s = URLSafeSerializer("RYJ5k67yr57K%$YHErenT46wjrrtdrmnwtrdnt")
