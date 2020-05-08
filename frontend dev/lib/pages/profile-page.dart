@@ -32,9 +32,6 @@ class _ProfilePageState extends State<ProfilePage> {
     getToken().then((val) => setState(() {
       authToken = val;
     }));
-    getSkills().then((val) => setState(() {
-          skills = val;
-        }));
 
 
 
@@ -55,12 +52,15 @@ class _ProfilePageState extends State<ProfilePage> {
   bool ranThis = false;
 
   Widget build(BuildContext context) {
+    getSkills().then((val) => setState(() {
+      skills = val;
+    }));
 
     Future<String> getSummary() async {
 
       http.Response response = await http.get(
         Uri.encodeFull("http://167.172.59.89:5000/getSummary"),
-        headers: {"Authorization": authToken, HttpHeaders.contentTypeHeader: "application/json"},
+        headers: {HttpHeaders.authorizationHeader: authToken, HttpHeaders.contentTypeHeader: "application/json"},
       );
       var _summary = json.decode(response.body);
       summary = _summary.toString();
@@ -72,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
     //getSummary();
 
     //getSkills();
-
+    getSummary();
     sum.text = summary;
 
     List<Widget> skillsList = [];

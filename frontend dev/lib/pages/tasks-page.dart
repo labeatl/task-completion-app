@@ -83,7 +83,7 @@ class TaskPageState extends State<TasksPage> {
 
     http.Response response = await http.get(
       Uri.encodeFull("http://167.172.59.89:5000/tasks"),
-      headers: {"Accept": "application/json"},
+      headers: {"Authorization": authToken, "Accept": "application/json"},
     );
     tasks = [];
     this.setState(() {
